@@ -1,0 +1,2 @@
+[预算项目](introduction/workers) 是公信宝数据交易系统中独有的概念。他们是一些期望通过提供服务来从区块链获得奖金的工作项目提案。一项提案包含一个指向网站或论坛帖子的链接，在其中详细解释了工作项目的介绍。
+[^_^]:在这里[BitSharestalk](https://bitsharestalk.org/index.php/board,103.0.html)可以看到一些提案。
