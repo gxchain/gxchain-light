@@ -442,7 +442,7 @@
     "league_update": "{issuer} 决议通过并更新了联盟 {league}",
     "data_transaction_create": "{account} 发起了一笔数据交易请求",
     "data_transaction_update":"{account} 更新了一笔数据交易请求状态",
-    "data_transaction_pay": "{from} 支付金额为 {amount} 的数据交易手续费到 {to}",
+    "data_transaction_pay": "{from} 支付金额为 {amount} 的数据购买费用到 {to}",
     "account_upgrade_data_transaction_member":"{account} 升级为交易确认节点",
     "data_transaction_datasource_upload":"{account} 验证了数据源 {datasource} 的数据上传",
     "data_transaction_datasource_validate_error":"{account} 数据返回验证失败"
