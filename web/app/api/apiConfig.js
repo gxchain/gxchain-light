@@ -5,7 +5,7 @@ export const settingsAPIs = (()=> {
             WS_NODE_LIST: [
                 {url: "ws://192.168.1.118:28090", location: '测试环境'}
             ],
-            DEFAULT_FAUCET: "http://192.168.1.118:1337"
+            DEFAULT_FAUCET: "http://192.168.1.118:1337/gateway"
         }
     }
     if(__PRE__){
@@ -17,7 +17,7 @@ export const settingsAPIs = (()=> {
                 {url: "ws://192.168.2.246:28090", location: '246节点'},
                 {url: "ws://192.168.2.247:28090", location: '247节点'}
             ],
-            DEFAULT_FAUCET: "http://192.168.2.244:1337"
+            DEFAULT_FAUCET: "http://192.168.2.244:1337/gateway"
         }
     }
     return {
@@ -28,8 +28,6 @@ export const settingsAPIs = (()=> {
             {url: "wss://node8.gxb.io", location: '华北节点'},
             {url: "wss://node11.gxb.io", location: '香港节点'}
         ],
-        // DEFAULT_FAUCET: "http://localhost:1341",
-        // DEFAULT_FAUCET: "http://192.168.1.118:1337",
         DEFAULT_FAUCET: "https://opengateway.gxb.io"
     }
 })();

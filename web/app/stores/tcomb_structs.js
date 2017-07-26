@@ -19,6 +19,7 @@ let Block = t.struct({
     previous: t.Str,
     timestamp: t.Dat,
     transactions: t.Arr,
+    transaction_ids: t.maybe(t.Arr),
     transaction_merkle_root: t.Str,
     witness: t.Str,
     witness_signature: t.Str

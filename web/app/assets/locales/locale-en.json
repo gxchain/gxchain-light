@@ -545,7 +545,7 @@
     "inputs": "Inputs",
     "settlement_date": "Settlement date",
     "asset_reserve": "reserved asset amount",
-    "tx_id":"transaction id",
+    "tx_id":"TxID",
     "trxTypes": {
       "all": "Show all",
       "transfer": "Transfer",

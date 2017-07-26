@@ -513,7 +513,7 @@
     "create_worker": "创建雇员，要求报酬为",
     "custom": "创建自定义操作",
     "order_id": "订单ID",
-    "tx_id":"交易ID",
+    "tx_id":"TxID",
     "trxTypes": {
       "all":"显示全部",
       "transfer": "转账",
