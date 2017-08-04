@@ -227,7 +227,7 @@
       "sign_owner": "以所有者身份签名"
     },
     "votes": {
-      "proxy_current": "Your current proxy is",
+      "proxy_current": "你的投票代理",
       "proxy_short": "代理投票",
       "workers_short": "预算项目",
       "proxy": "代理投票账户",
