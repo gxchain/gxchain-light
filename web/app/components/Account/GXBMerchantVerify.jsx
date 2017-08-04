@@ -1,23 +1,23 @@
 import React from "react";
 import CityPicker from './CityPicker'
 import utils from 'common/utils'
-import SettingsStore from "stores/SettingsStore";
+import SettingsStore from "stores/SettingsStore"
 import notify from "actions/NotificationActions";
 import PrivateKeyStore from 'stores/PrivateKeyStore'
 import AccountStore from 'stores/AccountStore'
 import WalletDb from 'stores/WalletDb'
-import WalletUnlockActions from "actions/WalletUnlockActions";
-import GXBFaucetActions from "actions/GXBFaucetActions";
-import {TransactionBuilder, ChainStore, Signature,PublicKey,hash} from "gxbjs/es";
-import ZfApi from "react-foundation-apps/src/utils/foundation-api";
-import Modal from "react-foundation-apps/src/modal";
-import LoadingIndicator from "../LoadingIndicator";
+import WalletUnlockActions from "actions/WalletUnlockActions"
+import GXBFaucetActions from "actions/GXBFaucetActions"
+import {TransactionBuilder, ChainStore, Signature, PublicKey, hash} from "gxbjs/es"
+import ZfApi from "react-foundation-apps/src/utils/foundation-api"
+import Modal from "react-foundation-apps/src/modal"
+import LoadingIndicator from "../LoadingIndicator"
 
 class MerchantVerify extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading:false,
+            loading: false,
             type: 'enterprise',
             name: '',
             alias: '',
@@ -68,19 +68,19 @@ class MerchantVerify extends React.Component {
     }
 
     render() {
-        if(this.state.loading){
+        if (this.state.loading) {
             return <LoadingIndicator></LoadingIndicator>
         }
         return (
             <div className="grid-content">
                 <div className="small-12 medium-8 medium-offset-2 vertical">
                     <h3 className="title text-center">商户认证</h3>
-                    <form noValidate="novalidate" className="form form-merchant-verify" noValidate="novlidate">
+                    <form noValidate="novalidate" className="form form-merchant-verify">
                         <section>
                             <div className="form-group">
                                 <label className="form-label">商户类型</label>
                                 <div className="input-group">
-                                    <input defaultChecked={this.state.type=='enterprise'} value='enterprise'
+                                    <input defaultChecked={this.state.type == 'enterprise'} value='enterprise'
                                            onChange={this.handleTypeChange.bind(this)} type="radio" name="type"
                                            className="form-control"/>
                                     &nbsp;企业
@@ -141,13 +141,13 @@ class MerchantVerify extends React.Component {
                                 <div className="input-group flex-column">
                                     <div className="input-group">
                                         <label className="radio">
-                                            <input defaultChecked={this.state.cert_type=='normal'}
+                                            <input defaultChecked={this.state.cert_type == 'normal'}
                                                    onChange={this.handleCertTypeChange.bind(this)} defaultValue="normal"
                                                    className="form-control" name="cert_type" type="radio"/>&nbsp;
                                             普通营业执照&nbsp;
                                         </label>
                                         <label className="radio">
-                                            <input defaultChecked={this.state.cert_type=='5in1'}
+                                            <input defaultChecked={this.state.cert_type == '5in1'}
                                                    onChange={this.handleCertTypeChange.bind(this)} defaultValue="5in1"
                                                    className="form-control" name="cert_type" type="radio"/>&nbsp;
                                             五证合一营业执照&nbsp;
@@ -358,7 +358,7 @@ class MerchantVerify extends React.Component {
             })
             return;
         }
-        if (!/\.(jpe?g|png)/.test(file.name)) {
+        if (!/\.(jpe?g|png)$/i.test(file.name)) {
             error.cert_image = '格式不正确,请重新选择';
         }
         else if (file.size > 2 * 1024 * 1024) {
@@ -475,7 +475,7 @@ class MerchantVerify extends React.Component {
             error.contact_name = '请填写联系人姓名';
             result = false;
         }
-        if (!this.state.contact_tel||!/^1\d{10}$/.test(this.state.contact_tel)) {
+        if (!this.state.contact_tel || !/^1\d{10}$/.test(this.state.contact_tel)) {
             error.contact_tel = '请填写正确联系人手机号';
             result = false;
         }
@@ -503,19 +503,19 @@ class MerchantVerify extends React.Component {
     apply(applyInfo) {
         let self = this;
         self.setState({
-            loading:true
+            loading: true
         })
-        GXBFaucetActions.merchantApply(applyInfo,this.props.account).then(function (result) {
+        GXBFaucetActions.merchantApply(applyInfo, this.props.account).then(function (result) {
             self.setState({
-                loading:false
+                loading: false
             });
             self.showNoticeModal();
-        },function (err) {
+        }, function (err) {
             self.setState({
-                loading:false
+                loading: false
             })
             console.log("ERROR when apply for merchant", err);
-            let error_msg = err.message||(err.base && err.base.length && err.base.length > 0 ? err.base[0] : "未知错误");
+            let error_msg = err.message || (err.base && err.base.length && err.base.length > 0 ? err.base[0] : "未知错误");
             notify.addNotification({
                 message: `申请失败: ${error_msg}`,
                 level: "error",
