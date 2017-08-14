@@ -173,7 +173,7 @@ class Operation extends React.Component {
                             string="operation.transfer"
                             keys={[
                                 {type: "account", value: op[1].from, arg: "from"},
-                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null},
+                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: 0},
                                 {type: "account", value: op[1].to, arg: "to"}
                             ]}
                         />
@@ -989,7 +989,7 @@ class Operation extends React.Component {
                             string={"operation.data_transaction_pay"}
                             keys={[
                                     {type: "account", value: op[1].from, arg: "from"},
-                                    {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null},
+                                    {type: "amount", value: op[1].amount, arg: "amount", decimalOffset:0},
                                     {type: "account", value: op[1].to, arg: "to"}
                                 ]}
                         />

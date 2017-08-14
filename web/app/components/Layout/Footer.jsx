@@ -61,7 +61,6 @@ class Footer extends React.Component {
         let versions = APP_VERSION.split('.');
         let version = versions[versions.length - 1];
         let needsUpgrade = this.state.latest_version && this.state.latest_version != APP_VERSION;
-        console.log(APP_VERSION);
 
         let tip = '';
         if (__TEST__) {
