@@ -645,6 +645,25 @@
       "title": "账户",
       "filter": "过滤账户"
     },
+    "statistics": {
+      "title": "统计",
+      "transaction_year_costs": "预计2017年总交易额",
+      "transaction_year_count": "预计2017年总交易次数",
+      "transaction_now_count": "实时交易数",
+      "transaction_total_costs": "总交易额",
+      "transaction_week_costs": "最近一周交易额",
+      "transaction_today_costs": "最近24小时交易额",
+      "transaction_total_count": "总交易次数",
+      "transaction_week_count": "最近一周交易次数",
+      "transaction_today_count": "最近24小时交易次数",
+      "merchants_total_count": "认证商户总数量",
+      "transaction_pay_fees": "交易手续费",
+      "transaction_product": "产品交易统计",
+      "transaction_recent_product": "近期交易",
+      "transaction_prdouct_name": "产品名",
+      "transaction_prdouct_costs": "交易额",
+      "transaction_prdouct_count": "交易次数"
+    },
     "blocks": {
       "title": "区块链",
       "globals": "全局参数",
