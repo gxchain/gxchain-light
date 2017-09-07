@@ -1,19 +1,22 @@
 import React from "react"
 import {Apis} from 'gxbjs-ws'
-import {Link} from "react-router/es";
-import {FormattedDate} from "react-intl";
-import Operation from "../Blockchain/Operation";
-import LinkToWitnessById from "../Blockchain/LinkToWitnessById";
 import Translate from "react-translate-component"
-import LoadingIndicator from '../LoadingIndicator'
-import DataProductList from '../Dashboard/DataProductList'
 import notify from "actions/NotificationActions"
 import ChainTypes from "../Utility/ChainTypes";
 import FormattedAsset from "../Utility/FormattedAsset"
 import BindToChainState from "../Utility/BindToChainState"
+import { Icon } from 'antd';
+import LogoCard from "../Dashboard/LogoCard";
+import DataProductList from '../Dashboard/DataProductList'
+
+import Operation from "../Blockchain/Operation";
+import LoadingIndicator from '../LoadingIndicator'
+
 import Immutable from "immutable";
 import utils from "common/utils";
 import BlockchainActions from "actions/BlockchainActions";
+
+require("assets/stylesheets/components/_statistics.scss");
 
 let pageSize = 10;
 let curDate = new Date().toISOString().substr(0,19);
@@ -23,7 +26,7 @@ let weekDate = new Date(new Date().getTime() - 7*24*60*60*1000).toISOString().su
 class Statistics extends React.Component {
     static propTypes = {
         dynGlobalObject: ChainTypes.ChainObject.isRequired,
-        coreAsset: ChainTypes.ChainAsset.isRequired
+        coreAsset: ChainTypes.ChainAsset.isRequired,
     };
 
     static defaultProps = {
@@ -56,63 +59,16 @@ class Statistics extends React.Component {
     componentWillMount() {
         let self = this;
         self.loadTransactionCosts();
+        self.loadTransactionCount();
         this.statsInterval = setInterval(function () {
             self.loadTransactionCosts();
+            self.loadTransactionCount();
         },15 * 1000);
     }
 
     componentWillUnmount() {
         clearInterval(this.statsInterval);
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        if (nextProps.latestBlocks.size === 0) {
-            return this._getInitialBlocks();
-        } else if (!this.state.animateEnter) {
-            this.setState({
-                animateEnter: true
-            });
-        }
-
-        let maxBlock = nextProps.dynGlobalObject.get("head_block_number");
-        if (nextProps.latestBlocks.size >= 20 && nextProps.dynGlobalObject.get("head_block_number") !== nextProps.latestBlocks.get(0).id) {
-            return this._getBlock(maxBlock, maxBlock);
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return (
-            !Immutable.is(nextProps.latestBlocks, this.props.latestBlocks) ||
-            !utils.are_equal_shallow(nextState, this.state)
-        );
-    }
-
-    _getInitialBlocks() {
-        let maxBlock = parseInt(this.props.dynGlobalObject.get("head_block_number"), 10);
-        if (maxBlock) {
-            for (let i = 19; i >= 0; i--) {
-                let exists = false;
-                if (this.props.latestBlocks.size > 0) {
-                    for (let j = 0; j < this.props.latestBlocks.size; j++) {
-                        if (this.props.latestBlocks.get(j).id === maxBlock - i) {
-                            exists = true;
-                            break;
-                        }
-                    }
-                }
-                if (!exists) {
-                    this._getBlock(maxBlock - i, maxBlock);
-                }
-            }
-        }
-    }
-
-    _getBlock(height, maxBlock) {
-        if (height) {
-            height = parseInt(height, 10);
-            BlockchainActions.getLatest(height, maxBlock);
-        }
+        this.statsInterval = null;
     }
 
     loadTransactionCosts() {
@@ -128,22 +84,55 @@ class Statistics extends React.Component {
             self.setState({
                 transaction_total_costs: res,
             })
-            Apis.instance().db_api().exec('get_data_transaction_product_costs', [weekDate,curDate]).then(function (res) {
-                self.setState({
-                    transaction_week_costs: res
-                })
-                Apis.instance().db_api().exec('get_data_transaction_product_costs', [preDate,curDate]).then(function (res) {
-                    self.setState({
-                        transaction_today_costs: res
-                    })
-                    Apis.instance().db_api().exec('get_data_transaction_pay_fee', ['2017-06-15T00:00:00',curDate]).then(function (res) {
-                        self.setState({
-                            transaction_pay_fees: res
-                        })
-                        self.loadTransactionCount();
-                    })
-                })
+        }).catch(function (err) {
+            console.error('error on fetching data products', err);
+            notify.addNotification({
+                message: `加载交易额数据失败`,
+                level: "error",
+                autoDismiss: 5
+            });
+            self.setState({
+                loading: false
             })
+        })
+
+        Apis.instance().db_api().exec('get_data_transaction_product_costs', [weekDate,curDate]).then(function (res) {
+            self.setState({
+                transaction_week_costs: res
+            })
+        }).catch(function (err) {
+            console.error('error on fetching data products', err);
+            notify.addNotification({
+                message: `加载交易额数据失败`,
+                level: "error",
+                autoDismiss: 5
+            });
+            self.setState({
+                loading: false
+            })
+        })
+
+        Apis.instance().db_api().exec('get_data_transaction_product_costs', [preDate,curDate]).then(function (res) {
+            self.setState({
+                transaction_today_costs: res
+            })
+        }).catch(function (err) {
+            console.error('error on fetching data products', err);
+            notify.addNotification({
+                message: `加载交易额数据失败`,
+                level: "error",
+                autoDismiss: 5
+            });
+            self.setState({
+                loading: false
+            })
+        })
+
+        Apis.instance().db_api().exec('get_data_transaction_pay_fee', ['2017-06-15T00:00:00',curDate]).then(function (res) {
+            self.setState({
+                transaction_pay_fees: res
+            })
+            self.loadTransactionCount();
         }).catch(function (err) {
             console.error('error on fetching data products', err);
             notify.addNotification({
@@ -169,21 +158,53 @@ class Statistics extends React.Component {
             self.setState({
                 transaction_total_count: res
             })
-            Apis.instance().db_api().exec('get_data_transaction_total_count', [weekDate,curDate]).then(function (res) {
-                self.setState({
-                    transaction_week_count: res
-                })
-                Apis.instance().db_api().exec('get_data_transaction_total_count', [preDate,curDate]).then(function (res) {
-                    self.setState({
-                        transaction_today_count: res
-                    })
-                    Apis.instance().db_api().exec('get_merchants_total_count', [preDate,curDate]).then(function (res) {
-                        self.setState({
-                            merchants_total_count: res
-                        })
-                        self.loadCategories();
-                    })
-                })
+        }).catch(function (err) {
+            console.error('error on fetching data products', err);
+            notify.addNotification({
+                message: `加载交易次数数据失败`,
+                level: "error",
+                autoDismiss: 5
+            });
+            self.setState({
+                loading: false
+            })
+        })
+
+        Apis.instance().db_api().exec('get_data_transaction_total_count', [weekDate,curDate]).then(function (res) {
+            self.setState({
+                transaction_week_count: res
+            })
+        }).catch(function (err) {
+            console.error('error on fetching data products', err);
+            notify.addNotification({
+                message: `加载交易次数数据失败`,
+                level: "error",
+                autoDismiss: 5
+            });
+            self.setState({
+                loading: false
+            })
+        })
+
+        Apis.instance().db_api().exec('get_data_transaction_total_count', [preDate,curDate]).then(function (res) {
+            self.setState({
+                transaction_today_count: res
+            })
+        }).catch(function (err) {
+            console.error('error on fetching data products', err);
+            notify.addNotification({
+                message: `加载交易次数数据失败`,
+                level: "error",
+                autoDismiss: 5
+            });
+            self.setState({
+                loading: false
+            })
+        })
+
+        Apis.instance().db_api().exec('get_merchants_total_count', [preDate,curDate]).then(function (res) {
+            self.setState({
+                merchants_total_count: res
             })
         }).catch(function (err) {
             console.error('error on fetching data products', err);
@@ -281,225 +302,127 @@ class Statistics extends React.Component {
 
     render() {
         let {latestBlocks, latestTransactions, dynGlobalObject, coreAsset} = this.props;
-        let transactions = null;
-        let trxCount = 0, blockTimes = [];
-
-        if (latestBlocks && latestBlocks.size >= 20) {
-
-            let previousTime;
-
-            let lastBlock, firstBlock;
-
-            // Map out the block times for the latest blocks and count the number of transactions
-            latestBlocks.filter((a, index) => {
-                // Only use consecutive blocks counting back from head block
-                return a.id === (dynGlobalObject.get("head_block_number") - index);
-            }).sort((a, b) => {
-                return a.id - b.id;
-            }).forEach((block, index) => {
-                trxCount += block.transactions.length;
-                if (index > 0) {
-                    blockTimes.push([block.id, (block.timestamp - previousTime) / 1000]);
-                    lastBlock = block.timestamp;
-                } else {
-                    firstBlock = block.timestamp;
-                }
-                previousTime = block.timestamp;
-            });
-
-            let trxIndex = 0;
-
-            transactions = latestTransactions.take(20)
-                .map((trx) => {
-
-                    let opIndex = 0;
-                    return trx.operations.map(op => {
-                        return (
-                            <Operation
-                                key={trxIndex++}
-                                op={op}
-                                result={trx.operation_results[opIndex++]}
-                                block={trx.block_num}
-                                hideFee={true}
-                                hideOpLabel={false}
-                                current={"1.2.0"}
-                            />
-                        );
-                    });
-
-                }).toArray();
-        }
-
-        if (this.state.loading) {
-            return <LoadingIndicator></LoadingIndicator>
-        }
-
-        var tip = ''; //无数据提示
-        if (!this.state.list||this.state.list.length==0) {
-            tip = <p className="text-center">未查询到结果</p>;
-        }
 
         return (
-            <div className="grid-block vertical page-layout">
-                {/* First row of stats */}
-                <div className="align-center grid-block shrink small-horizontal blocks-row">
-                    <div className="grid-block text-center small-12 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_year_costs" /></span>
-                            <h3 className="txtlabel success">
-                                <FormattedAsset
-                                    amount={this.state.transaction_total_costs * 365}
-                                    asset={coreAsset.get("id")}
-                                    decimalOffset={5}
-                                />
-                            </h3>
-                        </div>
-                    </div>
-                    <div className="grid-block text-center small-12 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_year_count" /></span>
-                            <h3 className="txtlabel success">
-                                {this.state.transaction_week_costs * 365}
-                            </h3>
-                        </div>
-                    </div>
+            <div className="home-wrapper">
+                <div className="nav-wrapper">
+                    <div className="active"></div>
+                    <div className=""></div>
+                    <div className=""></div>
+                    <div className=""></div>
                 </div>
-
-                {/* Second row of stats */}
-                <div className="align-center grid-block shrink small-horizontal blocks-row">
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_costs" /></span>
-                            <h3 className="txtlabel success">
-                                <FormattedAsset
-                                    amount={this.state.transaction_total_costs}
-                                    asset={coreAsset.get("id")}
-                                    decimalOffset={5}
-                                />
-                            </h3>
-                        </div>
-                    </div>
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_costs" /></span>
-                            <h3 className="txtlabel">
-                                <FormattedAsset
-                                    amount={this.state.transaction_week_costs}
-                                    asset={coreAsset.get("id")}
-                                    decimalOffset={5}
-                                />
-                            </h3>
-                        </div>
-                    </div>
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_costs" /></span>
-                            <h3 className="txtlabel">
-                                <FormattedAsset
-                                    amount={this.state.transaction_today_costs}
-                                    asset={coreAsset.get("id")}
-                                    decimalOffset={5}
-                                />
-                            </h3>
-                        </div>
-                    </div>
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_pay_fees" /></span>
-                            <h3 className="txtlabel">
-                                <FormattedAsset
-                                    amount={this.state.transaction_pay_fees}
-                                    asset={coreAsset.get("id")}
-                                    decimalOffset={5}
-                                />
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Third row of stats */}
-                <div className="align-center grid-block shrink small-horizontal blocks-row">
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_count" /></span>
-                            <h3 className="txtlabel success">{this.state.transaction_total_count}</h3>
-                        </div>
-                    </div>
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_count" /></span>
-                            <h3 className="txtlabel">{this.state.transaction_week_count}</h3>
-                        </div>
-                    </div>
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_count" /></span>
-                            <h3 className="txtlabel">{this.state.transaction_today_count}</h3>
-                        </div>
-                    </div>
-                    <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.merchants_total_count" /></span>
-                            <h3 className="txtlabel warning">{this.state.merchants_total_count}</h3>
-                        </div>
-                    </div>
-                </div>
-
-                { /* Fourth row: transactions of products */ }
-                <div className="align-center grid-block shrink small-horizontal blocks-row">
-                    <div className="grid-block medium-6 show-for-medium vertical no-overflow" style={{paddingBottom: 0}}>
-                        <div className="grid-block vertical no-overflow generic-bordered-box">
-
-                            <div className="block-content-header">
-                                <Translate component="span" content="explorer.statistics.transaction_product" />
-                            </div>
-
-                            <div className="grid-block vertical">
-                                <table className="table">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th><Translate component="span" content="explorer.statistics.transaction_prdouct_name" /></th>
-                                        <th><Translate component="span" content="explorer.statistics.transaction_prdouct_costs" /></th>
-                                        <th><Translate component="span" content="explorer.statistics.transaction_prdouct_count" /></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {this.state.list.map((prod, i)=> {
-                                        return <DataProductList key={`item_${i}_${prod.category_name}`} id={prod.id} router={this.props.router}
-                                        image={prod.icon} name={prod.product_name} desc={prod.brief_desc} price={prod.price}
-                                        volume={prod.total} costs={prod.transaction_costs} count={prod.transaction_count}></DataProductList>
-                                    })}
-                                    </tbody>
-                                </table>
-                                {tip}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="grid-block medium-6 show-for-medium vertical no-overflow" style={{paddingBottom: 0}}>
-                        <div className="grid-block vertical no-overflow generic-bordered-box">
-                            <div ref="operationsText">
-                                <div className="block-content-header">
-                                    <Translate content="explorer.statistics.transaction_recent_product" />
+                <div className="banner-wrapper">
+                    <svg className="banner-bg-center" width="100%" viewBox="0 0 1200 800">
+                        <circle fill="rgba(161,174,245,.15)" r="130" cx="350" cy="350" ></circle>
+                        <circle fill="rgba(120,172,254,.1)" r="80" cx="500" cy="420" ></circle>
+                    </svg>
+                    <div className="banner">
+                        <LogoCard/>
+                        <div className="banner-text">
+                            <h1><Translate component="span" content="explorer.statistics.transaction_basic" /></h1>
+                            <p><Translate component="span" content="explorer.statistics.transaction_basic_subtitle" /></p>
+                            <div className="grid-block vertical page-layout">
+                                {/* First row of stats */}
+                                <div className="align-center grid-block shrink small-horizontal blocks-row">
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_costs" /></span>
+                                            <h3 className="txtlabel success">
+                                                <FormattedAsset
+                                                    amount={this.state.transaction_total_costs}
+                                                    asset={coreAsset.get("id")}
+                                                    decimalOffset={5}
+                                                />
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_costs" /></span>
+                                            <h3 className="txtlabel">
+                                                <FormattedAsset
+                                                    amount={this.state.transaction_week_costs}
+                                                    asset={coreAsset.get("id")}
+                                                    decimalOffset={5}
+                                                />
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_costs" /></span>
+                                            <h3 className="txtlabel">
+                                                <FormattedAsset
+                                                    amount={this.state.transaction_today_costs}
+                                                    asset={coreAsset.get("id")}
+                                                    decimalOffset={5}
+                                                />
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_pay_fees" /></span>
+                                            <h3 className="txtlabel">
+                                                <FormattedAsset
+                                                    amount={this.state.transaction_pay_fees}
+                                                    asset={coreAsset.get("id")}
+                                                    decimalOffset={5}
+                                                />
+                                            </h3>
+                                        </div>
+                                    </div>
                                 </div>
-                                <table className="table">
-                                    <thead>
-                                    <tr>
-                                        <th><Translate content="account.votes.info" /></th>
-                                    </tr>
-                                    </thead>
-                                </table>
+
+                                {/* Second row of stats */}
+                                <div className="align-center grid-block shrink small-horizontal blocks-row">
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_count" /></span>
+                                            <h3 className="txtlabel success">{this.state.transaction_total_count}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_count" /></span>
+                                            <h3 className="txtlabel">{this.state.transaction_week_count}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_count" /></span>
+                                            <h3 className="txtlabel">{this.state.transaction_today_count}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="grid-block text-center small-6 medium-3">
+                                        <div className="grid-content no-overflow">
+                                            <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.merchants_total_count" /></span>
+                                            <h3 className="txtlabel warning">{this.state.merchants_total_count}</h3>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="grid-block">
-                                <table className="table">
-                                    <tbody>
-                                    {transactions}
-                                    </tbody>
-                                </table>
+                            <div className="">
+                                <a className="banner-text-button" >预计年总交易额: <FormattedAsset amount={this.state.transaction_today_costs * 365} asset={coreAsset.get("id")} decimalOffset={5}/></a>
+                                <a className="banner-text-button template">预计年总交易数: {this.state.transaction_today_count * 365}<i></i></a>
+                            </div>
+                        </div>
+                        <div className="banner-down-wrapper" >
+                            <div className="banner-mouse">
+                                <div className="mouse-bar"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div className="home-content page1">
+                    <div className="page-text">
+                        <h1><Translate component="span" content="explorer.statistics.transaction_product" /></h1>
+                        <p><Translate component="span" content="explorer.statistics.transaction_product_subtitle" /></p>
+                        <DataProductList/>
+                    </div>
+                </div>
+                <div className="home-content page2"></div>
+                <div className="home-content page3"></div>
             </div>
         );
     }
