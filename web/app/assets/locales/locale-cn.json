@@ -664,8 +664,9 @@
       "transaction_product_subtitle": "基于区块链的数据交易和数据服务，为您提供更清晰、更精准的全方位用户画像。",
       "transaction_recent_product": "近期交易",
       "transaction_prdouct_name": "产品名",
-      "transaction_prdouct_costs": "交易额",
-      "transaction_prdouct_count": "交易数"
+      "transaction_prdouct_price": "价格",
+      "transaction_prdouct_costs": "总交易额",
+      "transaction_prdouct_count": "总交易数"
     },
     "blocks": {
       "title": "区块链",

@@ -39,7 +39,7 @@
 
 .details-switch-demo-pic {
   width: 220px;
-  top: 100px;
+  top: 75px;
   left: 40px;
 }
 
@@ -58,21 +58,30 @@
 }
 
 .details-switch-demo-text-wrapper h1 {
-  font-size: 18px;
+  font-size: 22px !important;
+  font-weight: normal !important;
+  text-align: left !important;
   margin: 5px auto;
 }
 
 .details-switch-demo-text-wrapper em {
   height: 2px;
-  width: 60px;
+  width: 100px;
+  margin-top: 20px;
   border-radius: 2px;
   display: block;
 }
 
 .details-switch-demo-text-wrapper p {
-  font-size: 12px;
-  margin-top: 10px;
+  text-align: left !important;
+  font-size: 16px !important;
+  margin-top: 20px;
 }
+
+.details-switch-demo-text-wrapper p .num{
+  font-weight: normal;
+}
+
 
 .details-switch-demo-wrapper .anticon{
   position: absolute;

@@ -93,7 +93,7 @@ svg:not(:root) {
 
 .home-wrapper .banner-wrapper .banner-text .grid-block{
   background: transparent;
-  margin-left: -30px;
+  margin-left: -15px;
 }
 
 .home-wrapper .banner-wrapper .banner-text .txtlabel{
@@ -235,6 +235,11 @@ svg:not(:root) {
   text-align: center;
 }
 
+.home-wrapper .vh {
+  height: calc(100vh - 100px);
+  min-height: 650px;
+}
+
 .home-wrapper .page1 {
   width: 100%;
   max-width: 100%!important;
@@ -257,5 +262,6 @@ svg:not(:root) {
 }
 
 .home-wrapper .home-content .page-text {
-  margin: 40px auto 0;
+  //margin: 40px auto 0;
+  margin-top: calc((100vh - 624px) / 2);
 }
