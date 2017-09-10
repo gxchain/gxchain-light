@@ -32,7 +32,7 @@ class Settings extends React.Component {
             settingEntries: {
                 // general: ["locale", "unit", "showSettles", "walletLockTimeout", "themes",
                 // "disableChat", "showAssetPercent", "reset"],
-                general: [ "walletLockTimeout", "themes", "reset"],
+                general: [ "locale","walletLockTimeout", "themes", "reset"],
                 access: ["apiServer", "faucet_address"]
             }
         };

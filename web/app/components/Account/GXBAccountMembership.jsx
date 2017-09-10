@@ -141,24 +141,24 @@ class GXBAccountMembership extends React.Component {
 
         //商户认证按钮
         let btnMerchantVerify = <Link to={`/account/${account_name}/merchant-verify`}
-                                      className="button">认证为商户</Link>
+                                      className="button"><Translate content="account.member.merchant_apply"></Translate></Link>
         if(member_status=='merchant'||member_status=='datasource'){
-            btnMerchantVerify='已认证';
+            btnMerchantVerify=<Translate content="account.member.verified"></Translate>;
         }
 
         //数据源认证按钮
         let btnDataSourceVerify = <Link to={`/account/${account_name}/data-source-verify`}
-                                        className="button">认证为数据源</Link>
+                                        className="button"><Translate content="account.member.datasource_apply"></Translate></Link>
         if(member_status=='datasource'){
-            btnDataSourceVerify='已认证';
+            btnDataSourceVerify=<Translate content="account.member.verified"></Translate>;
         }
         if(member_status!='merchant'&&member_status!='datasource'){
             btnDataSourceVerify=<a className="button disabled button-primary">请先完成商户认证</a>;
         }
 
         if(this.state.applying==1){
-            btnMerchantVerify=<a className="button disabled button-primary">认证申请中</a>
-            btnDataSourceVerify=<a className="button disabled button-primary">认证申请中</a>
+            btnMerchantVerify=<a className="button disabled button-primary"><Translate content="account.member.verifying"></Translate></a>
+            btnDataSourceVerify=<a className="button disabled button-primary"><Translate content="account.member.verifying"></Translate></a>
         }
         else if(this.state.applying==-1){
             btnMerchantVerify=null;
@@ -171,62 +171,62 @@ class GXBAccountMembership extends React.Component {
              </LeagueCard>
          });
         if(leagues.length==0){
-            leagues=<p className="tip">未加入任何联盟</p>
+            leagues=<p className="tip"><Translate content="account.member.no_alliance"></Translate></p>
         }
 
         return (
             <div className="grid-content" style={{overflowX: "hidden"}}>
                 <div className="content-block">
                     <Tabs>
-                        <Tab title={`账户资料`}>
+                        <Tab title="account.member.account_info">
                             <table className="table table-member-stats">
                                 <tbody>
                                 <tr>
-                                    <td width="100rem"><span className="secondary">账户类型</span></td>
+                                    <td width="100rem"><Translate content="account.member.account_type"></Translate></td>
                                     <td>
                                         <Translate content={membership}></Translate>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>转账权限</td>
-                                    <td>有</td>
+                                    <td><Translate content="account.member.transfer_permission"></Translate></td>
+                                    <td><Translate content="account.member.yes"></Translate></td>
                                 </tr>
                                 <tr>
-                                    <td>充值权限</td>
-                                    <td>有</td>
+                                    <td><Translate content="account.member.deposit_permission"></Translate></td>
+                                    <td><Translate content="account.member.yes"></Translate></td>
                                 </tr>
                                 <tr>
-                                    <td>提现权限</td>
-                                    <td>有</td>
+                                    <td><Translate content="account.member.withdraw_permission"></Translate></td>
+                                    <td><Translate content="account.member.yes"></Translate></td>
                                 </tr>
                                 <tr>
-                                    <td>购买数据</td>
-                                    <td>{member_status=='merchant'||member_status=='datasource' ? '有' : '无'}</td>
+                                    <td><Translate content="account.member.buy_data"></Translate></td>
+                                    <td>{member_status=='merchant'||member_status=='datasource' ? <Translate content="account.member.yes"></Translate> : <Translate content="account.member.no"></Translate>}</td>
                                 </tr>
                                 <tr>
-                                    <td>出售数据</td>
-                                    <td>{member_status=='datasource' ? '有' : '无'}</td>
+                                    <td><Translate content="account.member.sell_data"></Translate></td>
+                                    <td>{member_status=='datasource' ? <Translate content="account.member.yes"></Translate> : <Translate content="account.member.no"></Translate>}</td>
                                 </tr>
                                 </tbody>
                             </table>
                         </Tab>
-                        <Tab title="商户信息">
+                        <Tab title="account.member.merchant_info">
                             {isMyAccount ? <div className="content-block">
-                                <h4>商户认证</h4>
+                                <h4><Translate content="account.member.merchant_verify"></Translate></h4>
                                 <table className="table">
                                     <tbody>
                                     {member_status=='merchant'||member_status=='datasource' ? <tr>
-                                        <td>商户名称</td>
-                                        <td>{this.state.merchant_name?<span>{`${this.state.merchant_name}(${this.state.merchant_alias})`}</span>:<a onClick={this.loadMerchantInfo.bind(this)}>显示</a>}</td>
+                                        <td><Translate content="account.member.merchant_name"></Translate></td>
+                                        <td>{this.state.merchant_name?<span>{`${this.state.merchant_name}(${this.state.merchant_alias})`}</span>:<a onClick={this.loadMerchantInfo.bind(this)}><Translate content="account.member.show"></Translate></a>}</td>
                                     </tr> : null}
                                     <tr>
-                                        <td>如果你希望在公信宝进行数据交易，请完成商户实名认证</td>
+                                        <td><Translate content="account.member.tip_merchant"></Translate></td>
                                         <td>
                                             {btnMerchantVerify}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>如果你希望在公信宝里成为数据源并出售数据，请完成数据源认证</td>
+                                        <td><Translate content="account.member.tip_datasource"></Translate></td>
                                         <td>
                                             {btnDataSourceVerify}
                                         </td>
@@ -235,8 +235,8 @@ class GXBAccountMembership extends React.Component {
                                 </table>
                             </div> : null}
                             {isMyAccount&&member_status=='datasource' ? <div className="content-block">
-                                <h4>所在联盟</h4>
-                                {this.state.leagues_loaded?<div className="small-up-1 medium-up-3 large-up-3 no-overflow">{leagues}</div>:<a onClick={this.loadLeagueList.bind(this)}>显示联盟</a>}
+                                <h4><Translate content="account.member.alliance"></Translate></h4>
+                                {this.state.leagues_loaded?<div className="small-up-1 medium-up-3 large-up-3 no-overflow">{leagues}</div>:<a onClick={this.loadLeagueList.bind(this)}><Translate content="account.member.show"></Translate></a>}
                             </div> : null}
                         </Tab>
                     </Tabs>

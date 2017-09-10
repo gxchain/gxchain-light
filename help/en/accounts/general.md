@@ -7,3 +7,4 @@ signature. In practice, *owning an account name* is independent from being able
 to *spend its funds*. Furthermore, both rights (we call them *permissions*) can
 split among an arbitrary complex relation of people (we call them *authorities*)
 using *weights* and a required *thresholds*.
+v
