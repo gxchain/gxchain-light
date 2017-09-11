@@ -16,11 +16,16 @@ import WalletManagerStore from "stores/WalletManagerStore";
 import cnames from "classnames";
 import TotalBalanceValue from "../Utility/TotalBalanceValue";
 import ReactTooltip from "react-tooltip";
+import IntlActions from "actions/IntlActions";
 import {Apis} from "gxbjs-ws";
 import notify from "actions/NotificationActions";
 import AccountImage from '../Account/AccountImage';
 
 var logo = require("assets/images/logo.png");
+
+const FlagImage = ({flag, width = 20, height = 20}) => {
+    return <img height={height} width={width} src={"language-dropdown/" + flag.toUpperCase() + ".png"} />;
+};
 
 class Header extends React.Component {
 
@@ -71,6 +76,7 @@ class Header extends React.Component {
             nextProps.current_wallet !== this.props.current_wallet ||
             nextProps.lastMarket !== this.props.lastMarket ||
             nextProps.starredAccounts !== this.props.starredAccounts ||
+            nextProps.currentLocale !== this.props.currentLocale ||
             nextState.active !== this.state.active
         );
     }
@@ -286,6 +292,28 @@ class Header extends React.Component {
          </ActionSheet>*/
         }
 
+        const flagDropdown = <ActionSheet>
+            <ActionSheet.Button title="">
+                <a style={{padding: "1rem", border: "none"}} className="button">
+                    <FlagImage flag={this.props.currentLocale} />
+                </a>
+            </ActionSheet.Button>
+            <ActionSheet.Content>
+                <ul className="no-first-element-top-border">
+                    {this.props.locales.map(locale => {
+                        return (
+                            <li key={locale}>
+                                <a href onClick={(e) => {e.preventDefault(); IntlActions.switchLocale(locale);}}>
+                                    <div className="table-cell"><FlagImage flag={locale} /></div>
+                                    <div className="table-cell" style={{paddingLeft: 10}}><Translate content={"languages." + locale} /></div>
+                                </a>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </ActionSheet.Content>
+        </ActionSheet>;
+
 
         return (
             <div className="header menu-group primary">
@@ -334,13 +362,20 @@ class Header extends React.Component {
                         {myAccountCount !== 0 ? null : <div className="grp-menu-item overflow-visible">
                             {settingsDropdown}
                         </div>}
+                        {myAccountCount !== 0 ? null :<div className="grp-menu-item overflow-visible" >
+                            {flagDropdown}
+                        </div>}
 
                         <div className="grp-menu-item overflow-visible account-drop-down">
                             {accountsDropDown}
                         </div>
+                        {!myAccountCount ? null : <div className="grp-menu-item overflow-visible account-drop-down">
+                            {flagDropdown}
+                        </div>}
                         {!myAccountCount ? null : <div className="grp-menu-item overflow-visible">
                             {settingsDropdown}
                         </div>}
+
                         {lock_unlock}
                     </div>
                 </div>
@@ -361,7 +396,9 @@ export default connect(Header, {
             locked: WalletUnlockStore.getState().locked,
             current_wallet: WalletManagerStore.getState().current_wallet,
             lastMarket: SettingsStore.getState().viewSettings.get(`lastMarket${chainID ? ("_" + chainID.substr(0, 8)) : ""}`),
-            starredAccounts: SettingsStore.getState().starredAccounts
+            starredAccounts: SettingsStore.getState().starredAccounts,
+            currentLocale: SettingsStore.getState().settings.get("locale"),
+            locales: SettingsStore.getState().defaults.locale
         };
     }
 });

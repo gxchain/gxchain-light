@@ -10,9 +10,9 @@ if (__ELECTRON__) {
 class IntlActions {
 
     switchLocale(locale) {
-        if (locale === "en") {
-            return {locale};
-        }
+        // if (locale === "en") {
+        //     return {locale};
+        // }
         if (__ELECTRON__) {
             return {
                 locale: locale,
