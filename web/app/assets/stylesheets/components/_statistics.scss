@@ -93,10 +93,15 @@ svg:not(:root) {
   margin-left: -15px;
 }
 
+.home-wrapper .banner-wrapper .banner-text .grid-content{
+  padding: 0;
+}
+
+
 .home-wrapper .banner-wrapper .banner-text .txtlabel{
   margin: 16px 0 40px;
   line-height: 24px;
-  font-size: 18px;
+  font-size: 16px;
   color: #fff;
 }
 
@@ -109,6 +114,7 @@ svg:not(:root) {
   transition: background .45s cubic-bezier(.215,.61,.355,1),box-shadow .45s cubic-bezier(.215,.61,.355,1);
   color: #fff;
   display: inline-block;
+  margin-bottom: 10px;
 }
 
 .home-wrapper .banner-wrapper .banner-text-button.template {

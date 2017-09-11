@@ -280,8 +280,8 @@ class DataProductCard extends React.Component {
 
                 {/* Third row of furturn */}
                 <div className="center">
-                    <div className="banner-text-button" ><Icon type="bank" /> 预计年总交易额: <FormattedAsset amount={this.state.transaction_today_costs * 365} asset={coreAsset.get("id")} decimalOffset={5}/></div>
-                    <div className="banner-text-button template"><Icon type="line-chart" /> 预计年总交易数: {this.state.transaction_today_count * 365}<i></i></div>
+                    <div className="banner-text-button" ><Icon type="bank" /> <Translate component="span" content="explorer.statistics.transaction_year_costs" />: <FormattedAsset amount={this.state.transaction_today_costs * 365} asset={coreAsset.get("id")} decimalOffset={5}/></div>
+                    <div className="banner-text-button template"><Icon type="line-chart" /> <Translate component="span" content="explorer.statistics.transaction_year_count" />: {this.state.transaction_today_count * 365}<i></i></div>
                 </div>
             </div>
         );

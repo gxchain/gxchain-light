@@ -667,8 +667,8 @@
     },
     "statistics": {
       "title": "统计",
-      "transaction_year_costs": "预计2017年总交易额",
-      "transaction_year_count": "预计2017年总交易次数",
+      "transaction_year_costs": "预计年总交易额",
+      "transaction_year_count": "预计年总交易数",
       "transaction_now_count": "实时交易数",
       "transaction_total_costs": "总交易额",
       "transaction_week_costs": "周交易额",
