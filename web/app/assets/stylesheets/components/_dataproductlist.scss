@@ -1,0 +1,117 @@
+.banner-anim {
+  position: relative;
+  overflow: hidden;
+  min-height: 100px;
+}
+
+.banner-anim-elem {
+  height: 100%;
+}
+
+.details-switch-demo-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 450px;
+  transition: background 1s;
+}
+
+.details-switch-demo {
+  margin: 40px auto;
+  width: 600px;
+  height: 370px;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.details-switch-demo-img-wrapper,
+.details-switch-demo-text-wrapper {
+  width: 50%;
+  display: inline-block;
+  height: 100%;
+}
+
+.details-switch-demo-pic,
+.details-switch-demo-map {
+  position: absolute;
+}
+
+.details-switch-demo-pic {
+  width: 220px;
+  top: 75px;
+  left: 40px;
+}
+
+.details-switch-demo-map {
+  width: 250px;
+  top: 60px;
+  left: 30px;
+}
+.details-switch-demo-map.map2{
+  width: 200px;
+  left: 50px;
+}
+
+.details-switch-demo-text-wrapper .banner-anim-elem {
+  padding: 40px;
+}
+
+.details-switch-demo-text-wrapper h1 {
+  font-size: 22px !important;
+  font-weight: normal !important;
+  text-align: left !important;
+  margin: 5px auto;
+}
+
+.details-switch-demo-text-wrapper em {
+  height: 2px;
+  width: 100px;
+  margin-top: 20px;
+  border-radius: 2px;
+  display: block;
+}
+
+.details-switch-demo-text-wrapper p {
+  text-align: left !important;
+  font-size: 16px !important;
+  margin-top: 20px;
+}
+
+.details-switch-demo-text-wrapper p .num{
+  font-weight: normal;
+}
+
+
+.details-switch-demo-wrapper .anticon{
+  position: absolute;
+  font-size: 24px;
+  top: 50%;
+  margin-top: -12px;
+  cursor: pointer;
+}
+
+.details-switch-demo-wrapper .anticon-left{
+  left: 5px;
+  z-index: 999;
+}
+
+.details-switch-demo-wrapper .anticon-right{
+  right: 5px;
+}
+@media screen and (max-width: 414px) {
+  .details-switch-demo {
+    transform: scale(.6) translateX(12px);
+    transform-origin: left center;
+  }
+}
+@media screen and (max-width: 375px) {
+  .details-switch-demo {
+    transform: scale(.55) translateX(7px);
+  }
+}
+@media screen and (max-width: 320px) {
+  .details-switch-demo {
+    transform: scale(.46) translateX(12px);
+  }
+}

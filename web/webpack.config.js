@@ -196,6 +196,10 @@ module.exports = function (env) {
                     loader: scssLoaders
                 },
                 {
+                    test: /\.less$/,
+                    loader: 'style-loader!css-loader!less-loader'
+                },
+                {
                     test: /\.png$/,
                     exclude: [path.resolve(root_dir, "app/assets/asset-symbols"),path.resolve(root_dir, "app/assets/language-dropdown/img")],
                     use: [
