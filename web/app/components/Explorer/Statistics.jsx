@@ -4,31 +4,50 @@ import LogoCard from "../Dashboard/LogoCard";
 import DataTransactionCard from '../Dashboard/DataTransactionCard'
 import DataProductList from '../Dashboard/DataProductList'
 
+require("assets/flipclock/flipclock.css");
+require("assets/flipclock/flipclock.js");
+
 require("assets/stylesheets/components/_statistics.scss");
 require("assets/iconfont.less"); // iconfont本地化
+
+let pre_time = '2017-09-24 20:08:00';
 
 class Statistics extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            currentIndex: 0
+            currentIndex: 0,
         };
     }
 
     componentDidMount() {
         let self = this;
-        document.getElementById('bodyBox').parentNode.onscroll = function(){
-            let current_y = document.getElementById('bodyBox').parentNode.scrollTop;
-            let pg0_h = document.getElementById("page0").offsetHeight - 62;
+        if (document.getElementById('bodyBox')){
+            document.getElementById('bodyBox').parentNode.onscroll = function(){
+                let current_y = document.getElementById('bodyBox').parentNode.scrollTop;
+                let pg0_h = document.getElementById("page0").offsetHeight - 62;
 
-            if (current_y < pg0_h){
-                self.setState({currentIndex: 0});
-            }
-            if (current_y >= pg0_h){
-                self.setState({currentIndex: 1});
+                if (current_y < pg0_h){
+                    self.setState({currentIndex: 0});
+                }
+                if (current_y >= pg0_h){
+                    self.setState({currentIndex: 1});
+                }
             }
         }
+
+        let count_time = Math.round((new Date(pre_time).getTime() - new Date().getTime()) / 1000);
+        let clock = $('.countdown-clock').FlipClock(count_time,{
+            countdown: true,
+            clockFace: 'DailyCounter',
+            language: 'zh',
+            callbacks:{
+                stop: function() {
+                    location.reload();
+                }
+            }
+        });
     }
 
     handleClick = (e) => {
@@ -78,39 +97,49 @@ class Statistics extends React.Component {
     render() {
 
         let index = this.state.currentIndex;
-
-        return (
-            <div id="bodyBox" className="home-wrapper" onScroll={this.handleScroll}>
-                <div className="nav-wrapper">
-                    <div className={index == 0 ? 'active' : ''} data-index="0" onClick={this.handleClick}></div>
-                    <div className={index == 1 ? 'active' : ''} data-index="1" onClick={this.handleClick}></div>
+        if ( (new Date().getTime()) < (new Date(pre_time).getTime()) ){
+            return (
+                <div id="bodyBox" className="home-wrapper">
+                    <div className="banner-wrapper vh">
+                        <div className="countdown-clock"></div>
+                    </div>
                 </div>
-                <div className="banner-wrapper" id="page0">
-                    <div className="banner">
-                        <LogoCard/>
-                        <div className="banner-text">
-                            <h1><Translate component="span" content="explorer.statistics.transaction_basic" /></h1>
-                            <p><Translate component="span" content="explorer.statistics.transaction_basic_subtitle" /></p>
-                            <DataTransactionCard/>
-                        </div>
-                        <div className="banner-down-wrapper" >
-                            <div className="banner-mouse">
-                                <div className="mouse-bar"></div>
+            );
+        }else {
+            return (
+                <div className="home-wrapper">
+                    <div className="nav-wrapper">
+                        <div className={index == 0 ? 'active' : ''} data-index="0" onClick={this.handleClick}></div>
+                        <div className={index == 1 ? 'active' : ''} data-index="1" onClick={this.handleClick}></div>
+                    </div>
+                    <div className="banner-wrapper" id="page0">
+                        <div className="banner">
+                            <LogoCard/>
+                            <div className="banner-text">
+                                <h1><Translate component="span" content="explorer.statistics.transaction_basic"/></h1>
+                                <p><Translate component="span"
+                                              content="explorer.statistics.transaction_basic_subtitle"/></p>
+                                <DataTransactionCard/>
+                            </div>
+                            <div className="banner-down-wrapper">
+                                <div className="banner-mouse">
+                                    <div className="mouse-bar"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="home-content page1 vh" id="page1">
-                    <div className="page-text">
-                        <h1><Translate component="span" content="explorer.statistics.transaction_product" /></h1>
-                        <p><Translate component="span" content="explorer.statistics.transaction_product_subtitle" /></p>
-                        <DataProductList/>
+                    <div className="home-content page1 vh" id="page1">
+                        <div className="page-text">
+                            <h1><Translate component="span" content="explorer.statistics.transaction_product"/></h1>
+                            <p><Translate component="span" content="explorer.statistics.transaction_product_subtitle"/>
+                            </p>
+                            <DataProductList/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
-
 }
 
 export default Statistics;
