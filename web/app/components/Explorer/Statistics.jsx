@@ -86,10 +86,6 @@ class Statistics extends React.Component {
                     <div className={index == 1 ? 'active' : ''} data-index="1" onClick={this.handleClick}></div>
                 </div>
                 <div className="banner-wrapper" id="page0">
-                    <svg className="banner-bg-center" width="100%" viewBox="0 0 1200 800">
-                        <circle fill="rgba(161,174,245,.15)" r="130" cx="350" cy="350" ></circle>
-                        <circle fill="rgba(120,172,254,.1)" r="80" cx="500" cy="420" ></circle>
-                    </svg>
                     <div className="banner">
                         <LogoCard/>
                         <div className="banner-text">

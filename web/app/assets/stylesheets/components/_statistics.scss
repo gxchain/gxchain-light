@@ -28,10 +28,12 @@
 }
 
 .home-wrapper .banner-wrapper {
-  background: #35aef8;
-  background: -webkit-linear-gradient(-45deg,#35aef8,#7681ff 76%,#7681ff 0);
-  background: -webkit-linear-gradient(315deg,#35aef8,#7681ff 76%,#7681ff 0);
-  background: linear-gradient(135deg,#35aef8,#7681ff 76%,#7681ff 0);
+  background: #4b5cba;
+  //background: -webkit-linear-gradient(-45deg,#1c2763,#6d83fa 76%,#6d83fa 0);
+  //background: -webkit-linear-gradient(315deg,#1c2763,#6d83fa 76%,#6d83fa 0);
+  //background: linear-gradient(135deg,#1c2763,#6d83fa 76%,#6d83fa 0);
+  background: url("../../images/statistics-bg.png");
+  background-size: cover;
   position: relative;
 }
 
@@ -57,7 +59,7 @@ svg:not(:root) {
 }
 
 .home-wrapper .banner-wrapper .banner-text {
-  width: 60%;
+  width: 54%;
   height: 450px;
   position: absolute;
   top: 0;
@@ -66,31 +68,27 @@ svg:not(:root) {
   z-index: 1;
 }
 
-.home-wrapper .banner-wrapper .center{
-  text-align: center;
-}
-
-.home-wrapper .banner-wrapper .banner-text h1, .home-wrapper .banner-wrapper .banner-text h3 {
-  font-weight: lighter;
+.home-wrapper .banner-wrapper .banner-text h1 {
+  font-weight: 400;
+  font-size: 30px;
   color: #fff;
 }
 
-.home-wrapper .banner-wrapper .banner-text h1 {
+.home-wrapper .banner-wrapper .banner-text h3 {
   font-weight: lighter;
-  font-size: 36px;
+  color: #fff;
 }
 
 .home-wrapper .banner-wrapper .banner-text p {
   margin: 16px 0 40px;
   line-height: 24px;
-  font-size: 14px;
+  font-size: 13px;
   color: #fff;
-  font-weight: lighter;
 }
 
 .home-wrapper .banner-wrapper .banner-text .grid-block{
   background: transparent;
-  margin-left: -15px;
+  overflow: hidden;
 }
 
 .home-wrapper .banner-wrapper .banner-text .grid-content{
@@ -101,24 +99,39 @@ svg:not(:root) {
 .home-wrapper .banner-wrapper .banner-text .txtlabel{
   margin: 16px 0 40px;
   line-height: 24px;
+  font-size: 15px;
+  color: #fff;
+}
+
+.home-wrapper .banner-wrapper .banner-text .bottom{
+  width: 100%;
+  text-align: left;
+  border-top: 1px solid #fff;
+}
+
+.home-wrapper .banner-wrapper .banner-text .bottom .imp-text {
+  width: 45%;
+  font-size: 14px;
+  color: #fff;
+  display: inline-block;
+  margin-top: 25px;
+}
+
+.home-wrapper .banner-wrapper .banner-text .bottom .imp-text:last-child {
+  border-left:1px solid #fff;
+  padding-left: 10%;
+}
+
+.home-wrapper .banner-wrapper .banner-text .bottom .imp-text p{
+  margin: 0;
+  line-height: 24px;
   font-size: 16px;
   color: #fff;
 }
 
-.home-wrapper .banner-wrapper .banner-text-button {
-  padding: 8px 16px;
-  border-radius: 40px;
-  font-size: 14px;
-  border: 1px solid #fff;
-  -webkit-transition: background .45s cubic-bezier(.215,.61,.355,1),box-shadow .45s cubic-bezier(.215,.61,.355,1);
-  transition: background .45s cubic-bezier(.215,.61,.355,1),box-shadow .45s cubic-bezier(.215,.61,.355,1);
-  color: #fff;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-.home-wrapper .banner-wrapper .banner-text-button.template {
-  margin-left: 10px;
+.home-wrapper .banner-wrapper .banner-text .bottom .imp-text p:last-child{
+  margin-top: 35px;
+  font-size: 20px;
 }
 
 .home-wrapper .banner-wrapper .banner-down-wrapper {
@@ -252,16 +265,16 @@ svg:not(:root) {
 }
 
 .home-wrapper .home-content h1 {
-  font-weight: lighter;
-  font-size: 36px;
+  font-weight: 400;
+  font-size: 30px;
   color: #3e3e3e;
 }
 
 .home-wrapper .home-content p {
+  margin: 16px 0;
   line-height: 24px;
-  font-size: 14px;
+  font-size: 13px;
   color: #333;
-  font-weight: lighter;
 }
 
 .home-wrapper .home-content .page-text {

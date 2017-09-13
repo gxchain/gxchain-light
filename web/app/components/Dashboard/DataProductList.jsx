@@ -15,7 +15,7 @@ import BindToChainState from '../Utility/BindToChainState';
 require("assets/stylesheets/components/_dataproductlist.scss");
 
 let pageSize = 10;
-let colorArray = ['#FFF43D','#FF4058','#9FDA7F'];
+let colorArray = ['#353844'];
 let backgroundArray = ['#F6B429','#FC1E4F','#64D487'];
 let curDate = new Date().toISOString().substr(0,19);
 
@@ -154,7 +154,7 @@ class DataProductList extends React.Component {
             let products_list = res.data;
 
             for (let i=0; i<products_list.length; i++){
-                products_list[i].color = colorArray[i % 3];
+                products_list[i].color = colorArray[0];
                 products_list[i].background = backgroundArray[i % 3];
 
                 Apis.instance().db_api().exec('get_data_transaction_product_costs_by_product_id', [products_list[i].id,'2017-06-15T00:00:00',curDate]).then(function (res) {

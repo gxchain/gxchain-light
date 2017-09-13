@@ -200,7 +200,7 @@ class DataProductCard extends React.Component {
             <div className="grid-block vertical page-layout">
                 {/* First row of stats */}
                 <div className="align-center grid-block shrink small-horizontal blocks-row">
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_costs" /></span>
                             <h3 className="txtlabel success">
@@ -212,7 +212,7 @@ class DataProductCard extends React.Component {
                             </h3>
                         </div>
                     </div>
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_costs" /></span>
                             <h3 className="txtlabel">
@@ -224,7 +224,7 @@ class DataProductCard extends React.Component {
                             </h3>
                         </div>
                     </div>
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_costs" /></span>
                             <h3 className="txtlabel">
@@ -236,7 +236,7 @@ class DataProductCard extends React.Component {
                             </h3>
                         </div>
                     </div>
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_pay_fees" /></span>
                             <h3 className="txtlabel">
@@ -252,25 +252,25 @@ class DataProductCard extends React.Component {
 
                 {/* Second row of stats */}
                 <div className="align-center grid-block shrink small-horizontal blocks-row">
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_count" /></span>
                             <h3 className="txtlabel success">{this.state.transaction_total_count}</h3>
                         </div>
                     </div>
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_count" /></span>
                             <h3 className="txtlabel">{this.state.transaction_week_count}</h3>
                         </div>
                     </div>
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_count" /></span>
                             <h3 className="txtlabel">{this.state.transaction_today_count}</h3>
                         </div>
                     </div>
-                    <div className="grid-block text-center small-6 medium-3">
+                    <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.merchants_total_count" /></span>
                             <h3 className="txtlabel warning">{this.state.merchants_total_count}</h3>
@@ -279,9 +279,15 @@ class DataProductCard extends React.Component {
                 </div>
 
                 {/* Third row of furturn */}
-                <div className="center">
-                    <div className="banner-text-button" ><Icon type="bank" /> <Translate component="span" content="explorer.statistics.transaction_year_costs" />: <FormattedAsset amount={this.state.transaction_today_costs * 365} asset={coreAsset.get("id")} decimalOffset={5}/></div>
-                    <div className="banner-text-button template"><Icon type="line-chart" /> <Translate component="span" content="explorer.statistics.transaction_year_count" />: {this.state.transaction_today_count * 365}<i></i></div>
+                <div className="bottom">
+                    <div className="imp-text" >
+                        <p><Translate component="span" content="explorer.statistics.transaction_year_costs" /></p>
+                        <p className="txtlabel"><FormattedAsset amount={this.state.transaction_today_costs * 365} asset={coreAsset.get("id")} decimalOffset={5}/></p>
+                    </div>
+                    <div className="imp-text">
+                        <p><Translate component="span" content="explorer.statistics.transaction_year_count" /></p>
+                        <p className="txtlabel">{this.state.transaction_today_count * 365}</p>
+                    </div>
                 </div>
             </div>
         );
