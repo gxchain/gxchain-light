@@ -58,11 +58,6 @@ module.exports = function (env) {
             __HASH_HISTORY__: !!env.hash,
             __BASE_URL__: JSON.stringify("baseUrl" in env ? env.baseUrl : "/"),
             __TESTNET__: !!env.testnet
-        }),
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery",
         })
     ];
 

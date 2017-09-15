@@ -1,6 +1,6 @@
 import React from 'react'
 import {Apis} from 'gxbjs-ws'
-import { Icon } from 'antd';
+import {FormattedNumber} from "react-intl"
 import notify from "actions/NotificationActions"
 import ChainTypes from "../Utility/ChainTypes";
 import Translate from "react-translate-component";
@@ -10,6 +10,9 @@ import BindToChainState from '../Utility/BindToChainState';
 let curDate = new Date().toISOString().substr(0,19);
 let preDate = new Date(new Date().getTime() - 24*60*60*1000).toISOString().substr(0,19); //前一天
 let weekDate = new Date(new Date().getTime() - 7*24*60*60*1000).toISOString().substr(0,19); //前七天
+
+let startStasticsDate = '2017-08-25T00:00:00';
+let startStasticsDays = (new Date().getTime() - new Date(startStasticsDate).getTime())/1000/60/60/24;
 
 class DataProductCard extends React.Component {
     static propTypes = {
@@ -42,7 +45,7 @@ class DataProductCard extends React.Component {
         this.statsInterval = setInterval(function () {
             self.loadTransactionCosts();
             self.loadTransactionCount();
-        },10 * 1000);
+        },5 * 1000);
     }
 
     componentWillUnmount() {
@@ -56,7 +59,7 @@ class DataProductCard extends React.Component {
             loading: true,
         });
 
-        Apis.instance().db_api().exec('get_data_transaction_product_costs', ['2017-06-15T00:00:00',curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_product_costs', [startStasticsDate,curDate]).then(function (res) {
             self.setState({
                 transaction_total_costs: res,
             })
@@ -104,7 +107,7 @@ class DataProductCard extends React.Component {
             })
         })
 
-        Apis.instance().db_api().exec('get_data_transaction_pay_fee', ['2017-06-15T00:00:00',curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_pay_fee', [startStasticsDate,curDate]).then(function (res) {
             self.setState({
                 transaction_pay_fees: res
             })
@@ -128,7 +131,7 @@ class DataProductCard extends React.Component {
             loading: true,
         });
 
-        Apis.instance().db_api().exec('get_data_transaction_total_count', ['2017-06-15T00:00:00',curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_total_count', [startStasticsDate,curDate]).then(function (res) {
             self.setState({
                 transaction_total_count: res
             })
@@ -255,25 +258,41 @@ class DataProductCard extends React.Component {
                     <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_count" /></span>
-                            <h3 className="txtlabel success">{this.state.transaction_total_count}</h3>
+                            <h3 className="txtlabel success"><FormattedNumber
+                                value={this.state.transaction_total_count}
+                                minimumFractionDigits={0}
+                                maximumFractionDigits={5}
+                            /></h3>
                         </div>
                     </div>
                     <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_count" /></span>
-                            <h3 className="txtlabel">{this.state.transaction_week_count}</h3>
+                            <h3 className="txtlabel"><FormattedNumber
+                                value={this.state.transaction_week_count}
+                                minimumFractionDigits={0}
+                                maximumFractionDigits={5}
+                            /></h3>
                         </div>
                     </div>
                     <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_count" /></span>
-                            <h3 className="txtlabel">{this.state.transaction_today_count}</h3>
+                            <h3 className="txtlabel"><FormattedNumber
+                                value={this.state.transaction_today_count}
+                                minimumFractionDigits={0}
+                                maximumFractionDigits={5}
+                            /></h3>
                         </div>
                     </div>
                     <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.merchants_total_count" /></span>
-                            <h3 className="txtlabel warning">{this.state.merchants_total_count}</h3>
+                            <h3 className="txtlabel"><FormattedNumber
+                                value={this.state.merchants_total_count}
+                                minimumFractionDigits={0}
+                                maximumFractionDigits={5}
+                            /></h3>
                         </div>
                     </div>
                 </div>
@@ -282,11 +301,11 @@ class DataProductCard extends React.Component {
                 <div className="bottom">
                     <div className="imp-text" >
                         <p><Translate component="span" content="explorer.statistics.transaction_year_costs" /></p>
-                        <p className="txtlabel"><FormattedAsset amount={this.state.transaction_today_costs * 365} asset={coreAsset.get("id")} decimalOffset={5}/></p>
+                        <p className="txtlabel"><FormattedAsset amount={this.state.transaction_total_costs / startStasticsDays * 365} asset={coreAsset.get("id")} decimalOffset={5}/></p>
                     </div>
                     <div className="imp-text">
                         <p><Translate component="span" content="explorer.statistics.transaction_year_count" /></p>
-                        <p className="txtlabel">{this.state.transaction_today_count * 365}</p>
+                        <p className="txtlabel"><FormattedNumber value={Math.ceil(this.state.transaction_total_count / startStasticsDays * 365)} minimumFractionDigits={0} maximumFractionDigits={5}/></p>
                     </div>
                 </div>
             </div>

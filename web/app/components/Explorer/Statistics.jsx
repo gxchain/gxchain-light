@@ -3,9 +3,7 @@ import Translate from "react-translate-component";
 import LogoCard from "../Dashboard/LogoCard";
 import DataTransactionCard from '../Dashboard/DataTransactionCard'
 import DataProductList from '../Dashboard/DataProductList'
-
-require("assets/flipclock/flipclock.css");
-require("assets/flipclock/flipclock.js");
+import Iframe from 'react-iframe'
 
 require("assets/stylesheets/components/_statistics.scss");
 require("assets/iconfont.less"); // iconfont本地化
@@ -37,17 +35,12 @@ class Statistics extends React.Component {
             }
         }
 
-        let count_time = Math.round((new Date(pre_time).getTime() - new Date().getTime()) / 1000);
-        let clock = $('.countdown-clock').FlipClock(count_time,{
-            countdown: true,
-            clockFace: 'DailyCounter',
-            language: 'zh',
-            callbacks:{
-                stop: function() {
-                    location.reload();
-                }
-            }
-        });
+        let count_time = Math.round((new Date(pre_time).getTime() - new Date().getTime()));
+        if (count_time>0){
+            window.setTimeout(function() {
+                location.reload();
+            }, count_time);
+        }
     }
 
     handleClick = (e) => {
@@ -99,11 +92,11 @@ class Statistics extends React.Component {
         let index = this.state.currentIndex;
         if ( (new Date().getTime()) < (new Date(pre_time).getTime()) ){
             return (
-                <div id="bodyBox" className="home-wrapper">
-                    <div className="banner-wrapper vh">
-                        <div className="countdown-clock"></div>
-                    </div>
-                </div>
+                    <Iframe url="http://wechat-test.gxb.io/demo/"
+                            width="100%"
+                            height="100vh"
+                            display="initial"
+                            position="relative"/>
             );
         }else {
             return (

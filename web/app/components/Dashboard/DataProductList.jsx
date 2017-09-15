@@ -9,6 +9,7 @@ import {Apis} from 'gxbjs-ws'
 import notify from "actions/NotificationActions"
 import ChainTypes from "../Utility/ChainTypes";
 import Translate from "react-translate-component";
+import {FormattedNumber} from "react-intl"
 import FormattedAsset from "../Utility/FormattedAsset"
 import BindToChainState from '../Utility/BindToChainState';
 
@@ -17,6 +18,7 @@ require("assets/stylesheets/components/_dataproductlist.scss");
 let pageSize = 10;
 let colorArray = ['#353844'];
 let backgroundArray = ['#F6B429','#FC1E4F','#64D487'];
+let startStasticsDate = '2017-08-25T00:00:00';
 let curDate = new Date().toISOString().substr(0,19);
 
 class DataProductList extends React.Component {
@@ -99,7 +101,7 @@ class DataProductList extends React.Component {
         self.loadCategories();
         this.statsInterval = setInterval(function () {
             self.loadCategories();
-        },10 * 1000);
+        },5 * 1000);
     }
 
     componentWillUnmount() {
@@ -157,14 +159,14 @@ class DataProductList extends React.Component {
                 products_list[i].color = colorArray[0];
                 products_list[i].background = backgroundArray[i % 3];
 
-                Apis.instance().db_api().exec('get_data_transaction_product_costs_by_product_id', [products_list[i].id,'2017-06-15T00:00:00',curDate]).then(function (res) {
+                Apis.instance().db_api().exec('get_data_transaction_product_costs_by_product_id', [products_list[i].id,startStasticsDate,curDate]).then(function (res) {
                     products_list[i].transaction_costs = res;
                     self.setState({
                         list: products_list,
                     })
                 })
 
-                Apis.instance().db_api().exec('get_data_transaction_total_count_by_product_id', [products_list[i].id,'2017-06-15T00:00:00',curDate]).then(function (res) {
+                Apis.instance().db_api().exec('get_data_transaction_total_count_by_product_id', [products_list[i].id,startStasticsDate,curDate]).then(function (res) {
                     products_list[i].transaction_count = res;
                     self.setState({
                         list: products_list,
@@ -201,9 +203,6 @@ class DataProductList extends React.Component {
                     ease={['easeOutCubic', 'easeInQuad']}
                     key="img-wrapper"
                 >
-                    {/*<div className={`${this.props.className}-map map${i}`} key="map">*/}
-                        {/*<img src={item.map} width="100%" />*/}
-                    {/*</div>*/}
                     <div className={`${this.props.className}-pic pic${i}`} key="icon">
                         <img src={item.icon} width="100%" />
                     </div>
@@ -236,7 +235,13 @@ class DataProductList extends React.Component {
                         </span>
                     </p>
                     <p key="count"><Translate component="span" content="explorer.statistics.transaction_prdouct_count" />：
-                        <span className="num">{transaction_count}</span>
+                        <span className="num">
+                            <FormattedNumber
+                                value={transaction_count}
+                                minimumFractionDigits={0}
+                                maximumFractionDigits={5}
+                            />
+                        </span>
                     </p>
                 </QueueAnim>
             </Element>);
