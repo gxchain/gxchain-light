@@ -92,7 +92,7 @@ class Statistics extends React.Component {
         let index = this.state.currentIndex;
         if ( (new Date().getTime()) < (new Date(pre_time).getTime()) ){
             return (
-                    <Iframe url="http://wechat-test.gxb.io/demo/"
+                    <Iframe url="https://gxs.gxb.io/countdown/index.html"
                             width="100%"
                             height="100vh"
                             display="initial"
