@@ -283,19 +283,3 @@ svg:not(:root) {
   //margin: 40px auto 0;
   margin-top: calc((100vh - 624px) / 2);
 }
-
-.flip-clock-wrapper{
-  position: absolute;
-  width: 620px;
-  height: 200px;
-  top: 50%;
-  margin-top: -100px;
-  left: 50%;
-  margin-left: -310px;
-}
-
-.flip-clock-divider .flip-clock-label {
-  color: #fff;
-  font-size: 20px;
-}
-
