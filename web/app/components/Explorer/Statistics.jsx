@@ -5,7 +5,7 @@ import DataTransactionCard from '../Dashboard/DataTransactionCard'
 import DataProductList from '../Dashboard/DataProductList'
 import Iframe from 'react-iframe'
 
-let pre_time = '2017/09/24 20:08:00';
+let pre_time = '2017-09-24 20:08:00';
 
 class Statistics extends React.Component {
 
@@ -21,7 +21,7 @@ class Statistics extends React.Component {
         if (document.getElementById('bodyBox')){
             document.getElementById('bodyBox').parentNode.onscroll = function(){
                 let current_y = document.getElementById('bodyBox').parentNode.scrollTop;
-                let pg0_h = document.getElementById("page0").offsetHeight - 62;
+                let pg0_h = document.getElementById("page0").offsetHeight;
 
                 if (current_y < pg0_h){
                     self.setState({currentIndex: 0});
@@ -42,7 +42,7 @@ class Statistics extends React.Component {
 
     handleClick = (e) => {
         let currentIndex = e.target.getAttribute('data-index');
-        let pg0_h = document.getElementById("page0").offsetHeight - 62;
+        let pg0_h = document.getElementById("page0").offsetHeight;
         this.setState({currentIndex:currentIndex});
         switch (currentIndex){
             case "0":
@@ -86,12 +86,12 @@ class Statistics extends React.Component {
 
     render() {
         require("assets/stylesheets/components/_statistics.scss");
-        require("assets/iconfont.less"); // iconfont本地化
+        // require("assets/iconfont.less"); // iconfont本地化
         let index = this.state.currentIndex;
         if ( (new Date().getTime()) < (new Date(pre_time).getTime()) ){
             if (Translate.getLocale() == 'cn'){
                 return (
-                    <Iframe url="http://gxs.gxb.io/countdown/"
+                    <Iframe url="https://gxs.gxb.io/countdown/"
                             width="100%"
                             height="100vh"
                             display="initial"
@@ -99,7 +99,7 @@ class Statistics extends React.Component {
                 );
             }else{
                 return (
-                    <Iframe url="http://gxs.gxb.io/en/countdown/"
+                    <Iframe url="https://gxs.gxb.io/en/countdown/"
                             width="100%"
                             height="100vh"
                             display="initial"
@@ -108,7 +108,7 @@ class Statistics extends React.Component {
             }
         }else {
             return (
-                <div className="home-wrapper">
+                <div className="home-wrapper" id="bodyBox">
                     <div className="nav-wrapper">
                         <div className={index == 0 ? 'active' : ''} data-index="0" onClick={this.handleClick}></div>
                         <div className={index == 1 ? 'active' : ''} data-index="1" onClick={this.handleClick}></div>

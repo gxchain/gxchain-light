@@ -2,7 +2,7 @@ import React from "react"
 import BannerAnim, { Element } from 'rc-banner-anim';
 import QueueAnim from 'rc-queue-anim';
 import { TweenOneGroup } from 'rc-tween-one';
-import { Icon, Timeline } from 'antd';
+import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
 import {Apis} from 'gxbjs-ws'
