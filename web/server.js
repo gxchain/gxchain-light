@@ -5,7 +5,7 @@ var devMiddleware = require("webpack-dev-middleware");
 var hotMiddleware = require("webpack-hot-middleware");
 
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
-var config = require("./webpack.config.js")({prod: false});
+var config = require("./webpack.config.js")({prod: false,hash: true});
 
 var app = express();
 var compiler = webpack(config);
