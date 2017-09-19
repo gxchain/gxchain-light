@@ -5,10 +5,7 @@ import DataTransactionCard from '../Dashboard/DataTransactionCard'
 import DataProductList from '../Dashboard/DataProductList'
 import Iframe from 'react-iframe'
 
-require("assets/stylesheets/components/_statistics.scss");
-require("assets/iconfont.less"); // iconfont本地化
-
-let pre_time = '2017-09-24 20:08:00';
+let pre_time = '2017/09/24 20:08:00';
 
 class Statistics extends React.Component {
 
@@ -88,16 +85,27 @@ class Statistics extends React.Component {
     }
 
     render() {
-
+        require("assets/stylesheets/components/_statistics.scss");
+        require("assets/iconfont.less"); // iconfont本地化
         let index = this.state.currentIndex;
         if ( (new Date().getTime()) < (new Date(pre_time).getTime()) ){
-            return (
-                    <Iframe url="https://gxs.gxb.io/countdown/index.html"
+            if (Translate.getLocale() == 'cn'){
+                return (
+                    <Iframe url="http://gxs.gxb.io/countdown/"
                             width="100%"
                             height="100vh"
                             display="initial"
                             position="relative"/>
-            );
+                );
+            }else{
+                return (
+                    <Iframe url="http://gxs.gxb.io/en/countdown/"
+                            width="100%"
+                            height="100vh"
+                            display="initial"
+                            position="relative"/>
+                );
+            }
         }else {
             return (
                 <div className="home-wrapper">

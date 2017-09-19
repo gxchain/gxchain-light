@@ -13,8 +13,6 @@ import {FormattedNumber} from "react-intl"
 import FormattedAsset from "../Utility/FormattedAsset"
 import BindToChainState from '../Utility/BindToChainState';
 
-require("assets/stylesheets/components/_dataproductlist.scss");
-
 let pageSize = 10;
 let colorArray = ['#353844'];
 let backgroundArray = ['#F6B429','#FC1E4F','#64D487'];
@@ -192,6 +190,8 @@ class DataProductList extends React.Component {
     }
 
     render() {
+        require("assets/stylesheets/components/_dataproductlist.scss");
+
         let {coreAsset} = this.props;
 
         const imgChildren = this.state.list.map((item, i) =>

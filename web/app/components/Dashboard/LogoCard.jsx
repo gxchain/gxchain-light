@@ -4,7 +4,6 @@ import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import ticker from 'rc-tween-one/lib/ticker';
 import PropTypes from 'prop-types';
 
-require("assets/stylesheets/components/_logocard.scss");
 let logo = require('assets/logo-gxb.png');
 
 class LogoCard extends React.Component {
@@ -171,6 +170,7 @@ class LogoCard extends React.Component {
     };
 
     render() {
+        require("assets/stylesheets/components/_logocard.scss")
 
         return (
 
