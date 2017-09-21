@@ -1,18 +1,14 @@
 import React from 'react'
 import {Apis} from 'gxbjs-ws'
 import {FormattedNumber} from "react-intl"
+import { Spin } from 'antd';
 import notify from "actions/NotificationActions"
 import ChainTypes from "../Utility/ChainTypes";
 import Translate from "react-translate-component";
 import FormattedAsset from "../Utility/FormattedAsset"
 import BindToChainState from '../Utility/BindToChainState';
 
-let curDate = new Date().toISOString().substr(0,19);
-let preDate = new Date(new Date().getTime() - 24*60*60*1000).toISOString().substr(0,19); //前一天
-let weekDate = new Date(new Date().getTime() - 7*24*60*60*1000).toISOString().substr(0,19); //前七天
-
 let startStasticsDate = '2017-08-25T00:00:00';
-let startStasticsDays = (new Date().getTime() - new Date(startStasticsDate).getTime())/1000/60/60/24;
 
 class DataProductCard extends React.Component {
     static propTypes = {
@@ -26,7 +22,7 @@ class DataProductCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
+            loading: true,
             transaction_total_costs: 0,
             transaction_week_costs: 0,
             transaction_today_costs: 0,
@@ -46,6 +42,11 @@ class DataProductCard extends React.Component {
             self.loadTransactionCosts();
             self.loadTransactionCount();
         },5 * 1000);
+        setTimeout(function () {
+            self.setState({
+                loading: false,
+            })
+        },3 * 1000);
     }
 
     componentWillUnmount() {
@@ -55,11 +56,7 @@ class DataProductCard extends React.Component {
 
     loadTransactionCosts() {
         let self = this;
-        self.setState({
-            loading: true,
-        });
-
-        Apis.instance().db_api().exec('get_data_transaction_product_costs', [startStasticsDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_product_costs', [startStasticsDate,(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 transaction_total_costs: res,
             })
@@ -75,7 +72,7 @@ class DataProductCard extends React.Component {
             })
         })
 
-        Apis.instance().db_api().exec('get_data_transaction_product_costs', [weekDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_product_costs', [(new Date(new Date().getTime() - 7*24*60*60*1000).toISOString()).substr(0,19),(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 transaction_week_costs: res
             })
@@ -85,13 +82,13 @@ class DataProductCard extends React.Component {
                 message: `加载交易额数据失败`,
                 level: "error",
                 autoDismiss: 5
-            });
+            });``
             self.setState({
                 loading: false
             })
         })
 
-        Apis.instance().db_api().exec('get_data_transaction_product_costs', [preDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_product_costs', [(new Date(new Date().getTime() - 24*60*60*1000).toISOString()).substr(0,19),(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 transaction_today_costs: res
             })
@@ -107,7 +104,7 @@ class DataProductCard extends React.Component {
             })
         })
 
-        Apis.instance().db_api().exec('get_data_transaction_pay_fee', [startStasticsDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_pay_fee', [startStasticsDate,(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 transaction_pay_fees: res
             })
@@ -127,11 +124,7 @@ class DataProductCard extends React.Component {
 
     loadTransactionCount() {
         let self = this;
-        self.setState({
-            loading: true,
-        });
-
-        Apis.instance().db_api().exec('get_data_transaction_total_count', [startStasticsDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_total_count', [startStasticsDate,(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 transaction_total_count: res
             })
@@ -147,7 +140,7 @@ class DataProductCard extends React.Component {
             })
         })
 
-        Apis.instance().db_api().exec('get_data_transaction_total_count', [weekDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_total_count', [(new Date(new Date().getTime() - 7*24*60*60*1000).toISOString()).substr(0,19),(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 transaction_week_count: res
             })
@@ -163,7 +156,7 @@ class DataProductCard extends React.Component {
             })
         })
 
-        Apis.instance().db_api().exec('get_data_transaction_total_count', [preDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_data_transaction_total_count', [(new Date(new Date().getTime() - 24*60*60*1000).toISOString()).substr(0,19),(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 transaction_today_count: res
             })
@@ -179,7 +172,7 @@ class DataProductCard extends React.Component {
             })
         })
 
-        Apis.instance().db_api().exec('get_merchants_total_count', [preDate,curDate]).then(function (res) {
+        Apis.instance().db_api().exec('get_merchants_total_count', [startStasticsDate,(new Date().toISOString()).substr(0,19)]).then(function (res) {
             self.setState({
                 merchants_total_count: res
             })
@@ -200,9 +193,10 @@ class DataProductCard extends React.Component {
         let {coreAsset} = this.props;
 
         return (
-            <div className="grid-block vertical page-layout">
+            <div className="grid-block vertical page-layout min-h">
+                <div className={`${!this.state.loading ? 'hidden' : ''} data-loading`}><Spin/></div>
                 {/* First row of stats */}
-                <div className="align-center grid-block shrink small-horizontal blocks-row">
+                <div className={`align-center grid-block shrink small-horizontal blocks-row ${this.state.loading ? 'hidden' : ''}`}>
                     <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_costs" /></span>
@@ -254,7 +248,7 @@ class DataProductCard extends React.Component {
                 </div>
 
                 {/* Second row of stats */}
-                <div className="align-center grid-block shrink small-horizontal blocks-row">
+                <div className={`align-center grid-block shrink small-horizontal blocks-row ${this.state.loading ? 'hidden' : ''}`}>
                     <div className="grid-block small-6 medium-3">
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_count" /></span>
@@ -297,21 +291,9 @@ class DataProductCard extends React.Component {
                     </div>
                 </div>
 
-                {/* Third row of furturn */}
-                <div className="bottom">
-                    <div className="imp-text" >
-                        <p><Translate component="span" content="explorer.statistics.transaction_year_costs" /></p>
-                        <p className="txtlabel"><FormattedAsset amount={this.state.transaction_total_costs / startStasticsDays * 365} asset={coreAsset.get("id")} decimalOffset={5}/></p>
-                    </div>
-                    <div className="imp-text">
-                        <p><Translate component="span" content="explorer.statistics.transaction_year_count" /></p>
-                        <p className="txtlabel"><FormattedNumber value={Math.ceil(this.state.transaction_total_count / startStasticsDays * 365)} minimumFractionDigits={0} maximumFractionDigits={5}/></p>
-                    </div>
-                </div>
             </div>
         );
     }
-
 }
 
 

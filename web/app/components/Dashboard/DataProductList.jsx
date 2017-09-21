@@ -2,7 +2,7 @@ import React from "react"
 import BannerAnim, { Element } from 'rc-banner-anim';
 import QueueAnim from 'rc-queue-anim';
 import { TweenOneGroup } from 'rc-tween-one';
-import { Icon } from 'antd';
+import { Icon, Spin } from 'antd';
 import PropTypes from 'prop-types';
 
 import {Apis} from 'gxbjs-ws'
@@ -17,7 +17,6 @@ let pageSize = 10;
 let colorArray = ['#353844'];
 let backgroundArray = ['#F6B429','#FC1E4F','#64D487'];
 let startStasticsDate = '2017-08-25T00:00:00';
-let curDate = new Date().toISOString().substr(0,19);
 
 class DataProductList extends React.Component {
     static propTypes = {
@@ -33,7 +32,7 @@ class DataProductList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
+            loading: true,
             showInt: 0,
             delay: 0,
             imgAnim: [
@@ -109,9 +108,6 @@ class DataProductList extends React.Component {
 
     loadCategories() {
         let self = this;
-        self.setState({
-            loading:true
-        });
         Apis.instance().db_api().exec('list_data_market_categories', [1]).then(function (res) {
             res=(res||[]).filter(function (cate) {
                 return cate.status==1;
@@ -147,7 +143,6 @@ class DataProductList extends React.Component {
         let self = this;
         keywords=keywords||"";
         self.setState({
-            loading: true,
             currentPage: page,
         });
         Apis.instance().db_api().exec('list_free_data_products', [category_id, page * pageSize, pageSize, "", keywords,false]).then(function (res) {
@@ -156,26 +151,20 @@ class DataProductList extends React.Component {
             for (let i=0; i<products_list.length; i++){
                 products_list[i].color = colorArray[0];
                 products_list[i].background = backgroundArray[i % 3];
-
-                Apis.instance().db_api().exec('get_data_transaction_product_costs_by_product_id', [products_list[i].id,startStasticsDate,curDate]).then(function (res) {
+                Apis.instance().db_api().exec('get_data_transaction_product_costs_by_product_id', [products_list[i].id,startStasticsDate,(new Date().toJSON()).substr(0,19)]).then(function (res) {
                     products_list[i].transaction_costs = res;
-                    self.setState({
-                        list: products_list,
-                    })
-                })
-
-                Apis.instance().db_api().exec('get_data_transaction_total_count_by_product_id', [products_list[i].id,startStasticsDate,curDate]).then(function (res) {
-                    products_list[i].transaction_count = res;
-                    self.setState({
-                        list: products_list,
+                    Apis.instance().db_api().exec('get_data_transaction_total_count_by_product_id', [products_list[i].id,startStasticsDate,(new Date().toJSON()).substr(0,19)]).then(function (res) {
+                        products_list[i].transaction_count = res;
+                        if (i == (products_list.length - 1)){
+                            self.setState({
+                                list: products_list,
+                                loading: false,
+                                total: res.filtered_total
+                            })
+                        }
                     })
                 })
             }
-
-            self.setState({
-                loading: false,
-                total: res.filtered_total
-            })
         }).catch(function (err) {
             console.error('error on fetching data products', err);
             notify.addNotification({
@@ -221,7 +210,7 @@ class DataProductList extends React.Component {
                             <FormattedAsset
                                 amount={price}
                                 asset={coreAsset.get("id")}
-                                decimalOffset={5}
+                                decimalOffset={1}
                             />
                         </span>
                     </p>
@@ -230,7 +219,7 @@ class DataProductList extends React.Component {
                             <FormattedAsset
                                 amount={transaction_costs}
                                 asset={coreAsset.get("id")}
-                                decimalOffset={5}
+                                decimalOffset={1}
                             />
                         </span>
                     </p>
@@ -249,6 +238,7 @@ class DataProductList extends React.Component {
 
         return (
             <div className={`${this.props.className}-wrapper`}>
+                <div className={`${!this.state.loading ? 'hidden' : ''} data-loading`}><Spin/></div>
                 <div className={this.props.className}>
                     <BannerAnim
                         prefixCls={`${this.props.className}-img-wrapper`}
@@ -287,6 +277,5 @@ class DataProductList extends React.Component {
         );
     }
 }
-
 
 export default BindToChainState(DataProductList)

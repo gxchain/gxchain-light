@@ -60,12 +60,12 @@ svg:not(:root) {
 
 .home-wrapper .banner-wrapper .banner-text {
   width: 54%;
-  height: 500px;
+  height: 450px;
   position: absolute;
   top: 50%;
   bottom: 0;
   margin: 0 auto;
-  margin-top: -315px;
+  margin-top: -250px;
   z-index: 1;
 
 }
@@ -282,4 +282,21 @@ svg:not(:root) {
 .home-wrapper .home-content .page-text {
   //margin: 40px auto 0;
   margin-top: calc((100vh - 624px) / 2);
+}
+
+.home-wrapper .data-loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -13.5px;
+  z-index: 9999;
+}
+
+.home-wrapper .min-h{
+  min-height: 100px;
+}
+
+.home-wrapper .hidden{
+  display: none;
 }
