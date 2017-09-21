@@ -237,7 +237,7 @@ class DataProductList extends React.Component {
                     <p key="count"><Translate component="span" content="explorer.statistics.transaction_prdouct_count" />：
                         <span className="num">
                             <FormattedNumber
-                                value={transaction_count}
+                                value={transaction_count ? transaction_count : 0}
                                 minimumFractionDigits={0}
                                 maximumFractionDigits={5}
                             />

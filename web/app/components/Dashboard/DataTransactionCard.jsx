@@ -259,7 +259,7 @@ class DataProductCard extends React.Component {
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_total_count" /></span>
                             <h3 className="txtlabel success"><FormattedNumber
-                                value={this.state.transaction_total_count}
+                                value={this.state.transaction_total_count ? this.state.transaction_total_count : 0}
                                 minimumFractionDigits={0}
                                 maximumFractionDigits={5}
                             /></h3>
@@ -269,7 +269,7 @@ class DataProductCard extends React.Component {
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_week_count" /></span>
                             <h3 className="txtlabel"><FormattedNumber
-                                value={this.state.transaction_week_count}
+                                value={this.state.transaction_week_count ? this.state.transaction_week_count : 0}
                                 minimumFractionDigits={0}
                                 maximumFractionDigits={5}
                             /></h3>
@@ -279,7 +279,7 @@ class DataProductCard extends React.Component {
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.transaction_today_count" /></span>
                             <h3 className="txtlabel"><FormattedNumber
-                                value={this.state.transaction_today_count}
+                                value={this.state.transaction_today_count ? this.state.transaction_today_count : 0}
                                 minimumFractionDigits={0}
                                 maximumFractionDigits={5}
                             /></h3>
@@ -289,7 +289,7 @@ class DataProductCard extends React.Component {
                         <div className="grid-content no-overflow">
                             <span className="txtlabel subheader"><Translate component="span" content="explorer.statistics.merchants_total_count" /></span>
                             <h3 className="txtlabel"><FormattedNumber
-                                value={this.state.merchants_total_count}
+                                value={this.state.merchants_total_count ? this.state.merchants_total_count : 0}
                                 minimumFractionDigits={0}
                                 maximumFractionDigits={5}
                             /></h3>
