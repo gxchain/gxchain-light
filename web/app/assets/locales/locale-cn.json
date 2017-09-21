@@ -678,7 +678,7 @@
       "transaction_today_count": "24小时交易数",
       "merchants_total_count": "认证商户总数",
       "transaction_pay_fees": "交易手续费",
-      "transaction_basic": "基本数据统计",
+      "transaction_basic": "实时交易统计",
       "transaction_basic_subtitle": "公信宝数据交易所具有不缓存数据、保护个人隐私、数据版权保护、数据新鲜度高、打击造假以及可以设置匿名交易等特点。",
       "transaction_product": "产品数据统计",
       "transaction_product_subtitle": "基于区块链的数据交易和数据服务，为您提供更清晰、更精准的全方位用户画像。",
