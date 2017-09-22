@@ -34,14 +34,14 @@ class OpType extends React.Component {
     }
 
     render() {
-        let trxTypes = counterpart.translate("transaction.trxTypes");
+        let trxType = "transaction.trxTypes." + opras[this.props.type];
         let labelClass = classNames("txtlabel", this.props.color || "info");
 
         return (
             <tr>
                 <td>
                     <span className={labelClass}>
-                        {trxTypes[opras[this.props.type]]}
+                        <Translate component="span" content={trxType}/>
                     </span>
                 </td>
                 <td>
@@ -104,6 +104,8 @@ class Transaction extends React.Component {
             <LinkToAssetById asset={symbol_or_id}/> :
             <Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;
     }
+
+
 
     _toggleLock(e) {
         e.preventDefault();
@@ -1079,6 +1081,93 @@ class Transaction extends React.Component {
                                                 asset={op[1].amount_to_reserve.asset_id}/></td>
                         </tr>
                     );
+                    break;
+
+                /* 数据交易相关 by xLogic */
+                // 55:data_transaction_create
+                case "data_transaction_create":
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.request_id"/></td>
+                            <td style={{'word-break':'break-all'}}>{op[1].request_id}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.product_id"/></td>
+                            <td>{op[1].product_id}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.version"/></td>
+                            <td>{op[1].version}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.requester"/></td>
+                            <td>{this.linkToAccount(op[1].requester)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.create_date_time"/></td>
+                            <td>{op[1].create_date_time ? <FormattedDate value={op[1].create_date_time} format="full"/> : null}</td>
+                        </tr>
+                    );
+
+                    break;
+                // 57:data_transaction_pay
+                case "data_transaction_pay":
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.request_id"/></td>
+                            <td style={{'word-break':'break-all'}}>{op[1].request_id}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.from"/></td>
+                            <td>{this.linkToAccount(op[1].from)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.to"/></td>
+                            <td>{this.linkToAccount(op[1].to)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.amount"/></td>
+                            <td><FormattedAsset amount={op[1].amount.amount}
+                                                asset={op[1].amount.asset_id}/></td>
+                        </tr>
+                    );
+
+                    break;
+                // 59:data_transaction_datasource_upload
+                case "data_transaction_datasource_upload":
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_datasource_upload.request_id"/></td>
+                            <td style={{'word-break':'break-all'}}>{op[1].request_id}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_datasource_upload.requester"/></td>
+                            <td>{this.linkToAccount(op[1].requester)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_datasource_upload.datasource"/></td>
+                            <td>{this.linkToAccount(op[1].datasource)}</td>
+                        </tr>
+                    );
+
                     break;
 
                 default:
