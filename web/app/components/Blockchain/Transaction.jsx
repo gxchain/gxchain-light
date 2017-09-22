@@ -10,6 +10,7 @@ import Inspector from "react-json-inspector";
 import utils from "common/utils";
 import LinkToAccountById from "../Blockchain/LinkToAccountById";
 import LinkToAssetById from "../Blockchain/LinkToAssetById";
+import LinkToProductById from "../Blockchain/LinkToProductById";
 import FormattedPrice from "../Utility/FormattedPrice";
 import account_constants from "chain/account_constants";
 import Icon from "../Icon/Icon";
@@ -103,6 +104,14 @@ class Transaction extends React.Component {
         return utils.is_object_id(symbol_or_id) ?
             <LinkToAssetById asset={symbol_or_id}/> :
             <Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;
+    }
+
+    linkToProductById(product_id) {
+        if (!product_id) return <span>-</span>;
+        let Link = this.props.no_links ? NoLinkDecorator : RealLink;
+        return utils.is_object_id(product_id) ?
+            <LinkToProductById product={product_id}/> :
+            {/*<Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;*/}
     }
 
 
@@ -1089,13 +1098,13 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.trxOps.data_transaction_create.request_id"/></td>
-                            <td style={{'word-break':'break-all'}}>{op[1].request_id}</td>
+                            <td style={{wordBreak:'break-all'}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.trxOps.data_transaction_create.product_id"/></td>
-                            <td>{op[1].product_id}</td>
+                            <td>{this.linkToProductById(op[1].product_id)}</td>
                         </tr>
                     );
                     rows.push(
@@ -1123,7 +1132,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.request_id"/></td>
-                            <td style={{'word-break':'break-all'}}>{op[1].request_id}</td>
+                            <td style={{wordBreak:'break-all'}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
@@ -1152,7 +1161,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.trxOps.data_transaction_datasource_upload.request_id"/></td>
-                            <td style={{'word-break':'break-all'}}>{op[1].request_id}</td>
+                            <td style={{wordBreak:'break-all'}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
