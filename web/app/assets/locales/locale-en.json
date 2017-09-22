@@ -638,6 +638,29 @@
       "data_transaction_datasource_upload":"Copyright stored",
       "data_transaction_datasource_validate_error":"Data transaction fail"
     },
+    "trxOps": {
+      "data_transaction_create":{
+        "name": "Data transaction created",
+        "request_id": "Request id",
+        "product_id": "Product id",
+        "version": "Version",
+        "requester": "Requester",
+        "create_date_time": "Create datetime"
+      },
+      "data_transaction_pay":{
+        "name": "Data transaction pay",
+        "from": "From",
+        "to": "To",
+        "amount": "Amount",
+        "request_id": "Request id"
+      },
+      "data_transaction_datasource_upload":{
+        "name": "Copyright stored",
+        "request_id": "Request id",
+        "requester": "Requester",
+        "datasource": "Datasource"
+      }
+    },
     "feeGroups": {
       "general": "General",
       "asset": "Asset-Specific",

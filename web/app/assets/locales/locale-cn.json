@@ -599,6 +599,29 @@
       "data_transaction_datasource_upload":"数据存证",
       "data_transaction_datasource_validate_error":"数据交易失败"
     },
+    "trxOps": {
+      "data_transaction_create":{
+        "name": "发起数据交易",
+        "request_id": "请求ID",
+        "product_id": "产品名称",
+        "version": "版本",
+        "requester": "发起人",
+        "create_date_time": "创建时间"
+      },
+      "data_transaction_pay":{
+        "name": "数据支付",
+        "from": "来自",
+        "to": "发往",
+        "amount": "金额",
+        "request_id": "请求ID"
+      },
+      "data_transaction_datasource_upload":{
+        "name": "数据存证",
+        "request_id": "请求ID",
+        "requester": "发起人",
+        "datasource": "数据源"
+      }
+    },
     "confirm": "请确认交易",
     "broadcast_success": "交易已向网络广播",
     "transaction_confirmed": "交易已确认",
