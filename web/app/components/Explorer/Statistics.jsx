@@ -5,7 +5,7 @@ import DataTransactionCard from '../Dashboard/DataTransactionCard'
 import DataProductList from '../Dashboard/DataProductList'
 import Iframe from 'react-iframe'
 
-let pre_time = '2017-09-24 20:08:00';
+let pre_time = 'Sun Sep 24 2017 20:08:00 GMT+0800';
 
 class Statistics extends React.Component {
 
@@ -32,7 +32,7 @@ class Statistics extends React.Component {
             }
         }
 
-        let count_time = Math.round(new Date(pre_time.substr(0,10)+"T"+pre_time.substr(11,8)) - new Date());
+        let count_time = Math.round(new Date(pre_time) - new Date());
         if (count_time>0){
             window.setTimeout(function() {
                 location.reload();
@@ -88,7 +88,7 @@ class Statistics extends React.Component {
         require("assets/stylesheets/components/_statistics.scss");
         require("assets/iconfont.less"); // iconfont本地化
         let index = this.state.currentIndex;
-        if (new Date() < new Date(pre_time.substr(0,10)+"T"+pre_time.substr(11,8))){
+        if (new Date() < new Date(pre_time)){
             if (Translate.getLocale() == 'cn'){
                 return (
                     <Iframe url="https://gxs.gxb.io/countdown/"
