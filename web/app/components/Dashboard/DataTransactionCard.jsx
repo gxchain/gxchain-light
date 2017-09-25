@@ -38,10 +38,10 @@ class DataProductCard extends React.Component {
         let self = this;
         self.loadTransactionCosts();
         self.loadTransactionCount();
-        this.statsInterval = setInterval(function () {
-            self.loadTransactionCosts();
-            self.loadTransactionCount();
-        },5 * 1000);
+        // this.statsInterval = setInterval(function () {
+        //     self.loadTransactionCosts();
+        //     self.loadTransactionCount();
+        // },5 * 1000);
         setTimeout(function () {
             self.setState({
                 loading: false,
@@ -50,8 +50,8 @@ class DataProductCard extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.statsInterval);
-        this.statsInterval = null;
+        // clearInterval(this.statsInterval);
+        // this.statsInterval = null;
     }
 
     loadTransactionCosts() {
@@ -108,7 +108,6 @@ class DataProductCard extends React.Component {
             self.setState({
                 transaction_pay_fees: res
             })
-            self.loadTransactionCount();
         }).catch(function (err) {
             console.error('error on fetching data products', err);
             notify.addNotification({
