@@ -96,14 +96,14 @@ class DataProductList extends React.Component {
     componentWillMount() {
         let self = this;
         self.loadCategories();
-        this.statsInterval = setInterval(function () {
-            self.loadCategories();
-        },5 * 1000);
+        // this.statsInterval = setInterval(function () {
+        //     self.loadCategories();
+        // },5 * 1000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.statsInterval);
-        this.statsInterval = null;
+        //clearInterval(this.statsInterval);
+        //this.statsInterval = null;
     }
 
     loadCategories() {
