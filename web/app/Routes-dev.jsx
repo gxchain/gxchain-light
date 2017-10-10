@@ -20,6 +20,7 @@ import AccountAssets from "./components/Account/AccountAssets";
 import {AccountAssetCreate} from "./components/Account/AccountAssetCreate";
 import AccountAssetUpdate from "./components/Account/AccountAssetUpdate";
 import AccountMembership from "./components/Account/GXBAccountMembership";
+import AccountVesting from './components/Account/AccountVesting'
 import AccountPermissions from "./components/Account/AccountPermissions";
 import AccountWhitelist from "./components/Account/AccountWhitelist";
 import AccountVoting from "./components/Account/AccountVoting";
@@ -122,7 +123,7 @@ const routes = (
             <Route path="create-asset" component={AccountAssetCreate} />
             <Route path="update-asset/:asset" component={AccountAssetUpdate} />
             <Route path="member-stats" component={AccountMembership} />
-            {/*<Route path="vesting" component={AccountVesting} />*/}
+            <Route path="vesting" component={AccountVesting} />
             <Route path="permissions" component={AccountPermissions} />
             <Route path="voting" component={AccountVoting} />
             {/*<Route path="deposit-withdraw" component={GXBAccountDepositWithdraw} />*/}
