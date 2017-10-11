@@ -186,9 +186,9 @@ const routes = (
             <Route path="member-stats" getComponent={(location, cb) => {
                 System.import("components/Account/GXBAccountMembership").then(loadRoute(cb)).catch(errorLoading);
             }}/>
-            {/*<Route path="vesting" getComponent={(location, cb) => {
+            {<Route path="vesting" getComponent={(location, cb) => {
                 System.import("components/Account/AccountVesting").then(loadRoute(cb)).catch(errorLoading);
-            }}/>*/}
+            }}/>}
             <Route path="permissions" getComponent={(location, cb) => {
                 System.import("components/Account/AccountPermissions").then(loadRoute(cb)).catch(errorLoading);
             }}/>

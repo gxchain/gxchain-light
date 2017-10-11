@@ -43,7 +43,7 @@ class AccountMembership extends React.Component {
     };
     static defaultProps = {
         gprops: "2.0.0",
-        core_asset: "1.3.1"
+        core_asset: "1.3.0"
     };
 
     upgradeAccount(id, lifetime, e) {
@@ -126,7 +126,7 @@ class AccountMembership extends React.Component {
                                     <div>
                                         <h4><Translate content="account.member.referral_link"/></h4>
                                         <Translate content="account.member.referral_text"/>:
-                                        <h5>{`https://bitshares.org/wallet?r=${account.name}`}</h5>
+                                        <h5>{`https://${location.host}?r=${account.name}`}</h5>
                                     </div>) : null}
                                 <h4><Translate content="account.member.fee_allocation"/></h4>
                                 <table className="table key-value-table">
