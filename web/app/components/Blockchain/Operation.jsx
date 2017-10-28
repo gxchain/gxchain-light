@@ -111,6 +111,7 @@ class Row extends React.Component {
         );
     }
 }
+
 Row = BindToChainState(Row, {keep_updating: true});
 
 class Operation extends React.Component {
@@ -194,8 +195,19 @@ class Operation extends React.Component {
                                 string={isAsk ? "operation.limit_order_sell" : "operation.limit_order_buy"}
                                 keys={[
                                     {type: "account", value: op[1].seller, arg: "account"},
-                                    {type: "amount", value: isAsk ? op[1].amount_to_sell : op[1].min_to_receive, arg: "amount"},
-                                    {type: "price", value: {base: isAsk ? op[1].min_to_receive : op[1].amount_to_sell, quote: isAsk ? op[1].amount_to_sell : op[1].min_to_receive}, arg: "price"}
+                                    {
+                                        type: "amount",
+                                        value: isAsk ? op[1].amount_to_sell : op[1].min_to_receive,
+                                        arg: "amount"
+                                    },
+                                    {
+                                        type: "price",
+                                        value: {
+                                            base: isAsk ? op[1].min_to_receive : op[1].amount_to_sell,
+                                            quote: isAsk ? op[1].amount_to_sell : op[1].min_to_receive
+                                        },
+                                        arg: "price"
+                                    }
                                 ]}
                             />
                         </span>
@@ -251,9 +263,9 @@ class Operation extends React.Component {
                     <TranslateWithLinks
                         string="operation.reg_account"
                         keys={[
-                                {type: "account", value: op[1].registrar, arg: "registrar"},
-                                {type: "account", value: op[1].name, arg: "new_account"}
-                            ]}
+                            {type: "account", value: op[1].registrar, arg: "registrar"},
+                            {type: "account", value: op[1].name, arg: "new_account"}
+                        ]}
                     />
                 break;
 
@@ -608,7 +620,12 @@ class Operation extends React.Component {
                                 string="operation.fill_order"
                                 keys={[
                                     {type: "account", value: op[1].account_id, arg: "account"},
-                                    {type: "amount", value: {amount: receivedAmount, asset_id: op[1].receives.asset_id}, arg: "received", decimalOffset: op[1].receives.asset_id === "1.3.0" ? 3 : null},
+                                    {
+                                        type: "amount",
+                                        value: {amount: receivedAmount, asset_id: op[1].receives.asset_id},
+                                        arg: "received",
+                                        decimalOffset: op[1].receives.asset_id === "1.3.0" ? 3 : null
+                                    },
                                     {type: "price", value: {base: o.pays, quote: o.receives}, arg: "price"}
                                 ]}
                             />
@@ -719,7 +736,7 @@ class Operation extends React.Component {
                     <span>
                         {this.linkToAccount(op[1].issuer)}&nbsp;
                         <BindToChainState.Wrapper asset={op[1].amount_to_claim.asset_id}>
-                           { ({asset}) =>
+                           {({asset}) =>
                                <Translate
                                    component="span"
                                    content="transaction.asset_claim_fees"
@@ -801,7 +818,7 @@ class Operation extends React.Component {
                             <TranslateWithLinks
                                 string={"operation.account_upgrade_datasource"}
                                 keys={[
-                                   {type: "account", value: op[1].account_to_upgrade, arg: "account"}
+                                    {type: "account", value: op[1].account_to_upgrade, arg: "account"}
                                 ]}
                             />
                     </span>
@@ -814,7 +831,7 @@ class Operation extends React.Component {
                             <TranslateWithLinks
                                 string={"operation.account_upgrade_data_transaction_member"}
                                 keys={[
-                                   {type: "account", value: op[1].account_to_upgrade, arg: "account"}
+                                    {type: "account", value: op[1].account_to_upgrade, arg: "account"}
                                 ]}
                             />
                     </span>
@@ -828,9 +845,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.data_market_category_create"}
                             keys={[
-                                   {type: "account", value: op[1].issuer, arg: "issuer"},
-                                   {type: "", value: op[1].category_name, arg: "category"}
-                                ]}
+                                {type: "account", value: op[1].issuer, arg: "issuer"},
+                                {type: "", value: op[1].category_name, arg: "category"}
+                            ]}
                         />
                     </span>
                 );
@@ -843,9 +860,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.data_market_category_update"}
                             keys={[
-                                   {type: "account", value: '1.2.0', arg: "issuer"},
-                                   {type: "", value: op[1].new_category_name, arg: "category"}
-                                ]}
+                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "", value: op[1].new_category_name, arg: "category"}
+                            ]}
                         />
                     </span>
                 );
@@ -862,9 +879,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.free_data_product_create"}
                             keys={[
-                                    {type: "account", value: op[1].issuer, arg: "issuer"},
-                                    {type: "free_product", value: prod_to_create, arg: "product"}
-                                ]}
+                                {type: "account", value: op[1].issuer, arg: "issuer"},
+                                {type: "free_product", value: prod_to_create, arg: "product"}
+                            ]}
                         />
                     </span>
                 );
@@ -880,9 +897,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.free_data_product_update"}
                             keys={[
-                                    {type: "account", value: '1.2.0', arg: "issuer"},
-                                    {type: "free_product", value: prod_to_update, arg: "product"}
-                                ]}
+                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "free_product", value: prod_to_update, arg: "product"}
+                            ]}
                         />
                     </span>
                 );
@@ -895,9 +912,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.league_data_product_create"}
                             keys={[
-                                    {type: "account", value: op[1].issuer, arg: "issuer"},
-                                    {type: "", value: op[1].product_name, arg: "product"}
-                                ]}
+                                {type: "account", value: op[1].issuer, arg: "issuer"},
+                                {type: "", value: op[1].product_name, arg: "product"}
+                            ]}
                         />
                     </span>
                 );
@@ -910,9 +927,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.league_data_product_update"}
                             keys={[
-                                    {type: "account", value: '1.2.0', arg: "issuer"},
-                                    {type: "", value: op[1].new_product_name, arg: "product"}
-                                ]}
+                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "", value: op[1].new_product_name, arg: "product"}
+                            ]}
                         />
                     </span>
                 );
@@ -928,9 +945,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.league_create"}
                             keys={[
-                                    {type: "account", value: op[1].issuer, arg: "issuer"},
-                                    {type: "league", value: league_to_create, arg: "league"}
-                                ]}
+                                {type: "account", value: op[1].issuer, arg: "issuer"},
+                                {type: "league", value: league_to_create, arg: "league"}
+                            ]}
                         />
                     </span>
                 );
@@ -946,9 +963,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.league_update"}
                             keys={[
-                                    {type: "account", value: '1.2.0', arg: "issuer"},
-                                    {type: "league", value: league_to_update, arg: "league"}
-                                ]}
+                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "league", value: league_to_update, arg: "league"}
+                            ]}
                         />
                     </span>
                 );
@@ -961,8 +978,8 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.data_transaction_create"}
                             keys={[
-                                    {type: "account", value: op[1].requester, arg: "account"}
-                                ]}
+                                {type: "account", value: op[1].requester, arg: "account"}
+                            ]}
                         />
                     </span>
                 );
@@ -975,8 +992,8 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.data_transaction_update"}
                             keys={[
-                                    {type: "account", value: op[1].new_requester, arg: "account"}
-                                ]}
+                                {type: "account", value: op[1].new_requester, arg: "account"}
+                            ]}
                         />
                     </span>
                 );
@@ -988,10 +1005,10 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.data_transaction_pay"}
                             keys={[
-                                    {type: "account", value: op[1].from, arg: "from"},
-                                    {type: "amount", value: op[1].amount, arg: "amount", decimalOffset:0},
-                                    {type: "account", value: op[1].to, arg: "to"}
-                                ]}
+                                {type: "account", value: op[1].from, arg: "from"},
+                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: 0},
+                                {type: "account", value: op[1].to, arg: "to"}
+                            ]}
                         />
                     </span>
                 );
@@ -1003,9 +1020,9 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.data_transaction_datasource_upload"}
                             keys={[
-                                    {type: "account", value: op[1].datasource, arg: "datasource"},
-                                    {type: "account", value: op[1].requester, arg: "account"}
-                                ]}
+                                {type: "account", value: op[1].datasource, arg: "datasource"},
+                                {type: "account", value: op[1].requester, arg: "account"}
+                            ]}
                         />
                     </span>
                 );
@@ -1017,8 +1034,33 @@ class Operation extends React.Component {
                         <TranslateWithLinks
                             string={"operation.data_transaction_datasource_validate_error"}
                             keys={[
-                                    {type: "account", value: op[1].datasource, arg: "account"}
-                                ]}
+                                {type: "account", value: op[1].datasource, arg: "account"}
+                            ]}
+                        />
+                    </span>
+                );
+                break;
+            case 'balance_lock':
+                column = (
+                    <span>
+                        <TranslateWithLinks
+                            string={"operation.balance_lock"}
+                            keys={[
+                                {type: "account", value: op[1].account, arg: "account"},
+                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: 0}
+                            ]}
+                        />
+                    </span>
+                );
+                break;
+            case 'balance_unlock':
+                column = (
+                    <span>
+                        <TranslateWithLinks
+                            string={"operation.balance_unlock"}
+                            keys={[
+                                {type: "account", value: op[1].account, arg: "account"}
+                            ]}
                         />
                     </span>
                 );

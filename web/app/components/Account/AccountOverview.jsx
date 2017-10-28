@@ -19,6 +19,8 @@ import utils from "common/utils";
 import ReactTooltip from "react-tooltip";
 import {Apis} from "gxbjs-ws";
 import GXBDepositModal from '../Modal/GXBDepositModal'
+import GXBLoyaltyPlanModal from '../Modal/GXBLoyaltyPlanModal'
+import AccountImage from "./AccountImage";
 
 let logos = {
     GXC: require('assets/logo-gxc.png'),
@@ -55,6 +57,10 @@ class AccountOverview extends React.Component {
 
     showGXBDeposit(asset) {
         this.refs['gxb-deposit-modal'].refs['bound_component'].show(asset);
+    }
+
+    showLoyaltyPlanModal(balanceObject){
+        this.refs['gxb-loyalty-program-modal'].refs['bound_component'].show(balanceObject);
     }
 
     // _showDepositWithdraw(action, asset, fiatModal, e) {
@@ -121,9 +127,10 @@ class AccountOverview extends React.Component {
                         <h4 className="title text-center">{asset.get('symbol')}</h4>
                         <div className="card-content">
                             <div className="text-center">
-                                <img className="align-center" style={{width:'3rem',height:'3rem'}}
-                                     src={`${logos[asset.get('symbol')]}`}></img>
+                                {logos[asset.get('symbol')]?<img className="align-center" style={{width:'3rem',height:'3rem'}}
+                                     src={`${logos[asset.get('symbol')]}`}></img>:<AccountImage size={{width:35,height:35}} account={asset.get('symbol')}/>}
                             </div>
+                            {asset_type=='1.3.1'&&this.props.isMyAccount?<a onClick={this.showLoyaltyPlanModal.bind(this,balanceObject)} className="btn-loyalty-program">加入忠诚计划</a>:null}
                             <table className="table key-value-table">
                                 <tbody>
                                 <tr>
@@ -212,13 +219,13 @@ class AccountOverview extends React.Component {
         }
 
         let includedBalances, hiddenBalances;
-        let account_balances = account.get("balances");
-        if (!account_balances||!account_balances.has('1.3.0')) {
+        let account_balances = account.get("balances")||new Immutable.Map();
+        if (!account_balances.has('1.3.0')) {
             account_balances = account_balances.merge({
                 '1.3.0': '2.5.-1'
             })
         }
-        if (!account_balances||(!account_balances.has('1.3.1') && ChainStore.getObject('1.3.1'))) {
+        if (!account_balances.has('1.3.1')) {
             account_balances = account_balances.merge({
                 '1.3.1': '2.5.-1'
             })
@@ -325,7 +332,8 @@ class AccountOverview extends React.Component {
                      />
                      */}
                 </div>
-                <GXBDepositModal account_name={account.get('name')} ref="gxb-deposit-modal"></GXBDepositModal>
+                <GXBDepositModal account={account} ref="gxb-deposit-modal"></GXBDepositModal>
+                <GXBLoyaltyPlanModal account={account} ref="gxb-loyalty-program-modal"/>
             </div>
         );
     }
@@ -353,6 +361,12 @@ class BalanceWrapper extends React.Component {
         let balanceAssets = this.props.balances.map(b => {
             return b && b.get("asset_type");
         }).filter(b => !!b);
+        if(balanceAssets.indexOf('1.3.0')==-1){
+            balanceAssets.push('1.3.0');
+        }
+        if(balanceAssets.indexOf('1.3.1')==-1){
+            balanceAssets.push('1.3.1');
+        }
 
         let ordersByAsset = this.props.orders.reduce((orders, o) => {
             let asset_id = o.getIn(["sell_price", "base", "asset_id"]);

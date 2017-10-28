@@ -14,27 +14,27 @@
     "sub_text_1": "请确认你的计算机系统时钟正确。",
     "sub_text_2": "同步你的计算机时钟后，请刷新本页面。如果你的时钟正确，那你连接的API服务器可能与区块链数据不同步，这种情况下，可尝试使用其他API服务器进行连接。"
   },
-  "dashboard":{
-    "create_account":"创建账户",
-    "go_free":"查看数据市场",
-    "hot_products":"热门数据",
-    "active_league":"活跃联盟",
-    "more_products":"更多数据",
-    "more_league":"更多联盟"
+  "dashboard": {
+    "create_account": "创建账户",
+    "go_free": "查看数据市场",
+    "hot_products": "热门数据",
+    "active_league": "活跃联盟",
+    "more_products": "更多数据",
+    "more_league": "更多联盟"
   },
-  "data_product":{
-    "price":"价格",
-    "volume":"调用量"
+  "data_product": {
+    "price": "价格",
+    "volume": "调用量"
   },
-  "league":{
-    "members":"成员",
-    "data_products":"数据产品",
-    "total_invokes":"累计"
+  "league": {
+    "members": "成员",
+    "data_products": "数据产品",
+    "total_invokes": "累计"
   },
   "header": {
     "title": "GXB (公信宝)钱包",
     "account": "账户",
-    "data_market":"数据市场",
+    "data_market": "数据市场",
     "dashboard": "概览",
     "explorer": "浏览",
     "exchange": "交易",
@@ -80,9 +80,9 @@
     "withdraw_full": "点击提现所有余额",
     "withdraw_address": "如果你还没有私人的 %(asset)s 地址, 请找到一个钱包提供商并注册一个账号以完成提现操作."
   },
-  "data_market":{
-    "free_market":"自由市场",
-    "league_market":"联盟市场"
+  "data_market": {
+    "free_market": "自由市场",
+    "league_market": "联盟市场"
   },
   "account": {
     "mine": "我的账户",
@@ -134,27 +134,27 @@
       "referral_link": "你的推荐链接",
       "referral_text": "分享此链接给你的朋友参与引荐计划",
       "claim_all": "尝试领取所有",
-      "account_info":"账户资料",
-      "merchant_info":"商户信息",
-      "account_type":"账户类型",
-      "transfer_permission":"转账权限",
-      "deposit_permission":"充值权限",
-      "withdraw_permission":"提现权限",
-      "buy_data":"购买数据",
-      "sell_data":"出售数据",
-      "yes":"是",
-      "no":"否",
-      "merchant_verify":"商户认证",
-      "merchant_name":"商户名称",
-      "merchant_apply":"认证为商户",
-      "datasource_apply":"认证为数据源",
-      "verifying":"认证申请中",
-      "verified":"已认证",
-      "tip_merchant":"如果你希望在公信宝进行数据交易，请完成商户实名认证",
-      "tip_datasource":"如果你希望在公信宝里成为数据源并出售数据，请完成数据源认证",
-      "show":"显示",
-      "alliance":"所在联盟",
-      "no_alliance":"未加入任何联盟"
+      "account_info": "账户资料",
+      "merchant_info": "商户信息",
+      "account_type": "账户类型",
+      "transfer_permission": "转账权限",
+      "deposit_permission": "充值权限",
+      "withdraw_permission": "提现权限",
+      "buy_data": "购买数据",
+      "sell_data": "出售数据",
+      "yes": "是",
+      "no": "否",
+      "merchant_verify": "商户认证",
+      "merchant_name": "商户名称",
+      "merchant_apply": "认证为商户",
+      "datasource_apply": "认证为数据源",
+      "verifying": "认证申请中",
+      "verified": "已认证",
+      "tip_merchant": "如果你希望在公信宝进行数据交易，请完成商户实名认证",
+      "tip_datasource": "如果你希望在公信宝里成为数据源并出售数据，请完成数据源认证",
+      "show": "显示",
+      "alliance": "所在联盟",
+      "no_alliance": "未加入任何联盟"
     },
     "connections": {
       "known": "识别为",
@@ -358,14 +358,17 @@
       "empty_white_by": "%(account)s 未被列入任何白名单",
       "empty_black_by": "%(account)s 未被列入任何黑名单"
     },
-    "league":{
-      "title":"我加入的联盟"
+    "league": {
+      "title": "我加入的联盟"
     },
     "vesting": {
       "title": "待解冻余额",
+      "witness_income": "矿工收益",
       "balance_number": "余额 #%(id)s",
-      "no_balances": "该账户无待解冻余额",
-      "explain": "待解冻金额包含通过推荐计划返现的手续费支出，以及通过预算计划获得的收入。待解冻金额在解冻期间组建释放，直到所有待解冻金额全部释放。"
+      "no_balances": "该账户无待解冻矿工收益",
+      "explain": "待解冻金额包含通过忠诚计划锁定的金额，以及见证人的收益等",
+      "loyalty_program": "忠诚计划",
+      "no_loyalty_balance": "该账户无待解冻忠诚计划"
     },
     "show_hidden": "显示已忽略资产",
     "hide_hidden": "隐藏已忽略资产",
@@ -403,7 +406,7 @@
     "broadcast": "你的转账已经向网络广播",
     "again": "发起新的转账",
     "see": "查看我的转账记录",
-    "available": "可用余额: ",
+    "available": "可用余额",
     "broadcasting": "交易广播中...",
     "close": "关闭",
     "pay_from": "支付自",
@@ -451,22 +454,24 @@
     "worker_create": "{account} 创建了预算提案，请求每日支付 {pay}",
     "committee_member_update_global_parameters": "{account} 更新了全局理事会参数",
     "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} ",
-    "account_upgrade_merchant":"{account} 认证为商户",
-    "account_upgrade_datasource":"{account} 认证为数据源",
-    "data_market_category_create":"{issuer} 创建了类目 {category}",
-    "data_market_category_update":"{issuer} 决议通过并更新了类目 {category}",
-    "free_data_product_create":"{issuer} 创建了自由市场数据产品 {product}",
-    "free_data_product_update":"{issuer} 决议通过并更新了自由市场数据产品 {product}",
+    "account_upgrade_merchant": "{account} 认证为商户",
+    "account_upgrade_datasource": "{account} 认证为数据源",
+    "data_market_category_create": "{issuer} 创建了类目 {category}",
+    "data_market_category_update": "{issuer} 决议通过并更新了类目 {category}",
+    "free_data_product_create": "{issuer} 创建了自由市场数据产品 {product}",
+    "free_data_product_update": "{issuer} 决议通过并更新了自由市场数据产品 {product}",
     "league_data_product_create": "{issuer} 创建了联盟数据产品 {product}",
     "league_data_product_update": "{issuer} 决议通过并更新了联盟数据产品 {product}",
     "league_create": "{issuer} 创建了联盟 {league}",
     "league_update": "{issuer} 决议通过并更新了联盟 {league}",
     "data_transaction_create": "{account} 发起了一笔数据交易请求",
-    "data_transaction_update":"{account} 更新了一笔数据交易请求状态",
+    "data_transaction_update": "{account} 更新了一笔数据交易请求状态",
     "data_transaction_pay": "{from} 支付金额为 {amount} 的数据购买费用到 {to}",
-    "account_upgrade_data_transaction_member":"{account} 升级为交易确认节点",
-    "data_transaction_datasource_upload":"{account} 验证了数据源 {datasource} 的数据上传",
-    "data_transaction_datasource_validate_error":"{account} 数据返回验证失败"
+    "account_upgrade_data_transaction_member": "{account} 升级为交易确认节点",
+    "data_transaction_datasource_upload": "{account} 验证了数据源 {datasource} 的数据上传",
+    "data_transaction_datasource_validate_error": "{account} 数据返回验证失败",
+    "balance_lock":"{account} 参与忠诚计划，冻结了 {amount}",
+    "balance_unlock":"{account} 完成一笔忠诚计划余额解冻操作"
   },
   "transaction": {
     "sent": "发送",
@@ -534,9 +539,9 @@
     "create_worker": "创建雇员，要求报酬为",
     "custom": "创建自定义操作",
     "order_id": "订单ID",
-    "tx_id":"TxID",
+    "tx_id": "TxID",
     "trxTypes": {
-      "all":"显示全部",
+      "all": "显示全部",
       "transfer": "转账",
       "limit_order_create": "限价单",
       "limit_order_cancel": "取消限价单",
@@ -582,25 +587,27 @@
       "transfer_from_blind": "从隐私账户转出",
       "committee_member_update": "更新理事会成员账户",
       "asset_claim_fees": "领取资产手续费",
-      "account_upgrade_merchant":"商户认证",
-      "account_upgrade_datasource":"数据源认证",
-      "data_market_category_create":"创建类目",
-      "data_market_category_update":"更新类目",
-      "free_data_product_create":"创建自由市场数据产品",
-      "free_data_product_update":"更新自由市场数据产品",
+      "account_upgrade_merchant": "商户认证",
+      "account_upgrade_datasource": "数据源认证",
+      "data_market_category_create": "创建类目",
+      "data_market_category_update": "更新类目",
+      "free_data_product_create": "创建自由市场数据产品",
+      "free_data_product_update": "更新自由市场数据产品",
       "league_data_product_create": "创建联盟数据产品",
       "league_data_product_update": "更新联盟数据产品",
       "league_create": "创建联盟",
       "league_update": "更新联盟",
-      "data_transaction_create":"发起数据交易",
-      "data_transaction_update":"更新数据交易",
-      "data_transaction_pay":"数据支付",
-      "account_upgrade_data_transaction_member":"交易节点认证",
-      "data_transaction_datasource_upload":"数据存证",
-      "data_transaction_datasource_validate_error":"数据交易失败"
+      "data_transaction_create": "发起数据交易",
+      "data_transaction_update": "更新数据交易",
+      "data_transaction_pay": "数据支付",
+      "account_upgrade_data_transaction_member": "交易节点认证",
+      "data_transaction_datasource_upload": "数据存证",
+      "data_transaction_datasource_validate_error": "数据交易失败",
+      "balance_lock":"冻结余额",
+      "balance_unlock":"解冻余额"
     },
     "trxOps": {
-      "data_transaction_create":{
+      "data_transaction_create": {
         "name": "发起数据交易",
         "request_id": "请求ID",
         "product_id": "产品名称",
@@ -608,14 +615,14 @@
         "requester": "发起人",
         "create_date_time": "创建时间"
       },
-      "data_transaction_pay":{
+      "data_transaction_pay": {
         "name": "数据支付",
         "from": "来自",
         "to": "发往",
         "amount": "金额",
         "request_id": "请求ID"
       },
-      "data_transaction_datasource_upload":{
+      "data_transaction_datasource_upload": {
         "name": "数据存证",
         "request_id": "请求ID",
         "requester": "发起人",
@@ -1177,14 +1184,22 @@
       "submit": "提现"
     },
     "ok": "确定",
+    "cancel":"取消",
     "settle": {
       "title": "请求清算资产%(asset)s",
       "amount": "数量",
       "submit": "清算资产"
     },
     "deposit": {
+      "title": "%(assetName)s充值",
+      "tip": "请和您的公信宝专属商户经理联系，如果您还没有专属商户经理，请访问公信宝官方网站联系我们",
       "amount": "充值数量",
-      "submit": "充值"
+      "submit": "充值",
+      "address": "充值地址",
+      "by_rmb": "人民币充值",
+      "asset": "资产",
+      "receive": "您将收到",
+      "remark": "备注：公信宝运营公司作为网关提供{assetName}和人民币1:1的承兑服务"
     },
     "reserve": {
       "title": "储备（销毁）资产",
@@ -1304,11 +1319,11 @@
     "asset_create": "使用账户{account}创建资产%{asset}s",
     "asset_update": "使用 {account} 更新 {asset} ",
     "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权",
-    "account_upgrade_merchant":"{account} 认证为商户，由 {issuer} 授权",
-    "account_upgrade_datasource":"{account} 认证为数据源，由 {issuer} 授权",
-    "account_upgrade_data_transaction_member":"{account} 认证为交易确认节点，由 {issuer} 授权",
-    "data_market_category_update":"{issuer} 更新类目 {category}",
-    "free_data_product_update":"{issuer} 更新自由市场数据产品 {product}",
+    "account_upgrade_merchant": "{account} 认证为商户，由 {issuer} 授权",
+    "account_upgrade_datasource": "{account} 认证为数据源，由 {issuer} 授权",
+    "account_upgrade_data_transaction_member": "{account} 认证为交易确认节点，由 {issuer} 授权",
+    "data_market_category_update": "{issuer} 更新类目 {category}",
+    "free_data_product_update": "{issuer} 更新自由市场数据产品 {product}",
     "league_data_product_update": "{issuer} 发起更新联盟数据产品 {product}",
     "league_update": "{issuer} 更新联盟 {league}"
   },
@@ -1317,5 +1332,25 @@
     "expiration_time": "过期时间",
     "proposed_operations": "提议的操作",
     "fee_paying_account": "付费账户"
+  },
+  "loyalty_program": {
+    "desc":"已锁定金额为通过忠诚计划锁定的金额，处于冻结状态，但冻结金额部分享受对应的奖励。公信宝希望投资者通过忠诚计划享受未来公信宝发展所带来的长期效益！",
+    "join": "加入忠诚计划",
+    "grow": "与公信宝一起成长",
+    "tip1": "价值投资者的福利，长线持有还送奖励",
+    "tip2": "忠诚计划是公信宝推出的一项福利计划，投资者可锁定一定额度的公信股，锁定期间金额冻结，同时享受对应的奖励。如锁定1万公信股9个月，按年化6%，到期后可获得450个公信股的奖励。公信股希望投资者通过忠诚计划，享受未来公信宝发展所带来的长期效益！",
+    "month": "%(month)s个月",
+    "months": "%(month)s个月",
+    "term": "锁定期限",
+    "yearly_bonus": "奖励年化",
+    "start_date":"开始时间",
+    "due_date":"到期时间",
+    "lock_amount":"锁定金额",
+    "bonus":"到期后可获得奖励：",
+    "button_title":"加入忠诚计划 赚 %(percent)s",
+    "notice":"加入忠诚计划的金额将被锁定，期间不可卖出，此操作不可撤销，确定加入吗？",
+    "no_program":"当前没有已发布的忠诚计划",
+    "time_error":"参与失败，请重试:",
+    "success":"恭喜！参与成功"
   }
 }

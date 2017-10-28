@@ -115,6 +115,30 @@ a.action-button > span {
 .assets-card{
   cursor: default;
   min-width: 20rem;
+  position: relative;
+  .btn-loyalty-program{
+    position: absolute;
+    right:1rem;
+    top:4rem;
+    background: #4A90E2;
+    font-size:.8rem;
+    font-weight: bold;
+    color:#fff !important;
+    padding:.52rem;
+    height:1.875rem;
+    &:before{
+      content:'';
+      width:0;
+      height:0;
+      position: absolute;
+      border:0.9375rem solid #4A90E2;
+      border-top:0.9375rem solid transparent;
+      border-bottom:0.9375rem solid transparent;
+      border-left:0;
+      left:-0.9375rem;
+      top:0;
+    }
+  }
   table{
     tr{
       td{

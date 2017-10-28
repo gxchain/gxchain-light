@@ -56,7 +56,7 @@ class AccountItemRow extends React.Component {
                 </td>
                 <td><LinkToAccountById account={account.get("id")} /></td>
                 <td><a href={link} target="_blank">{url.length < 45 ? url : url.substr(0, 45) + "..."}</a></td>
-                <td><FormattedAsset amount={votes} asset="1.3.0" decimalOffset={5} /></td>
+                <td><FormattedAsset amount={votes} asset="1.3.0" decimalOffset={5} hide_asset={true}/></td>
                 <td>
                     <button className="button outline" onClick={this.onAction.bind(this, item_id)}>
                         <Translate content={`account.votes.${this.props.action}_witness`}/></button>

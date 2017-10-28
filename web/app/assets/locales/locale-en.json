@@ -11,30 +11,30 @@
   },
   "sync_fail": {
     "title": "Failed to sync with the API server",
-    "sub_text_1" : "Please verify that your computer clock is correct.",
-    "sub_text_2" : "Once you've synchronized your clock, please refresh this page.<br/><br/>If your clock is already correct, the API server you're using could be out of sync. In that case, please try a different server from the list below."
+    "sub_text_1": "Please verify that your computer clock is correct.",
+    "sub_text_2": "Once you've synchronized your clock, please refresh this page.<br/><br/>If your clock is already correct, the API server you're using could be out of sync. In that case, please try a different server from the list below."
   },
-  "data_product":{
-    "price":"price",
-    "volume":"volume"
+  "data_product": {
+    "price": "price",
+    "volume": "volume"
   },
-  "dashboard":{
-    "create_account":"Create Account",
-    "go_free":"Free Market",
-    "hot_products":"Hot Data",
-    "active_league":"Active Alliance",
-    "more_products":"More",
-    "more_league":"More"
+  "dashboard": {
+    "create_account": "Create Account",
+    "go_free": "Free Market",
+    "hot_products": "Hot Data",
+    "active_league": "Active Alliance",
+    "more_products": "More",
+    "more_league": "More"
   },
-  "league":{
-    "members":"members",
-    "data_products":"products",
-    "total_invokes":"invokes"
+  "league": {
+    "members": "members",
+    "data_products": "products",
+    "total_invokes": "invokes"
   },
   "header": {
     "title": "GXB UI",
     "account": "Account",
-    "data_market":"Market",
+    "data_market": "Market",
     "dashboard": "Dashboard",
     "explorer": "Explore",
     "exchange": "Exchange",
@@ -82,9 +82,9 @@
   },
   "propose": "Propose",
   "cancel": "Cancel",
-  "data_market":{
-    "free_market":"Free Market",
-    "league_market":"Alliance Market"
+  "data_market": {
+    "free_market": "Free Market",
+    "league_market": "Alliance Market"
   },
   "account": {
     "in_open": "This is the amount of %(asset)s you have in open orders.",
@@ -135,9 +135,12 @@
     },
     "vesting": {
       "title": "Vesting balances",
+      "witness_income": "Witness income",
       "balance_number": "Balance #%(id)s",
-      "no_balances": "This account has no vesting balances",
-      "explain": "Vesting balances contain any fees earned through the referral program or from worker pay for example. They have a certain vesting period and are continually unlocked during that vesting period until all funds are available"
+      "no_balances": "This account has no vesting balances for witness income",
+      "explain": "Vesting balances contains vesting balances for loyalty program, and witness income etc.",
+      "loyalty_program": "Program plan",
+      "no_loyalty_balance": "This account has no vesting balances for program plan"
     },
     "member": {
       "stats": "Membership",
@@ -175,28 +178,28 @@
       "available": "Available to claim",
       "referral_link": "Your referral link",
       "referral_text": "Give this to link to people you want to refer to GXB",
-      "account_info":"Account Information",
-      "merchant_info":"Merchant Information",
-      "account_type":"Account Type",
-      "transfer_permission":"Transfer Permission",
-      "deposit_permission":"Deposit Permission",
-      "withdraw_permission":"Withdraw Permission",
-      "buy_data":"Buy Data",
-      "sell_data":"Sell Data",
-      "yes":"Yes",
-      "no":"No",
-      "merchant_verify":"Merchant Verify",
-      "merchant_name":"Merchant Name",
-      "merchant_apply":"Merchant Apply",
-      "datasource_apply":"Datasource Apply",
-      "verify":"Apply",
-      "verifying":"Waiting for confirmation",
-      "verified":"Verified",
-      "tip_merchant":"Apply to be a merchant if you are going to do data exchange on gxchain",
-      "tip_datasource":"Apply to be a datasource if you are going to sell your data on gxchain",
-      "show":"show",
-      "alliance":"Alliance",
-      "no_alliance":"no alliance"
+      "account_info": "Account Information",
+      "merchant_info": "Merchant Information",
+      "account_type": "Account Type",
+      "transfer_permission": "Transfer Permission",
+      "deposit_permission": "Deposit Permission",
+      "withdraw_permission": "Withdraw Permission",
+      "buy_data": "Buy Data",
+      "sell_data": "Sell Data",
+      "yes": "Yes",
+      "no": "No",
+      "merchant_verify": "Merchant Verify",
+      "merchant_name": "Merchant Name",
+      "merchant_apply": "Merchant Apply",
+      "datasource_apply": "Datasource Apply",
+      "verify": "Apply",
+      "verifying": "Waiting for confirmation",
+      "verified": "Verified",
+      "tip_merchant": "Apply to be a merchant if you are going to do data exchange on gxchain",
+      "tip_datasource": "Apply to be a datasource if you are going to sell your data on gxchain",
+      "show": "show",
+      "alliance": "Alliance",
+      "no_alliance": "no alliance"
     },
     "user_issued_assets": {
       "symbol": "Symbol",
@@ -458,22 +461,24 @@
     "committee_member_update_global_parameters": "{account} updated the global committee parameters",
     "worker_create": "{account} created a worker proposal with daily pay of {pay}",
     "override_transfer": "{issuer} transferred {amount} from {from} to {to}",
-    "account_upgrade_merchant":"{account} was upgraded to merchant",
-    "account_upgrade_datasource":"{account} was upgraded to datasource",
-    "data_market_category_create":"{issuer} created the market category {category}",
-    "data_market_category_update":"{issuer} passed the proposal and updated the market category {category}",
-    "free_data_product_create":"{issuer} created the free market product {product}",
-    "free_data_product_update":"{issuer} passed the proposal and updated the free market product {product}",
+    "account_upgrade_merchant": "{account} was upgraded to merchant",
+    "account_upgrade_datasource": "{account} was upgraded to datasource",
+    "data_market_category_create": "{issuer} created the market category {category}",
+    "data_market_category_update": "{issuer} passed the proposal and updated the market category {category}",
+    "free_data_product_create": "{issuer} created the free market product {product}",
+    "free_data_product_update": "{issuer} passed the proposal and updated the free market product {product}",
     "league_data_product_create": "{issuer} created the alliance market product {product}",
     "league_data_product_update": "{issuer} passed the proposal and updated the alliance market product named  {product}",
     "league_create": "{issuer} created the league {league}",
     "league_update": "{issuer} passed the proposal and updated the league {league}",
     "data_transaction_create": "{account} created a data transaction",
-    "data_transaction_update":"{account} updated a data transaction",
+    "data_transaction_update": "{account} updated a data transaction",
     "data_transaction_pay": "{from} payed {amount} for data transaction to {to}",
-    "account_upgrade_data_transaction_member":"{account} was upgraded to data transaction confirm node",
-    "data_transaction_datasource_upload":"{account} confirmed an data upload from {datasource}",
-    "data_transaction_datasource_validate_error":"{account} returned an error when processing the data upload"
+    "account_upgrade_data_transaction_member": "{account} was upgraded to data transaction confirm node",
+    "data_transaction_datasource_upload": "{account} confirmed an data upload from {datasource}",
+    "data_transaction_datasource_validate_error": "{account} returned an error when processing the data upload",
+    "balance_lock":"{account} locked {amount} for loyalty program",
+    "balance_unlock":"{account} complete a loyalty program"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -502,11 +507,11 @@
     "asset_issue": "Issue {amount} to {to} using {account}",
     "asset_reserve": "Reserve (burn) {amount} using {account}",
     "vesting_balance_withdraw": "Withdraw {amount} from vesting balance of {account}",
-    "account_upgrade_merchant":"{account} certified as a merchant by authority of {issuer}",
-    "account_upgrade_datasource":"{account} certified as a datasource by authority of {issuer}",
-    "account_upgrade_data_transaction_member":"{account} certified as a data transaction member by authority of {issuer}",
-    "data_market_category_update":"{issuer} update the category {category}",
-    "free_data_product_update":"{issuer} update free market data product {product}",
+    "account_upgrade_merchant": "{account} certified as a merchant by authority of {issuer}",
+    "account_upgrade_datasource": "{account} certified as a datasource by authority of {issuer}",
+    "account_upgrade_data_transaction_member": "{account} certified as a data transaction member by authority of {issuer}",
+    "data_market_category_update": "{issuer} update the category {category}",
+    "free_data_product_update": "{issuer} update free market data product {product}",
     "league_data_product_update": "{issuer} update league market data product {product}",
     "league_update": "{issuer} update league {league}"
   },
@@ -574,7 +579,7 @@
     "inputs": "Inputs",
     "settlement_date": "Settlement date",
     "asset_reserve": "reserved asset amount",
-    "tx_id":"TxID",
+    "tx_id": "TxID",
     "trxTypes": {
       "all": "Show all",
       "transfer": "Transfer",
@@ -621,25 +626,27 @@
       "blind_transfer": "Blinded transfer",
       "transfer_from_blind": "Transfer from blinded account",
       "asset_claim_fees": "Claim asset fees",
-      "account_upgrade_merchant":"Merchant verify",
-      "account_upgrade_datasource":"DataSource verify",
-      "data_market_category_create":"Market category created",
-      "data_market_category_update":"Market category updated",
-      "free_data_product_create":"Data item for free marked created",
-      "free_data_product_update":"Data item form free market updated",
+      "account_upgrade_merchant": "Merchant verify",
+      "account_upgrade_datasource": "DataSource verify",
+      "data_market_category_create": "Market category created",
+      "data_market_category_update": "Market category updated",
+      "free_data_product_create": "Data item for free marked created",
+      "free_data_product_update": "Data item form free market updated",
       "league_data_product_create": "Data item for alliance created",
       "league_data_product_update": "Data item for alliance updated",
       "league_create": "Alliance created",
       "league_update": "Alliance updated",
-      "data_transaction_create":"Data transaction created",
-      "data_transaction_update":"Data transaction updated",
-      "data_transaction_pay":"Data transaction pay",
-      "account_upgrade_data_transaction_member":"Upgrade to DE witness",
-      "data_transaction_datasource_upload":"Copyright stored",
-      "data_transaction_datasource_validate_error":"Data transaction fail"
+      "data_transaction_create": "Data transaction created",
+      "data_transaction_update": "Data transaction updated",
+      "data_transaction_pay": "Data transaction pay",
+      "account_upgrade_data_transaction_member": "Upgrade to DE witness",
+      "data_transaction_datasource_upload": "Copyright stored",
+      "data_transaction_datasource_validate_error": "Data transaction fail",
+      "balance_lock":"Balance Lock",
+      "balance_unlock":"Balance Unlock"
     },
     "trxOps": {
-      "data_transaction_create":{
+      "data_transaction_create": {
         "name": "Data transaction created",
         "request_id": "Request id",
         "product_id": "Product id",
@@ -647,14 +654,14 @@
         "requester": "Requester",
         "create_date_time": "Create datetime"
       },
-      "data_transaction_pay":{
+      "data_transaction_pay": {
         "name": "Data transaction pay",
         "from": "From",
         "to": "To",
         "amount": "Amount",
         "request_id": "Request id"
       },
-      "data_transaction_datasource_upload":{
+      "data_transaction_datasource_upload": {
         "name": "Copyright stored",
         "request_id": "Request id",
         "requester": "Requester",
@@ -924,21 +931,21 @@
   },
   "exchange": {
     "chart_options": {
-        "tools": "Tools",
-        "title": "Indicators",
-        "sma": "SMA",
-        "ema1": "EMA 1",
-        "ema2": "EMA 2",
-        "smaVolume": "SMA",
-        "macd": "MACD chart",
-        "bb": "Bollinger Bands",
-        "fib": "Draw Fibonacci retracement",
-        "trendline": "Draw trend line",
-        "volume": "Show volume chart",
-        "period": "Period",
-        "height": "Chart height",
-        "price_title": "Price indicators",
-        "volume_title": "Volume indicators"
+      "tools": "Tools",
+      "title": "Indicators",
+      "sma": "SMA",
+      "ema1": "EMA 1",
+      "ema2": "EMA 2",
+      "smaVolume": "SMA",
+      "macd": "MACD chart",
+      "bb": "Bollinger Bands",
+      "fib": "Draw Fibonacci retracement",
+      "trendline": "Draw trend line",
+      "volume": "Show volume chart",
+      "period": "Period",
+      "height": "Chart height",
+      "price_title": "Price indicators",
+      "volume_title": "Volume indicators"
     },
     "market": "Market",
     "price_history": "Price Chart",
@@ -1184,8 +1191,15 @@
       "submit": "Withdraw"
     },
     "deposit": {
+      "title": "Deposit by %(assetName)s",
+      "tip": "Please contact your business manager or contact us from our website",
       "amount": "Amount to Deposit",
-      "submit": "Deposit"
+      "submit": "Deposit",
+      "address": "Address",
+      "by_rmb": "Deposit by RMB",
+      "asset": "Asset",
+      "receive": "You will receive",
+      "remark": "Remark：GongXinBao will providing deposit service for 1GXC = 1RMB"
     },
     "convert": {
       "amount": "Amount to Convert",
@@ -1207,7 +1221,8 @@
       "accept": "Yes",
       "cancel": "No"
     },
-    "ok": "OK"
+    "ok": "OK",
+    "cancel":"Cancel"
   },
   "init_error": {
     "title": "Application initialization issues",
@@ -1234,10 +1249,10 @@
   "gateway": {
     "title": "Deposit & Withdraw",
     "assets": {
-        "open": "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Openledger.",
-        "trade": "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Blocktrades.",
-        "bit": "<br/>bit%(asset)s is a derivative that tracks the real value of %(backed)s. It is 100%% decentralized, trustless and backed by collateral held by the blockchain in a smart contract.",
-        "bitcny": "<br/><br/>bitCNY can be deposited or withdrawn 1:1 to real Yuan using the gateway service provided by Transwiser. For more info, see https://www.transwiser.com/"
+      "open": "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Openledger.",
+      "trade": "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Blocktrades.",
+      "bit": "<br/>bit%(asset)s is a derivative that tracks the real value of %(backed)s. It is 100%% decentralized, trustless and backed by collateral held by the blockchain in a smart contract.",
+      "bitcny": "<br/><br/>bitCNY can be deposited or withdrawn 1:1 to real Yuan using the gateway service provided by Transwiser. For more info, see https://www.transwiser.com/"
     },
     "your_account": "Your account",
     "service": "Transfer Service",
@@ -1292,5 +1307,25 @@
     "meta": {
       "open_website": "Open Website"
     }
+  },
+  "loyalty_program": {
+    "desc": "The amount subscribed to the Loyalty Program has been locked up and frozen, but eligible for extra bonus. GXB would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB's growth in the future.",
+    "join": "Join our Loyalty Program",
+    "grow": "Grow with GXB",
+    "tip1": "Benefit for value investors, extra bonus for long-run holders",
+    "tip2": "GXB's Loyalty Program is a benefit program designed for investors to lock up certain amount of GXS (GX Share). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXS for 9 months; calculating by 6% annualized return,  you may get 450 GXS for bonus on the due date. GXS would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB's growth in the future.",
+    "month": "%(month)s Month",
+    "months": "%(month)s Months",
+    "term": "Lockup Term",
+    "yearly_bonus": "Annualized Bonus",
+    "start_date":"Start Date",
+    "due_date": "Due Date",
+    "lock_amount": "Lockup Amount",
+    "bonus": "Bonus earned on due date:",
+    "button_title": "Earn %(percent)s by joining our Loyalty Program",
+    "notice": "The amount subscribed to the Loyalty Program will be locked up and unable to sell. This operation is irrevocable. Are you sure to join the program?",
+    "no_program":"No available loyalty program at this time",
+    "time_error":"Failed to join Loyalty Program, please retry:",
+    "success":"Congratulations! Join successfully"
   }
 }

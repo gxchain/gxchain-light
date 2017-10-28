@@ -24,7 +24,7 @@ import AccountImage from '../Account/AccountImage';
 var logo = require("assets/images/logo.png");
 
 const FlagImage = ({flag, width = 20, height = 20}) => {
-    return <img height={height} width={width} src={"language-dropdown/" + flag.toUpperCase() + ".png"} />;
+    return <img height={height} width={width} src={"language-dropdown/" + flag.toUpperCase() + ".png"}/>;
 };
 
 class Header extends React.Component {
@@ -175,7 +175,8 @@ class Header extends React.Component {
         );
 
         let createAccountLink = myAccountCount === 0 ? (
-            <ActionSheet.Button title="" setActiveState={() => {}}>
+            <ActionSheet.Button title="" setActiveState={() => {
+            }}>
                 <a className="button create-account" onClick={this._onNavigate.bind(this, "/create-account")}
                    style={{padding: "1rem", border: "none"}}>
                     <Icon className="icon-14px" name="user"/> <Translate content="header.create_account"/>
@@ -185,14 +186,14 @@ class Header extends React.Component {
 
         let lock_unlock = (this.props.current_wallet && myAccountCount) ? (
             <div className="grp-menu-item">
-                { this.props.locked ?
+                {this.props.locked ?
                     <a style={{padding: "1rem"}} href onClick={this._toggleLock.bind(this)} data-class="unlock-tooltip"
                        data-offset="{'left': 50}" data-tip={locked_tip} data-place="bottom" data-html><Icon
                         className="icon-14px" name="locked"/></a>
                     :
                     <a style={{padding: "1rem"}} href onClick={this._toggleLock.bind(this)} data-class="unlock-tooltip"
                        data-offset="{'left': 50}" data-tip={unlocked_tip} data-place="bottom" data-html><Icon
-                        className="icon-14px" name="unlocked"/></a> }
+                        className="icon-14px" name="unlocked"/></a>}
             </div>
         ) : null;
 
@@ -223,10 +224,12 @@ class Header extends React.Component {
         accountsDropDown = createAccountLink ?
             createAccountLink :
             tradingAccounts.length === 1 ?
-                (<ActionSheet.Button title="" setActiveState={() => {}}>
+                (<ActionSheet.Button title="" setActiveState={() => {
+                    }}>
                         <a onClick={this._accountClickHandler.bind(this, account_display_name)}
                            style={{cursor: "default", padding: "1rem", border: "none"}} className="button">
                             <table>
+                                <tbody>
                                 <tr>
                                     <td>
                                         <AccountImage style={{display: "inline-block"}}
@@ -234,9 +237,11 @@ class Header extends React.Component {
                                                       account={account_display_name}/>
                                     </td>
                                     <td>
-                                        &nbsp;&nbsp;<span style={{display: "inline-block"}}>{account_display_name}</span>
+                                        &nbsp;&nbsp;<span
+                                        style={{display: "inline-block"}}>{account_display_name}</span>
                                     </td>
                                 </tr>
+                                </tbody>
                             </table>
                         </a>
                     </ActionSheet.Button>
@@ -247,6 +252,7 @@ class Header extends React.Component {
                         <ActionSheet.Button title="">
                             <a style={{padding: "1rem", border: "none"}} className="button">
                                 <table>
+                                    <tbody>
                                     <tr>
                                         <td>
                                             <AccountImage style={{display: "inline-block"}}
@@ -254,9 +260,11 @@ class Header extends React.Component {
                                                           account={account_display_name}/>
                                         </td>
                                         <td>
-                                            &nbsp;&nbsp;<span style={{display: "inline-block"}}>{account_display_name}</span>
+                                            &nbsp;&nbsp;<span
+                                            style={{display: "inline-block"}}>{account_display_name}</span>
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </a>
                         </ActionSheet.Button>
@@ -295,7 +303,7 @@ class Header extends React.Component {
         const flagDropdown = <ActionSheet>
             <ActionSheet.Button title="">
                 <a style={{padding: "1rem", border: "none"}} className="button">
-                    <FlagImage flag={this.props.currentLocale} />
+                    <FlagImage flag={this.props.currentLocale}/>
                 </a>
             </ActionSheet.Button>
             <ActionSheet.Content>
@@ -303,9 +311,13 @@ class Header extends React.Component {
                     {this.props.locales.map(locale => {
                         return (
                             <li key={locale}>
-                                <a href onClick={(e) => {e.preventDefault(); IntlActions.switchLocale(locale);}}>
-                                    <div className="table-cell"><FlagImage flag={locale} /></div>
-                                    <div className="table-cell" style={{paddingLeft: 10}}><Translate content={"languages." + locale} /></div>
+                                <a href onClick={(e) => {
+                                    e.preventDefault();
+                                    IntlActions.switchLocale(locale);
+                                }}>
+                                    <div className="table-cell"><FlagImage flag={locale}/></div>
+                                    <div className="table-cell" style={{paddingLeft: 10}}><Translate
+                                        content={"languages." + locale}/></div>
                                 </a>
                             </li>
                         );
@@ -341,7 +353,8 @@ class Header extends React.Component {
                 </div> : null}
                 <div className="grid-block show-for-medium">
                     <ul className="menu-bar">
-                        {__ELECTRON__ ?<li className="logo-li">{dashboard}</li>:<li className="logo-li no-left-border">{dashboard}</li>}
+                        {__ELECTRON__ ? <li className="logo-li">{dashboard}</li> :
+                            <li className="logo-li no-left-border">{dashboard}</li>}
                         {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`}
                                                             className={cnames({active: active.indexOf("account/") !== -1})}><Translate
                             content="header.account"/></Link></li>}
@@ -362,7 +375,7 @@ class Header extends React.Component {
                         {myAccountCount !== 0 ? null : <div className="grp-menu-item overflow-visible">
                             {settingsDropdown}
                         </div>}
-                        {myAccountCount !== 0 ? null :<div className="grp-menu-item overflow-visible" >
+                        {myAccountCount !== 0 ? null : <div className="grp-menu-item overflow-visible">
                             {flagDropdown}
                         </div>}
 

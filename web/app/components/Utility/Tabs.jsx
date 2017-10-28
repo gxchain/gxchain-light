@@ -1,7 +1,7 @@
 import React, {PropTypes} from "react";
 import Translate from "react-translate-component";
 import cnames from "classnames";
-import { connect } from "alt-react";
+import {connect} from "alt-react";
 import SettingsActions from "actions/SettingsActions";
 import SettingsStore from "stores/SettingsStore";
 
@@ -42,7 +42,7 @@ class Tab extends React.Component {
 
         return (
             <li className={c} onClick={changeTab.bind(this, index)}>
-                <a>{title.indexOf(".") > 0 ? <Translate content={title} /> : title}</a>
+                <a>{title.indexOf(".") > 0 ? <Translate content={title}/> : title}</a>
             </li>
         );
     }
@@ -84,6 +84,7 @@ class Tabs extends React.Component {
             });
         }
         this.setState({activeTab: value});
+        typeof this.props.onChange === 'function' && this.props.onChange(value)
     }
 
     render() {
@@ -101,7 +102,7 @@ class Tabs extends React.Component {
                 activeContent = child.props.children;
             }
 
-            return React.cloneElement(child, {isActive: isActive, changeTab: this._changeTab.bind(this), index: index} );
+            return React.cloneElement(child, {isActive: isActive, changeTab: this._changeTab.bind(this), index: index});
         }).filter(a => {
             if (a) {
                 tabIndex.push(a.props.index);
@@ -120,7 +121,7 @@ class Tabs extends React.Component {
                         {tabs}
                     </ul>
                 </div>
-                <div className={contentClass} >
+                <div className={contentClass}>
                     {activeContent}
                 </div>
 

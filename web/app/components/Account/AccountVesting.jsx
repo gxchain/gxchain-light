@@ -6,6 +6,7 @@ import utils from "common/utils";
 import WalletActions from "actions/WalletActions";
 import BindToChainState from "../Utility/BindToChainState";
 import {Apis} from "gxbjs-ws";
+import {Tabs,Tab} from "../Utility/Tabs";
 
 class VestingBalance extends React.Component {
 
@@ -153,10 +154,18 @@ class AccountVesting extends React.Component {
         return (
             <div className="grid-content" style={{overflowX: "hidden"}}>
                 <Translate content="account.vesting.explain" component="p"/>
-                {!balances.length ? (
-                    <h4 style={{paddingTop: "1rem"}}>
-                        <Translate content={"account.vesting.no_balances"}/>
-                    </h4>) : balances}
+                <Tabs>
+                    <Tab title="account.vesting.loyalty_program">
+                        <Translate content="loyalty_program.desc"/>
+                    </Tab>
+                    <Tab title='account.vesting.witness_income'>
+                        {!balances.length ? (
+                            <h4 style={{paddingTop: "1rem"}}>
+                                <Translate content={"account.vesting.no_balances"}/>
+                            </h4>) : balances}
+                    </Tab>
+                </Tabs>
+
             </div>
         );
     }

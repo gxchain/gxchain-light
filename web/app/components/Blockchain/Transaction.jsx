@@ -1178,6 +1178,36 @@ class Transaction extends React.Component {
                     );
 
                     break;
+                case 'balance_lock':
+                    let term = Number(op[1].program_id) > 1 ? counterpart.translate('loyalty_program.months', {month: op[1].program_id}) : counterpart.translate('loyalty_program.month', {month: op[1].program_id})
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="loyalty_program.lock_amount"/></td>
+                            <td><FormattedAsset amount={op[1].amount.amount} asset={op[1].amount.asset_id}/></td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="loyalty_program.start_date"/></td>
+                            <td><FormattedDate
+                                value={op[1].create_date_time}
+                                format="full"
+                            /></td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="loyalty_program.term"/></td>
+                            <td>{term}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="loyalty_program.yearly_bonus"/></td>
+                            <td>{op[1].interest_rate/100}%</td>
+                        </tr>
+                    );
+                    break;
 
                 default:
                     console.log("unimplemented op:", op);

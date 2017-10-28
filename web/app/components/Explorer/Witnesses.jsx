@@ -55,7 +55,7 @@ class WitnessCard extends React.Component {
                             <tbody>
                                 <tr>
                                     <td>Votes</td>
-                                    <td><FormattedAsset amount={total_votes} asset="1.3.0" decimalOffset={5} /></td>
+                                    <td><FormattedAsset amount={total_votes} asset="1.3.0" decimalOffset={5} hide_asset={true}/></td>
                                 </tr>
                                 <tr>
                                     <td>Last&nbsp;Block</td>
@@ -127,7 +127,7 @@ class WitnessRow extends React.Component {
                 <td><TimeAgo time={new Date(last_aslot_time)} /></td>
                 <td>{witness_data.get('last_confirmed_block_num')}</td>
                 <td className={missedClass}>{missed}</td>
-                <td><FormattedAsset amount={witness_data.get('total_votes')} asset="1.3.0" decimalOffset={5} /></td>
+                <td><FormattedAsset amount={witness_data.get('total_votes')} asset="1.3.0" decimalOffset={5} hide_asset={true}/></td>
             </tr>
         )
     }

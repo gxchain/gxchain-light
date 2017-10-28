@@ -6,6 +6,7 @@ import WalletApi from "api/WalletApi";
 import ApplicationApi from "api/ApplicationApi";
 import WalletDb from "stores/WalletDb";
 import WalletActions from "actions/WalletActions";
+import WalletUnlockActions from "actions/WalletUnlockActions";
 
 let accountSearch = {};
 let wallet_api = new WalletApi();
@@ -29,10 +30,10 @@ class AccountActions {
             if (!accountSearch[uid]) {
                 accountSearch[uid] = true;
                 return AccountApi.lookupAccounts(start_symbol, limit)
-                .then(result => {
-                    accountSearch[uid] = false;
-                    dispatch({accounts: result, searchTerm: start_symbol});
-                });
+                    .then(result => {
+                        accountSearch[uid] = false;
+                        dispatch({accounts: result, searchTerm: start_symbol});
+                    });
             }
         };
     }
@@ -74,13 +75,11 @@ class AccountActions {
      *  This method exists ont he AccountActions because after creating the account via the wallet, the account needs
      *  to be linked and added to the local database.
      */
-    createAccount(
-        account_name,
-        registrar,
-        referrer,
-        referrer_percent,
-        refcode
-    ) {
+    createAccount(account_name,
+                  registrar,
+                  referrer,
+                  referrer_percent,
+                  refcode) {
         return (dispatch) => {
             return WalletActions.createAccount(
                 account_name,
@@ -88,7 +87,7 @@ class AccountActions {
                 referrer,
                 referrer_percent,
                 refcode
-            ).then( () => {
+            ).then(() => {
                 dispatch(account_name);
                 return account_name;
             });
@@ -113,6 +112,36 @@ class AccountActions {
             "upgrade_to_lifetime_member": lifetime
         });
         return WalletDb.process_transaction(tr, null, true);
+    }
+
+    joinLoyaltyProgram(program_id, account_id, amount, rate, memo = '') {
+        return new Promise((resolve, reject) => {
+            WalletUnlockActions.unlock().then(function () {
+                var tr = wallet_api.new_transaction();
+                tr.add_type_operation("balance_lock", {
+                    fee: {
+                        amount: 0,
+                        asset_id: '1.3.1'
+                    },
+                    account: account_id,
+                    create_date_time: new Date(),
+                    program_id: program_id,
+                    amount: {
+                        amount: amount,
+                        asset_id: '1.3.1'
+                    },
+                    interest_rate: rate,
+                    memo: memo,
+                });
+
+                // process transaction with no confirm, since it's already confirmed by user
+                WalletDb.process_transaction(tr, null, true, null, true).then(function (resp) {
+                    resolve(resp);
+                }).catch(ex => {
+                    reject(ex);
+                })
+            })
+        })
     }
 
     linkAccount(name) {
