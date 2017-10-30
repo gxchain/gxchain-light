@@ -144,6 +144,28 @@ class AccountActions {
         })
     }
 
+    unlockLoyaltyProgram(account_id,lock_id){
+        return new Promise((resolve, reject) => {
+            WalletUnlockActions.unlock().then(function () {
+                var tr = wallet_api.new_transaction();
+                tr.add_type_operation("balance_unlock", {
+                    fee: {
+                        amount: 0,
+                        asset_id: '1.3.1'
+                    },
+                    account: account_id,
+                    lock_id:lock_id
+                });
+                // process transaction with no confirm, since it's already confirmed by user
+                WalletDb.process_transaction(tr, null, true).then(function (resp) {
+                    resolve(resp);
+                }).catch(ex => {
+                    reject(ex);
+                })
+            })
+        })
+    }
+
     linkAccount(name) {
         return name;
     }

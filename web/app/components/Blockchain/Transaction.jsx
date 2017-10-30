@@ -18,6 +18,7 @@ import PrivateKeyStore from "stores/PrivateKeyStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import ProposedOperation from "./ProposedOperation";
 import {ChainTypes, ops, hash} from "gxbjs/es";
+
 let {operations} = ChainTypes;
 import ReactTooltip from "react-tooltip";
 
@@ -69,7 +70,7 @@ class OperationTable extends React.Component {
             </tr> ) : null;
 
         return (
-            <div >
+            <div>
                 {/*  <h6><Translate component="span" content="explorer.block.op" /> #{this.props.index + 1}/{this.props.opCount}</h6> */}
                 <table className="table op-table">
                     <caption></caption>
@@ -115,7 +116,6 @@ class Transaction extends React.Component {
     }
 
 
-
     _toggleLock(e) {
         e.preventDefault();
         WalletUnlockActions.unlock().then(() => {
@@ -124,7 +124,7 @@ class Transaction extends React.Component {
     }
 
     render() {
-        let {trx,trx_id} = this.props;
+        let {trx, trx_id} = this.props;
         let info = null;
         info = [];
 
@@ -391,7 +391,7 @@ class Transaction extends React.Component {
                             rows.push(
                                 <tr key={key++}>
                                     <td><Translate component="span" content="account.options.votes"/></td>
-                                    <td>{JSON.stringify(op[1].new_options.votes) }</td>
+                                    <td>{JSON.stringify(op[1].new_options.votes)}</td>
                                 </tr>
                             );
                         }
@@ -409,7 +409,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="explorer.block.common_options"/></td>
-                            <td><Inspector data={ op[1] } search={false}/></td>
+                            <td><Inspector data={op[1]} search={false}/></td>
                         </tr>
                     );
 
@@ -520,7 +520,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="explorer.block.common_options"/></td>
-                            <td><Inspector data={ op[1] } search={false}/></td>
+                            <td><Inspector data={op[1]} search={false}/></td>
                         </tr>
                     );
 
@@ -571,7 +571,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="explorer.block.new_options"/></td>
-                            <td><Inspector data={ op[1].new_options } search={false}/></td>
+                            <td><Inspector data={op[1].new_options} search={false}/></td>
                         </tr>
                     );
 
@@ -905,7 +905,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.outputs"/></td>
-                            <td><Inspector data={ op[1].outputs[0] } search={false}/></td>
+                            <td><Inspector data={op[1].outputs[0]} search={false}/></td>
                         </tr>
                     );
                     break;
@@ -932,7 +932,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.inputs"/></td>
-                            <td><Inspector data={ op[1].inputs[0] } search={false}/></td>
+                            <td><Inspector data={op[1].inputs[0]} search={false}/></td>
                         </tr>
                     );
                     break;
@@ -941,13 +941,13 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.inputs"/></td>
-                            <td><Inspector data={ op[1].inputs[0] } search={false}/></td>
+                            <td><Inspector data={op[1].inputs[0]} search={false}/></td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.outputs"/></td>
-                            <td><Inspector data={ op[1].outputs[0]} search={false}/></td>
+                            <td><Inspector data={op[1].outputs[0]} search={false}/></td>
                         </tr>
                     );
                     break;
@@ -956,14 +956,14 @@ class Transaction extends React.Component {
                     var expiration_date = new Date(op[1].expiration_time + 'Z')
                     var has_review_period = op[1].review_period_seconds !== undefined
                     var review_begin_time = !has_review_period ? null :
-                    expiration_date.getTime() - op[1].review_period_seconds * 1000
+                        expiration_date.getTime() - op[1].review_period_seconds * 1000
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="proposal_create.review_period"/></td>
                             <td>
-                                { has_review_period ?
+                                {has_review_period ?
                                     <FormattedDate
-                                        value={new Date( review_begin_time )}
+                                        value={new Date(review_begin_time)}
                                         format="full"
                                     />
                                     : <span>&mdash;</span>}
@@ -1097,32 +1097,38 @@ class Transaction extends React.Component {
                 case "data_transaction_create":
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.request_id"/></td>
-                            <td style={{wordBreak:'break-all'}}>{op[1].request_id}</td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_create.request_id"/></td>
+                            <td style={{wordBreak: 'break-all'}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.product_id"/></td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_create.product_id"/></td>
                             <td>{this.linkToProductById(op[1].product_id)}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.version"/></td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_create.version"/></td>
                             <td>{op[1].version}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.requester"/></td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_create.requester"/></td>
                             <td>{this.linkToAccount(op[1].requester)}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_create.create_date_time"/></td>
-                            <td>{op[1].create_date_time ? <FormattedDate value={op[1].create_date_time} format="full"/> : null}</td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_create.create_date_time"/></td>
+                            <td>{op[1].create_date_time ?
+                                <FormattedDate value={op[1].create_date_time} format="full"/> : null}</td>
                         </tr>
                     );
 
@@ -1131,13 +1137,15 @@ class Transaction extends React.Component {
                 case "data_transaction_pay":
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.request_id"/></td>
-                            <td style={{wordBreak:'break-all'}}>{op[1].request_id}</td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_pay.request_id"/></td>
+                            <td style={{wordBreak: 'break-all'}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.from"/></td>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.from"/>
+                            </td>
                             <td>{this.linkToAccount(op[1].from)}</td>
                         </tr>
                     );
@@ -1149,7 +1157,8 @@ class Transaction extends React.Component {
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.amount"/></td>
+                            <td><Translate component="span" content="transaction.trxOps.data_transaction_pay.amount"/>
+                            </td>
                             <td><FormattedAsset amount={op[1].amount.amount}
                                                 asset={op[1].amount.asset_id}/></td>
                         </tr>
@@ -1160,19 +1169,25 @@ class Transaction extends React.Component {
                 case "data_transaction_datasource_upload":
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_datasource_upload.request_id"/></td>
-                            <td style={{wordBreak:'break-all'}}>{op[1].request_id}</td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_datasource_upload.request_id"/>
+                            </td>
+                            <td style={{wordBreak: 'break-all'}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_datasource_upload.requester"/></td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_datasource_upload.requester"/>
+                            </td>
                             <td>{this.linkToAccount(op[1].requester)}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="transaction.trxOps.data_transaction_datasource_upload.datasource"/></td>
+                            <td><Translate component="span"
+                                           content="transaction.trxOps.data_transaction_datasource_upload.datasource"/>
+                            </td>
                             <td>{this.linkToAccount(op[1].datasource)}</td>
                         </tr>
                     );
@@ -1204,7 +1219,21 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="loyalty_program.yearly_bonus"/></td>
-                            <td>{op[1].interest_rate/100}%</td>
+                            <td>{op[1].interest_rate / 100}%</td>
+                        </tr>
+                    );
+                    break;
+                case 'balance_unlock':
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="loyalty_program.id"/></td>
+                            <td>{op[1].lock_id}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="loyalty_program.unlock_account"/></td>
+                            <td>{this.linkToAccount(op[1].account)}</td>
                         </tr>
                     );
                     break;
@@ -1215,7 +1244,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="explorer.block.op"/></td>
-                            <td><Inspector data={ op } search={false}/></td>
+                            <td><Inspector data={op} search={false}/></td>
                         </tr>
                     );
                     break;
@@ -1229,7 +1258,7 @@ class Transaction extends React.Component {
             );
         });
 
-        let trx_id_row = trx_id?
+        let trx_id_row = trx_id ?
             (<div>
                 <table style={{marginBottom: "1em"}} className="table op-table">
                     <tbody>
@@ -1239,11 +1268,11 @@ class Transaction extends React.Component {
                     </tr>
                     </tbody>
                 </table>
-            </div>):null;
+            </div>) : null;
 
         return (
             <div>
-                {/*     <h5><Translate component="span" content="explorer.block.trx" /> #{index + 1}</h5> */ }
+                {/*     <h5><Translate component="span" content="explorer.block.trx" /> #{index + 1}</h5> */}
                 {info}
                 {trx_id_row}
             </div>

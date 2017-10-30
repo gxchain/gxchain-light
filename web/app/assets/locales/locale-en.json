@@ -1316,6 +1316,8 @@
     "tip2": "GXB's Loyalty Program is a benefit program designed for investors to lock up certain amount of GXS (GX Share). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXS for 9 months; calculating by 6% annualized return,  you may get 450 GXS for bonus on the due date. GXS would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB's growth in the future.",
     "month": "%(month)s Month",
     "months": "%(month)s Months",
+    "day": "%(day)s Day",
+    "days": "%(day)s Days",
     "term": "Lockup Term",
     "yearly_bonus": "Annualized Bonus",
     "start_date":"Start Date",
@@ -1326,6 +1328,10 @@
     "notice": "The amount subscribed to the Loyalty Program will be locked up and unable to sell. This operation is irrevocable. Are you sure to join the program?",
     "no_program":"No available loyalty program at this time",
     "time_error":"Failed to join Loyalty Program, please retry:",
-    "success":"Congratulations! Join successfully"
+    "success":"Congratulations! Join successfully",
+    "id":"Lock ID",
+    "unlock":"Unlock",
+    "unlock_account":"Unlock Account",
+    "no_balances":"No Locked Balances"
   }
 }
