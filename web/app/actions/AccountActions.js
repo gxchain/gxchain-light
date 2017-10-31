@@ -114,7 +114,7 @@ class AccountActions {
         return WalletDb.process_transaction(tr, null, true);
     }
 
-    joinLoyaltyProgram(program_id, account_id, amount, rate, memo = '') {
+    joinLoyaltyProgram(program_id, account_id, amount, rate,lock_days, memo = '') {
         return new Promise((resolve, reject) => {
             WalletUnlockActions.unlock().then(function () {
                 var tr = wallet_api.new_transaction();
@@ -124,6 +124,7 @@ class AccountActions {
                         asset_id: '1.3.1'
                     },
                     account: account_id,
+                    lock_days:lock_days,
                     create_date_time: new Date(),
                     program_id: program_id,
                     amount: {

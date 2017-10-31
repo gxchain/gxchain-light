@@ -132,7 +132,7 @@ class GXBLoyaltyPlanModal extends React.Component {
         let precision = utils.get_asset_precision(this.state.asset.get("precision"));
         let amount = this.state.amount.replace(/,/g, "");
 
-        AccountActions.joinLoyaltyProgram(currentProgramID, this.props.account.get('id'), parseInt(amount * precision, 10), currentProgram.interest_rate).then(function (resp) {
+        AccountActions.joinLoyaltyProgram(currentProgramID, this.props.account.get('id'), parseInt(amount * precision, 10), currentProgram.interest_rate, currentProgram.lock_days).then(function (resp) {
             let msg = counterpart.translate('loyalty_program.success');
             notify.addNotification({
                 message: msg,
@@ -164,6 +164,7 @@ class GXBLoyaltyPlanModal extends React.Component {
         if (this.state.balanceObject == null) {
             return null;
         }
+        debugger;
 
         let programs = this.props.globalObject.getIn(['parameters', 'extensions']).find(function (arr) {
             return arr.toJS()[0] == 6;
@@ -176,7 +177,13 @@ class GXBLoyaltyPlanModal extends React.Component {
         let tabs = programs.getIn([1, 'params']).toJS().filter((program) => {
             return program[1].is_valid;
         }).map((program, i) => {
-            let title = Number(program[0]) > 1 ? counterpart.translate('loyalty_program.months', {month: program[0]}) : counterpart.translate('loyalty_program.month', {month: program[0]})
+            let title = '';//Number(program[0]) > 1 ? counterpart.translate('loyalty_program.months', {month: program[0]}) : counterpart.translate('loyalty_program.month', {month: program[0]})
+            if (Number(program[1].lock_days) > 30) {
+                title = counterpart.translate('loyalty_program.months', {month: program[1].lock_days / 30})
+            }
+            else {
+                title = Number(program[1].lock_days) > 1 ? counterpart.translate('loyalty_program.days', {day: program[1].lock_days}) : counterpart.translate('loyalty_program.day', {day: program[1].lock_days});
+            }
             return <Tab key={`tab_loyalty_${title}`} title={title} isActive={i == this.state.termIndex}></Tab>
         })
 
@@ -185,11 +192,11 @@ class GXBLoyaltyPlanModal extends React.Component {
         let currentProgram = programs.getIn([1, 'params', this.state.termIndex, '1']);
 
         let du_date = new Date();
-        du_date.setDate(new Date().getDate() + parseInt(currentProgram.get('interest_rate_days')));
+        du_date.setDate(new Date().getDate() + parseInt(currentProgram.get('lock_days')));
 
         let percent = currentProgram.get('interest_rate') / 100;
         let precision = utils.get_asset_precision(this.state.asset.get("precision"));
-        let bonus = Number(this.state.amount || 0) * (percent / 100) * (currentProgram.get('interest_rate_days') / 360);
+        let bonus = Number(this.state.amount || 0) * (percent / 100) * (currentProgram.get('lock_days') / 360);
 
         console.log(bonus);
 

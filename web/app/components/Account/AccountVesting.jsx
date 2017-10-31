@@ -10,6 +10,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import {Apis} from "gxbjs-ws";
 import {Tabs, Tab} from "../Utility/Tabs";
 import notify from "actions/NotificationActions";
+import Form from "antd/es/form/Form";
 
 
 class VestingBalance extends React.Component {
@@ -120,52 +121,29 @@ class LockedBalance extends React.Component {
         }
         let start_date = this.toDate(balance.create_date_time)
         let end_date = new Date(start_date.getTime());
-        end_date = end_date.setDate(end_date.getDate() + Number(balance.lock_days) + 1);
+        end_date.setDate(end_date.getDate() + Number(balance.lock_days) + 1);
         let canUnlock = new Date() - end_date >= 0;
-
         let lock_days = balance.lock_days > 1 ? counterpart.translate('loyalty_program.days', {day: balance.lock_days}) : counterpart.translate('loyalty_program.day', {day: balance.lock_days});
-
+        let bonus = balance.amount.amount * (balance.interest_rate / 10000) * (balance.lock_days / 360);
         return (
-            <div style={{paddingBottom: '1rem'}}>
-                <h5>
-                    <Translate content={'loyalty_program.id'}/>:&nbsp;#{balance.id}
-                </h5>
-                <table className="table key-value-table">
-                    <tbody>
-                    <tr>
-                        <td><Translate content="loyalty_program.start_date"/></td>
-                        <td>{start_date.toLocaleString()}</td>
-                    </tr>
-                    <tr>
-                        <td><Translate content="loyalty_program.term"/></td>
-                        <td>{lock_days}</td>
-                    </tr>
-                    <tr>
-                        <td><Translate content="loyalty_program.lock_amount"/></td>
-                        <td>
-                            <FormattedAsset amount={balance.amount.amount} asset={balance.amount.asset_id} decimalOffset={0}/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><Translate content="loyalty_program.yearly_bonus"/></td>
-                        <td>{balance.interest_rate / 100}%</td>
-                    </tr>
-                    <tr>
-                        {canUnlock ? <td colSpan="2" style={{textAlign: "right"}}>
-                            <button onClick={this._onUnlock.bind(this)} className="button outline">
-                                <Translate content="loyalty_program.unlock"/></button>
-                        </td> : null}
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <tr>
+                <td>#{balance.id}</td>
+                <td>{start_date.toLocaleString()}</td>
+                <td style={{textAlign:'right'}}><FormattedAsset amount={balance.amount.amount} asset={balance.amount.asset_id}/></td>
+                <td style={{textAlign:'right'}}><FormattedAsset amount={bonus} asset={balance.amount.asset_id}/></td>
+                <td style={{textAlign:'right'}}>{(balance.interest_rate / 100).toFixed(1)}%</td>
+                <td style={{textAlign:'right'}}>{lock_days}</td>
+                <td>{end_date.toLocaleString()}</td>
+                <td>{canUnlock ? <button onClick={this._onUnlock.bind(this)} className="button outline"><Translate
+                    content="loyalty_program.unlock"/></button> : <Translate content="loyalty_program.locking"/>}</td>
+            </tr>
         )
     }
 
     _onUnlock() {
-        AccountActions.unlockLoyaltyProgram(this.props.account.id,this.props.balance.id).then(()=>{
+        AccountActions.unlockLoyaltyProgram(this.props.account.id, this.props.balance.id).then(() => {
             typeof this.props.handleChanged == 'function' && this.props.handleChanged();
-        }).catch(ex=>{
+        }).catch(ex => {
             typeof this.props.handleChanged == 'function' && this.props.handleChanged();
         });
     }
@@ -177,7 +155,7 @@ class AccountVesting extends React.Component {
 
         this.state = {
             vbs: null,
-            lbs:null
+            lbs: null
         };
     }
 
@@ -211,14 +189,14 @@ class AccountVesting extends React.Component {
         });
     }
 
-    retrieveLockedBalances(accountId){
+    retrieveLockedBalances(accountId) {
         Apis.instance().db_api().exec("get_full_accounts", [
-            [accountId],true
-        ],true).then(results => {
+            [accountId], true
+        ], true).then(results => {
             let full_account = results[0][1];
-            let {locked_balances}=full_account;
+            let {locked_balances} = full_account;
             this.setState({
-                lbs:locked_balances
+                lbs: locked_balances
             })
         }).catch(err => {
             console.log("error:", err);
@@ -226,7 +204,7 @@ class AccountVesting extends React.Component {
     }
 
     render() {
-        let {vbs,lbs} = this.state;
+        let {vbs, lbs} = this.state;
 
         if (!this.props.account) {
             return null;
@@ -234,17 +212,18 @@ class AccountVesting extends React.Component {
 
         let account = this.props.account.toJS();
 
-        let balances =vbs?vbs.map(vb => {
+        let balances = vbs ? vbs.map(vb => {
             if (vb.balance.amount) {
                 return <VestingBalance key={vb.id} vb={vb} account={account} handleChanged={this.reload.bind(this)}/>;
             }
         }).filter(a => {
             return !!a;
-        }):[];
+        }) : [];
 
-        let locked_balances = lbs?lbs.map(balance => {
-            return <LockedBalance key={`${balance.id}`} account={account} balance={balance} handleChanged={this.reload.bind(this)}/>
-        }):[];
+        let locked_balances = lbs ? lbs.map(balance => {
+            return <LockedBalance key={`${balance.id}`} account={account} balance={balance}
+                                  handleChanged={this.reload.bind(this)}/>
+        }) : [];
 
         return (
             <div className="grid-content" style={{overflowX: "hidden"}}>
@@ -252,9 +231,25 @@ class AccountVesting extends React.Component {
                 <Tabs>
                     <Tab title="account.vesting.loyalty_program">
                         <Translate component="p" content="loyalty_program.desc"/>
-                        {locked_balances.length == 0 ? (<h4 style={{paddingTop: "1rem"}}>
-                            <Translate content={"loyalty_program.no_balances"}/>
-                        </h4> ) : locked_balances}
+                        {locked_balances.length == 0 ?
+                            <h4 style={{paddingTop: "1rem"}}>
+                                <Translate content={"loyalty_program.no_balances"}/>
+                            </h4> :
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th><Translate content="loyalty_program.id"/></th>
+                                    <th><Translate content="loyalty_program.start_date"/></th>
+                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.lock_amount"/></th>
+                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.bonus"/></th>
+                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.yearly_bonus"/></th>
+                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.term"/></th>
+                                    <th><Translate content="loyalty_program.due_date"/></th>
+                                    <th><Translate content="loyalty_program.status"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>{locked_balances}</tbody>
+                            </table>}
                     </Tab>
                     <Tab title='account.vesting.witness_income'>
                         {!balances.length ?

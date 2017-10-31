@@ -31,7 +31,12 @@ class AccountOverview extends React.Component {
 
     static propTypes = {
         balanceAssets: ChainTypes.ChainAssetsList,
+        globalObject: ChainTypes.ChainObject.isRequired,
     };
+
+    static defaultProps = {
+        globalObject: "2.0.0"
+    }
 
     constructor() {
         super();
@@ -59,7 +64,7 @@ class AccountOverview extends React.Component {
         this.refs['gxb-deposit-modal'].refs['bound_component'].show(asset);
     }
 
-    showLoyaltyPlanModal(balanceObject){
+    showLoyaltyPlanModal(balanceObject) {
         this.refs['gxb-loyalty-program-modal'].refs['bound_component'].show(balanceObject);
     }
 
@@ -86,6 +91,9 @@ class AccountOverview extends React.Component {
         let {settings, account} = this.props;
         let showAssetPercent = settings.get("showAssetPercent", false);
         let balances = [];
+        let programs = this.props.globalObject.getIn(['parameters', 'extensions']).find(function (arr) {
+            return arr.toJS()[0] == 6;
+        });
 
         balanceList.forEach(balance => {
 
@@ -127,25 +135,30 @@ class AccountOverview extends React.Component {
                         <h4 className="title text-center">{asset.get('symbol')}</h4>
                         <div className="card-content">
                             <div className="text-center">
-                                {logos[asset.get('symbol')]?<img className="align-center" style={{width:'3rem',height:'3rem'}}
-                                     src={`${logos[asset.get('symbol')]}`}></img>:<AccountImage size={{width:35,height:35}} account={asset.get('symbol')}/>}
+                                {logos[asset.get('symbol')] ?
+                                    <img className="align-center" style={{width: '3rem', height: '3rem'}}
+                                         src={`${logos[asset.get('symbol')]}`}></img> :
+                                    <AccountImage size={{width: 35, height: 35}} account={asset.get('symbol')}/>}
                             </div>
-                            {asset_type=='1.3.1'&&this.props.isMyAccount?<a onClick={this.showLoyaltyPlanModal.bind(this,balanceObject)} className="btn-loyalty-program">加入忠诚计划</a>:null}
+                            {programs && asset_type == '1.3.1' && this.props.isMyAccount ?
+                                <a onClick={this.showLoyaltyPlanModal.bind(this, balanceObject)}
+                                   className="btn-loyalty-program">加入忠诚计划</a> : null}
                             <table className="table key-value-table">
                                 <tbody>
                                 <tr>
                                     <td><Translate content="account.asset"/></td>
                                     <td>{hasBalance ? <BalanceComponent balance={balanceObject.get('id')}
-                                                                        assetInfo={assetInfoLinks}/> : <BalanceComponent amount={0} asset_type={asset.get('symbol')}
-                                                                                                                         assetInfo={assetInfoLinks}/>}</td>
+                                                                        assetInfo={assetInfoLinks}/> :
+                                        <BalanceComponent amount={0} asset_type={asset.get('symbol')}
+                                                          assetInfo={assetInfoLinks}/>}</td>
                                 </tr>
                                 <tr>
                                     <td><Translate content="account.transfer_actions"/></td>
                                     <td>
-                                        {hasBalance?transferLink:null}
+                                        {hasBalance ? transferLink : null}
                                         {this.props.isMyAccount ? (
                                             <span>{this._getSeparator(hasBalance)}
-                                                     <a onClick={this.showGXBDeposit.bind(this,asset)}>
+                                                <a onClick={this.showGXBDeposit.bind(this, asset)}>
                                                      <Translate content="gateway.deposit"/>
                                                      </a>
                                                 </span>
@@ -219,7 +232,7 @@ class AccountOverview extends React.Component {
         }
 
         let includedBalances, hiddenBalances;
-        let account_balances = account.get("balances")||new Immutable.Map();
+        let account_balances = account.get("balances") || new Immutable.Map();
         if (!account_balances.has('1.3.0')) {
             account_balances = account_balances.merge({
                 '1.3.0': '2.5.-1'
@@ -361,10 +374,10 @@ class BalanceWrapper extends React.Component {
         let balanceAssets = this.props.balances.map(b => {
             return b && b.get("asset_type");
         }).filter(b => !!b);
-        if(balanceAssets.indexOf('1.3.0')==-1){
+        if (balanceAssets.indexOf('1.3.0') == -1) {
             balanceAssets.push('1.3.0');
         }
-        if(balanceAssets.indexOf('1.3.1')==-1){
+        if (balanceAssets.indexOf('1.3.1') == -1) {
             balanceAssets.push('1.3.1');
         }
 
@@ -383,7 +396,7 @@ class BalanceWrapper extends React.Component {
 
         return (
             <AccountOverview {...this.state} {...this.props} orders={ordersByAsset}
-                                                             balanceAssets={Immutable.List(balanceAssets)}/>
+                             balanceAssets={Immutable.List(balanceAssets)}/>
         );
     };
 }

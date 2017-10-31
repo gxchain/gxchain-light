@@ -1348,15 +1348,17 @@
     "start_date":"开始时间",
     "due_date":"到期时间",
     "lock_amount":"锁定金额",
-    "bonus":"到期后可获得奖励：",
+    "bonus":"到期收益",
     "button_title":"加入忠诚计划 赚 %(percent)s",
     "notice":"加入忠诚计划的金额将被锁定，期间不可卖出，此操作不可撤销，确定加入吗？",
     "no_program":"当前没有已发布的忠诚计划",
-    "time_error":"参与失败，请重试:",
+    "time_error":"参与失败，请重试",
     "success":"恭喜！参与成功",
     "id":"锁定ID",
     "unlock":"立即解锁",
     "unlock_account":"解锁账户",
-    "no_balances":"暂无待解冻余额"
+    "no_balances":"暂无待解冻余额",
+    "locking":"锁仓中",
+    "status":"状态"
   }
 }

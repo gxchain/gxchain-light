@@ -1323,7 +1323,7 @@
     "start_date":"Start Date",
     "due_date": "Due Date",
     "lock_amount": "Lockup Amount",
-    "bonus": "Bonus earned on due date:",
+    "bonus": "Bonus earned on due date",
     "button_title": "Earn %(percent)s by joining our Loyalty Program",
     "notice": "The amount subscribed to the Loyalty Program will be locked up and unable to sell. This operation is irrevocable. Are you sure to join the program?",
     "no_program":"No available loyalty program at this time",
@@ -1332,6 +1332,8 @@
     "id":"Lock ID",
     "unlock":"Unlock",
     "unlock_account":"Unlock Account",
-    "no_balances":"No Locked Balances"
+    "no_balances":"No Locked Balances",
+    "locking":"Locking",
+    "status":"Status"
   }
 }
