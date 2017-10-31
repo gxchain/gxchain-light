@@ -44,11 +44,13 @@ class Footer extends React.Component {
 
     componentWillMount() {
         let self = this;
-        GXBFaucetActions.getLatestVersion().then(function (result) {
-            self.setState({
-                latest_version:result.version
+        if (__ELECTRON__) {
+            GXBFaucetActions.getLatestVersion().then(function (result) {
+                self.setState({
+                    latest_version: result.version
+                });
             });
-        });
+        }
     }
 
     render() {
