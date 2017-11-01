@@ -28,6 +28,7 @@ class GXBLoyaltyPlanModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading:false,
             error: '',
             amount: '',
             balance: null,
@@ -120,6 +121,7 @@ class GXBLoyaltyPlanModal extends React.Component {
     }
 
     submit() {
+        let self = this;
         ZfApi.publish('modal-confirm-loyalty-program', "close");
         let programs = this.props.globalObject.getIn(['parameters', 'extensions']).find(function (arr) {
             return arr.toJS()[0] == 6;
@@ -131,9 +133,14 @@ class GXBLoyaltyPlanModal extends React.Component {
         let currentProgram = programs[this.state.termIndex][1];
         let precision = utils.get_asset_precision(this.state.asset.get("precision"));
         let amount = this.state.amount.replace(/,/g, "");
-
+        self.setState({
+            loading:true
+        })
         AccountActions.joinLoyaltyProgram(currentProgramID, this.props.account.get('id'), parseInt(amount * precision, 10), currentProgram.interest_rate, currentProgram.lock_days).then(function (resp) {
             let msg = counterpart.translate('loyalty_program.success');
+            self.setState({
+                loading:false
+            })
             notify.addNotification({
                 message: msg,
                 level: "success",
@@ -141,6 +148,9 @@ class GXBLoyaltyPlanModal extends React.Component {
             });
             ZfApi.publish('modal-gxb-loyalty-program', "close");
         }).catch(ex => {
+            self.setState({
+                loading:false
+            })
             let error_msg = ex;
             if (typeof ex == 'object') {
                 error_msg = ex.message && ex.message.indexOf('create_date_time.sec_since_epoch() - _db.head_block_time().sec_since_epoch()') > -1 ? `${counterpart.translate('loyalty_program.time_error')}\n${ex.message}` : ex.message;
@@ -164,7 +174,6 @@ class GXBLoyaltyPlanModal extends React.Component {
         if (this.state.balanceObject == null) {
             return null;
         }
-        debugger;
 
         let programs = this.props.globalObject.getIn(['parameters', 'extensions']).find(function (arr) {
             return arr.toJS()[0] == 6;
@@ -267,7 +276,7 @@ class GXBLoyaltyPlanModal extends React.Component {
                             </p>
                             <div className="text-center">
                                 <button style={{margin: '.2rem'}} onClick={this.onSubmitClick.bind(this)}
-                                        className="button"
+                                        className={`button ${this.state.loading?'disabled':''}`}
                                         dangerouslySetInnerHTML={{__html: button_text}}>
                                 </button>
                             </div>
