@@ -121,7 +121,7 @@ class LockedBalance extends React.Component {
         }
         let start_date = this.toDate(balance.create_date_time)
         let end_date = new Date(start_date.getTime());
-        end_date.setDate(end_date.getDate() + Number(balance.lock_days) + 1);
+        end_date.setDate(end_date.getDate() + Number(balance.lock_days));
         let canUnlock = new Date() - end_date >= 0;
         let lock_days = balance.lock_days > 1 ? counterpart.translate('loyalty_program.days', {day: balance.lock_days}) : counterpart.translate('loyalty_program.day', {day: balance.lock_days});
         let bonus = balance.amount.amount * (balance.interest_rate / 10000) * (balance.lock_days / 360);
