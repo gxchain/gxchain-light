@@ -3,7 +3,7 @@
   "productName": "gxb-light",
   "identifier": "gxb.io",
   "description": "GXB - decentralized data exchange",
-  "version": "2.0.170727",
+  "version": "2.0.171101",
   "author": "bd@gxb.io",
   "main": "electron.js",
   "config": {
