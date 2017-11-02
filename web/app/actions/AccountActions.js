@@ -7,6 +7,7 @@ import ApplicationApi from "api/ApplicationApi";
 import WalletDb from "stores/WalletDb";
 import WalletActions from "actions/WalletActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
+import { Apis } from 'gxbjs-ws';
 
 let accountSearch = {};
 let wallet_api = new WalletApi();
@@ -117,28 +118,36 @@ class AccountActions {
     joinLoyaltyProgram(program_id, account_id, amount, rate,lock_days, memo = '') {
         return new Promise((resolve, reject) => {
             WalletUnlockActions.unlock().then(function () {
-                var tr = wallet_api.new_transaction();
-                tr.add_type_operation("balance_lock", {
-                    fee: {
-                        amount: 0,
-                        asset_id: '1.3.1'
-                    },
-                    account: account_id,
-                    lock_days:lock_days,
-                    create_date_time: new Date(),
-                    program_id: program_id,
-                    amount: {
-                        amount: amount,
-                        asset_id: '1.3.1'
-                    },
-                    interest_rate: rate,
-                    memo: memo,
-                });
+                Apis.instance().db_api().exec("get_objects", [["2.1.0"]]).then(function (resp) {
+                    let time = resp[0].time;
+                    if(!/Z$/.test(time)){
+                        time+='Z'
+                    }
+                    var tr = wallet_api.new_transaction();
+                    tr.add_type_operation("balance_lock", {
+                        fee: {
+                            amount: 0,
+                            asset_id: '1.3.1'
+                        },
+                        account: account_id,
+                        lock_days:lock_days,
+                        create_date_time: new Date(time),
+                        program_id: program_id,
+                        amount: {
+                            amount: amount,
+                            aset_id: '1.3.1'
+                        },
+                        interest_rate: rate,
+                        memo: memo,
+                    });
 
-                // process transaction with no confirm, since it's already confirmed by user
-                WalletDb.process_transaction(tr, null, true, null, true).then(function (resp) {
-                    resolve(resp);
-                }).catch(ex => {
+                    // process transaction with no confirm, since it's already confirmed by user
+                    WalletDb.process_transaction(tr, null, true, null, true).then(function (resp) {
+                        resolve(resp);
+                    }).catch(ex => {
+                        reject(ex);
+                    })
+                }).catch(ex=>{
                     reject(ex);
                 })
             })
