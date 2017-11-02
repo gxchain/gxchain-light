@@ -142,7 +142,7 @@ class AccountOverview extends React.Component {
                             </div>
                             {programs && asset_type == '1.3.1' && this.props.isMyAccount ?
                                 <a onClick={this.showLoyaltyPlanModal.bind(this, balanceObject)}
-                                   className="btn-loyalty-program">加入忠诚计划</a> : null}
+                                   className="btn-loyalty-program"><Translate content="loyalty_program.join"/></a> : null}
                             <table className="table key-value-table">
                                 <tbody>
                                 <tr>
