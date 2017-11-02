@@ -135,7 +135,7 @@ class AccountActions {
                         program_id: program_id,
                         amount: {
                             amount: amount,
-                            aset_id: '1.3.1'
+                            asset_id: '1.3.1'
                         },
                         interest_rate: rate,
                         memo: memo,
