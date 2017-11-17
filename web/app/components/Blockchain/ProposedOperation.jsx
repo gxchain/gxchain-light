@@ -325,11 +325,9 @@ class ProposedOperation extends React.Component {
                     <TranslateWithLinks
                         string="proposal.asset_create"
                         keys={[
-                                {type: "account", value: op[1].issuer, arg: "account"}
-                            ]}
-                        params={{
-                                asset: op[1].symbol
-                            }}
+                            {type: "account", value: op[1].issuer, arg: "account"},
+                            {type: "asset", value: op[1].symbol, arg: "asset"}
+                        ]}
                     />
                 );
                 break;

@@ -490,7 +490,7 @@
     "expires": "Expires",
     "update_account": "Update account data for {account}",
     "status": "Status",
-    "asset_create": "Create the asset %(asset)s using the account {account}",
+    "asset_create": "Create the asset {asset} using the account {account}",
     "asset_update": "Update the asset {asset} using the account {account}",
     "asset_settle": "Request a settlement of",
     "update": {

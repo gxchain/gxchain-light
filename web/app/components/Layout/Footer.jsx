@@ -33,12 +33,13 @@ class Footer extends React.Component {
         }
     }
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
         return (
             nextProps.dynGlobalObject !== this.props.dynGlobalObject ||
             nextProps.backup_recommended !== this.props.backup_recommended ||
             nextProps.rpc_connection_status !== this.props.rpc_connection_status ||
-            nextProps.synced !== this.props.synced
+            nextProps.synced !== this.props.synced ||
+            nextState.latest_version !== this.state.latest_version
         );
     }
 
@@ -116,8 +117,8 @@ class Footer extends React.Component {
                             <Translate content="footer.block"/> &nbsp;
                             <pre>#{block_height} </pre>
                             &nbsp;
-                            { now - bt > 5 ? <TimeAgo ref="footer_head_timeago" time={block_time}/> :
-                                <span data-tip="Synchronized" data-place="left"><Icon name="checkmark-circle"/></span> }
+                            {now - bt > 5 ? <TimeAgo ref="footer_head_timeago" time={block_time}/> :
+                                <span data-tip="Synchronized" data-place="left"><Icon name="checkmark-circle"/></span>}
                         </div>) :
                         <div className="grid-block shrink"><Translate content="footer.loading"/></div>}
                 </div>
@@ -141,6 +142,7 @@ class Footer extends React.Component {
         this.context.router.push("/wallet/backup/brainkey");
     }
 }
+
 Footer = BindToChainState(Footer, {keep_updating: true});
 
 class AltFooter extends Component {
@@ -150,9 +152,9 @@ class AltFooter extends Component {
         return <AltContainer
             stores={[CachedPropertyStore, BlockchainStore, WalletDb]}
             inject={{
-                backup_recommended: ()=>
-                    (wallet && ( ! wallet.backup_date || CachedPropertyStore.get("backup_recommended"))),
-                rpc_connection_status: ()=> BlockchainStore.getState().rpc_connection_status
+                backup_recommended: () =>
+                    (wallet && ( !wallet.backup_date || CachedPropertyStore.get("backup_recommended"))),
+                rpc_connection_status: () => BlockchainStore.getState().rpc_connection_status
                 // Disable notice for separate brainkey backup for now to keep things simple.  The binary wallet backup includes the brainkey...
                 // backup_brainkey_recommended: ()=> {
                 //     var wallet = WalletDb.getWallet()
