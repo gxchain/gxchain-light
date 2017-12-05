@@ -138,7 +138,8 @@ class AccountPermissions extends React.Component {
             updateObject.owner = this.permissionsToJson(s.owner_threshold, s.owner_accounts, s.owner_keys, s.owner_addresses, s.owner_weights);
         }
         if (s.memo_key && this.didChange("memo") && this.isValidPubKey(s.memo_key)) {
-            updateObject.new_options = {memo_key: s.memo_key};
+            updateObject.new_options = this.props.account.get("options").toJS();
+            updateObject.new_options.memo_key = s.memo_key;
         }
 
         // console.log("-- AccountPermissions.onPublish -->", updateObject, s.memo_key);
