@@ -20,6 +20,7 @@ class SettingsStore {
             locale: "cn",
             apiServer: settingsAPIs.DEFAULT_WS_NODE,
             faucet_address: settingsAPIs.DEFAULT_FAUCET,
+            statistics_address: settingsAPIs.DEFAULT_STATISTICS,
             unit: CORE_ASSET,
             showSettles: false,
             showAssetPercent: false,
