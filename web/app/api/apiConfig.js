@@ -34,6 +34,6 @@ export const settingsAPIs = (() => {
             {url: "wss://node17.gxb.io", location: "新加坡节点"}
         ],
         DEFAULT_FAUCET: "https://opengateway.gxb.io",
-        DEFAULT_STATISTICS: ""
+        DEFAULT_STATISTICS: "https://wallet.gxb.io/statistics/getStatisticsInfo"
     };
 })();
