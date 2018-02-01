@@ -7,19 +7,7 @@ class StatisticsContainer extends React.Component {
 
     render() {
         return (
-            <AltContainer
-                stores={[BlockchainStore]}
-                inject={{
-                    latestBlocks: () => {
-                        return BlockchainStore.getState().latestBlocks;
-                    },
-                    latestTransactions: () => {
-                        return BlockchainStore.getState().latestTransactions;
-                    }
-                }}
-            >
-                <Statistics/>
-            </AltContainer>
+            <Statistics/>
         );
     }
 }
