@@ -509,10 +509,35 @@ class ProposedOperation extends React.Component {
                 break;
 
             case "proposal_create":
+                debugger;
                 column = (
+                    <div className="inline-block">
                     <span>
-                        <Translate component="span" content="proposal.proposal_create"/>
+                        <TranslateWithLinks
+                            string="operation.proposal_create"
+                            keys={[
+                                {type: "account", value: op[1].fee_paying_account, arg: "account"}
+                            ]}
+                        />:
                     </span>
+                        <div>
+                            {op[1].proposed_ops.map((o, index) => {
+                                return (
+                                    <ProposedOperation
+                                        op={o.op}
+                                        key={index}
+                                        index={index}
+                                        inverted={false}
+                                        hideFee={true}
+                                        hideOpLabel={true}
+                                        hideDate={true}
+                                        proposal={true}
+                                    />
+                                );
+                            })}
+
+                        </div>
+                    </div>
                 );
                 break;
 
