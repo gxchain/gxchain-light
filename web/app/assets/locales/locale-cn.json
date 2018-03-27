@@ -1325,7 +1325,8 @@
     "data_market_category_update": "{issuer} 更新类目 {category}",
     "free_data_product_update": "{issuer} 更新自由市场数据产品 {product}",
     "league_data_product_update": "{issuer} 发起更新联盟数据产品 {product}",
-    "league_update": "{issuer} 更新联盟 {league}"
+    "league_update": "{issuer} 更新联盟 {league}",
+    "fund_pool": "转入资产资金池"
   },
   "proposal_create": {
     "review_period": "复审期开始",

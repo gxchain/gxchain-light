@@ -413,7 +413,7 @@ class ProposedOperation extends React.Component {
                 column = (
                     <span>
                         {this.linkToAccount(op[1].from_account)} &nbsp;
-                        <Translate component="span" content="proposal.fund_pool" asset={asset}/>
+                        <Translate component="span" content="proposal.fund_pool"/>
                         &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset="1.3.0"/>
                     </span>
                 );
@@ -507,7 +507,6 @@ class ProposedOperation extends React.Component {
                 break;
 
             case "proposal_create":
-                debugger;
                 column = (
                     <div className="inline-block">
                     <span>

@@ -513,7 +513,8 @@
     "data_market_category_update": "{issuer} update the category {category}",
     "free_data_product_update": "{issuer} update free market data product {product}",
     "league_data_product_update": "{issuer} update league market data product {product}",
-    "league_update": "{issuer} update league {league}"
+    "league_update": "{issuer} update league {league}",
+    "fund_pool": "funded fee pool with"
   },
   "transaction": {
     "confirm": "Please confirm the transaction",
