@@ -1066,6 +1066,27 @@ class Operation extends React.Component {
                 );
                 break;
 
+            case "proxy_transfer_operation":
+
+                color = "success";
+                op[1].request_params.amount.amount = parseFloat(op[1].request_params.amount.amount);
+
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.proxy_transfer_operation"
+                            keys={[
+                                {type: "account", value: op[1].request_params.proxy_account, arg: "account"},
+                                {type: "account", value: op[1].request_params.from, arg: "from"},
+                                {type: "amount", value: op[1].request_params.amount, arg: "amount", decimalOffset: 0},
+                                {type: "account", value: op[1].request_params.to, arg: "to"}
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+
             default:
                 console.log("unimplemented op:", op);
                 column = (
