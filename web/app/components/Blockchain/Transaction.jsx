@@ -129,7 +129,7 @@ class Transaction extends React.Component {
         info = [];
 
         let opCount = trx.operations.length;
-        let memo = null;
+        let memo = null
 
         trx.operations.forEach((op, opIndex) => {
 
@@ -1234,6 +1234,46 @@ class Transaction extends React.Component {
                         <tr key={key++}>
                             <td><Translate component="span" content="loyalty_program.unlock_account"/></td>
                             <td>{this.linkToAccount(op[1].account)}</td>
+                        </tr>
+                    );
+                    break;
+
+                case "proxy_transfer_operation":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="proxy_transfer_operation.from"/></td>
+                            <td>{this.linkToAccount(op[1].request_params.from)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="proxy_transfer_operation.to"/></td>
+                            <td>{this.linkToAccount(op[1].request_params.to)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="proxy_transfer_operation.amount"/></td>
+                            <td><FormattedAsset amount={op[1].request_params.amount.amount} asset={op[1].request_params.amount.asset_id}/></td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="proxy_transfer_operation.account"/></td>
+                            <td>{this.linkToAccount(op[1].request_params.proxy_account)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="proxy_transfer_operation.proxy_memo"/></td>
+                            <td>{op[1].proxy_memo}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="proxy_transfer_operation.memo"/></td>
+                            <td>{op[1].request_params.memo}</td>
                         </tr>
                     );
                     break;

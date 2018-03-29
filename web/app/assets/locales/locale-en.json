@@ -478,7 +478,8 @@
     "data_transaction_datasource_upload": "{account} confirmed an data upload from {datasource}",
     "data_transaction_datasource_validate_error": "{account} returned an error when processing the data upload",
     "balance_lock":"{account} locked {amount} for loyalty program",
-    "balance_unlock":"{account} complete a loyalty program"
+    "balance_unlock":"{account} complete a loyalty program",
+    "proxy_transfer_operation": "{account} created a proxy transaction: {from} sent {amount} to {to}"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -644,7 +645,8 @@
       "data_transaction_datasource_upload": "Copyright stored",
       "data_transaction_datasource_validate_error": "Data transaction fail",
       "balance_lock":"Balance Lock",
-      "balance_unlock":"Balance Unlock"
+      "balance_unlock":"Balance Unlock",
+      "proxy_transfer_operation": "Proxy Transfer"
     },
     "trxOps": {
       "data_transaction_create": {
