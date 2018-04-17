@@ -1066,7 +1066,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case "proxy_transfer_operation":
+            case "proxy_transfer":
 
                 color = "success";
                 op[1].request_params.amount.amount = parseFloat(op[1].request_params.amount.amount);
@@ -1074,7 +1074,7 @@ class Operation extends React.Component {
                 column = (
                     <span className="right-td">
                         <TranslateWithLinks
-                            string="operation.proxy_transfer_operation"
+                            string="operation.proxy_transfer"
                             keys={[
                                 {type: "account", value: op[1].request_params.proxy_account, arg: "account"},
                                 {type: "account", value: op[1].request_params.from, arg: "from"},

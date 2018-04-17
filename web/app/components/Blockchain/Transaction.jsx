@@ -132,7 +132,6 @@ class Transaction extends React.Component {
         let memo = null
 
         trx.operations.forEach((op, opIndex) => {
-
             let rows = [];
             let key = 0;
 
@@ -1238,41 +1237,41 @@ class Transaction extends React.Component {
                     );
                     break;
 
-                case "proxy_transfer_operation":
+                case "proxy_transfer":
                     color = "success";
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="proxy_transfer_operation.from"/></td>
+                            <td><Translate component="span" content="proxy_transfer.from"/></td>
                             <td>{this.linkToAccount(op[1].request_params.from)}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="proxy_transfer_operation.to"/></td>
+                            <td><Translate component="span" content="proxy_transfer.to"/></td>
                             <td>{this.linkToAccount(op[1].request_params.to)}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="proxy_transfer_operation.amount"/></td>
+                            <td><Translate component="span" content="proxy_transfer.amount"/></td>
                             <td><FormattedAsset amount={op[1].request_params.amount.amount} asset={op[1].request_params.amount.asset_id}/></td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="proxy_transfer_operation.account"/></td>
+                            <td><Translate component="span" content="proxy_transfer.account"/></td>
                             <td>{this.linkToAccount(op[1].request_params.proxy_account)}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="proxy_transfer_operation.proxy_memo"/></td>
+                            <td><Translate component="span" content="proxy_transfer.proxy_memo"/></td>
                             <td>{op[1].proxy_memo}</td>
                         </tr>
                     );
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="proxy_transfer_operation.memo"/></td>
+                            <td><Translate component="span" content="proxy_transfer.memo"/></td>
                             <td>{op[1].request_params.memo}</td>
                         </tr>
                     );

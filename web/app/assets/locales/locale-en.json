@@ -422,6 +422,17 @@
     "memo_unlock": "Unlock your wallet in order to see this memo",
     "optional": "Optional"
   },
+  "proxy_transfer": {
+    "from": "From",
+    "amount": "Amount",
+    "to": "To",
+    "account": "Proxy Account",
+    "proxy_memo": "Proxy Memo",
+    "memo": "memo",
+    "memo_unlock": "Unlock your wallet in order to see this memo",
+    "fee": "Fee",
+    "percentage": "Proxy Bonus"
+  },
   "operation": {
     "pending": "pending %(blocks)s blocks",
     "no_recent": "No recent transactions",
@@ -479,7 +490,7 @@
     "data_transaction_datasource_validate_error": "{account} returned an error when processing the data upload",
     "balance_lock":"{account} locked {amount} for loyalty program",
     "balance_unlock":"{account} complete a loyalty program",
-    "proxy_transfer_operation": "{account} created a proxy transaction: {from} sent {amount} to {to}"
+    "proxy_transfer": "{account} created a proxy transaction: {from} sent {amount} to {to}"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -646,7 +657,7 @@
       "data_transaction_datasource_validate_error": "Data transaction fail",
       "balance_lock":"Balance Lock",
       "balance_unlock":"Balance Unlock",
-      "proxy_transfer_operation": "Proxy Transfer"
+      "proxy_transfer": "Proxy Transfer"
     },
     "trxOps": {
       "data_transaction_create": {
