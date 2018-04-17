@@ -57,7 +57,7 @@ class Statistics extends React.Component {
                         transaction_total_count: data.transactionTotalNum,
                         transaction_week_count: data.transactionWeekNum,
                         transaction_today_count: data.transactionDayNum,
-                        transaction_pay_fees: data.fee,
+                        transaction_pay_fees: data.transactionTotalPrice/10,
                         merchants_total_count: data.merchantCertNum
                     };
                     let products_data = data.statisticsProductLog;
