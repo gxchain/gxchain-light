@@ -108,11 +108,6 @@ class Dashboard extends React.Component {
                                         className="button info float-left">
                                     <Translate content="dashboard.create_account"></Translate>
                                 </button>
-                                <button
-                                    onClick={(()=>{this.props.router.push(`/data-market`)}).bind(this)}
-                                    className="button gxb float-right">
-                                    <Translate content="dashboard.go_free"></Translate>
-                                </button>
                             </div>
                         </div>
                     </div>

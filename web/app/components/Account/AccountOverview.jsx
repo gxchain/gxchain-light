@@ -149,13 +149,6 @@ class AccountOverview extends React.Component {
                                     <td><Translate content="account.transfer_actions"/></td>
                                     <td>
                                         {hasBalance ? transferLink : null}
-                                        {this.props.isMyAccount ? (
-                                            <span>{this._getSeparator (hasBalance)}
-                                                <a onClick={this.showGXBDeposit.bind (this, asset)}>
-                                                     <Translate content="gateway.deposit"/>
-                                                     </a>
-                                                </span>
-                                        ) : null}
                                     </td>
                                 </tr>
                                 </tbody>
@@ -274,21 +267,6 @@ class AccountOverview extends React.Component {
                             <div className="grid-block small-up-1 medium-up-2 large-up-2 no-overflow">
                                 {includedBalances}
                             </div>
-                            {/*<table className="table">
-                             <thead>
-                             <tr>
-                             <th style={{textAlign: "left"}}><Translate component="span"
-                             content="account.asset"/></th>
-                             <th style={{textAlign: "center"}}>
-                             <Translate content="account.transfer_actions"/>
-                             </th>
-                             <th></th>
-                             </tr>
-                             </thead>
-                             <tbody>
-
-                             </tbody>
-                             </table>*/}
                         </div>
                     </div>
 
@@ -310,35 +288,8 @@ class AccountOverview extends React.Component {
                             showFilters={true}
                         />
                     </div>
-
-                    {/* Deposit Modal
-                     <SimpleDepositWithdraw
-                     ref="deposit_modal"
-                     action="deposit"
-                     fiatModal={this.state.fiatModal}
-                     account={this.props.account.get("name")}
-                     sender={this.props.account.get("id")}
-                     asset={this.state.depositAsset}
-                     modalId="simple_deposit_modal"
-                     balances={this.props.balances}
-                     {...currentDepositAsset}
-                     />
-                     */}
-                    {/* Withdraw Modal
-                     <SimpleDepositWithdraw
-                     ref="withdraw_modal"
-                     action="withdraw"
-                     fiatModal={this.state.fiatModal}
-                     account={this.props.account.get("name")}
-                     sender={this.props.account.get("id")}
-                     asset={this.state.withdrawAsset}
-                     modalId="simple_withdraw_modal"
-                     balances={this.props.balances}
-                     {...currentWithdrawAsset}
-                     />
-                     */}
                 </div>
-                <GXBDepositModal account={account} ref="gxb-deposit-modal"></GXBDepositModal>
+                {/*<GXBDepositModal account={account} ref="gxb-deposit-modal"></GXBDepositModal>*/}
                 <GXBLoyaltyPlanModal account={account} ref="gxb-loyalty-program-modal"/>
             </div>
         );

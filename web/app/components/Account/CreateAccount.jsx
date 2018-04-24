@@ -307,21 +307,9 @@ class CreateAccount extends React.Component {
                     <tbody>
 
                         <tr>
-                            <td><Translate content="wallet.tips_dashboard" />:</td>
-                            <td><Link to="dashboard"><Translate content="header.dashboard" /></Link></td>
-                        </tr>
-
-                        <tr>
                             <td><Translate content="wallet.tips_account" />:</td>
                             <td><Link to={`/account/${this.state.accountName}/overview`} ><Translate content="wallet.link_account" /></Link></td>
                         </tr>
-
-                        <tr>
-                            <td><Translate content="wallet.tips_deposit" />:</td>
-                            <td><Link to="deposit-withdraw"><Translate content="wallet.link_deposit" /></Link></td>
-                        </tr>
-
-
 
                         <tr>
                             <td><Translate content="wallet.tips_transfer" />:</td>

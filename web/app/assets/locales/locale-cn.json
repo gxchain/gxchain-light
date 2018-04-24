@@ -81,6 +81,7 @@
     "withdraw_address": "如果你还没有私人的 %(asset)s 地址, 请找到一个钱包提供商并注册一个账号以完成提现操作."
   },
   "data_market": {
+    "title": "数据市场",
     "free_market": "自由市场",
     "league_market": "联盟市场"
   },

@@ -612,82 +612,6 @@ class AccountAssetUpdate extends React.Component {
 
                             </Tab>
 
-                            <Tab title="account.user_issued_assets.description">
-                                <div className="small-12 large-8 grid-content">
-                                    <Translate component="h3" content="account.user_issued_assets.description" />
-                                    <label>
-                                        <textarea
-                                            style={{height: "7rem"}}
-                                            rows="1"
-                                            value={update.description.main || ""}
-                                            onChange={this._onUpdateDescription.bind(this, "main")}
-                                        />
-                                    </label>
-
-                                    <Translate component="h3" content="account.user_issued_assets.short" />
-                                    <label>
-                                        <input
-                                            type="text"
-                                            rows="1"
-                                            value={update.description.short_name || ""}
-                                            onChange={this._onUpdateDescription.bind(this, "short_name")}
-                                        />
-                                    </label>
-
-                                    <Translate component="h3" content="account.user_issued_assets.market" />
-                                    <AssetSelector
-                                        label="account.user_issued_assets.name"
-                                        onChange={this._onInputMarket.bind(this)}
-                                        asset={this.state.marketInput}
-                                        assetInput={this.state.marketInput}
-                                        style={{width: "100%", paddingRight: "10px"}}
-                                        onFound={this._onFoundMarketAsset.bind(this)}
-                                    />
-
-                                    {isPredictionMarketAsset ? (
-                                    <div>
-
-
-                                        <Translate component="h3" content="account.user_issued_assets.condition" />
-                                        <label>
-                                            <input
-                                                type="text"
-                                                rows="1"
-                                                value={update.description.condition}
-                                                onChange={this._onUpdateDescription.bind(this, "condition")}
-                                            />
-                                        </label>
-
-                                        <Translate component="h3" content="account.user_issued_assets.expiry" />
-                                        <label>
-                                            <input
-                                                type="date"
-                                                value={update.description.expiry}
-                                                onChange={this._onUpdateDescription.bind(this, "expiry")}
-                                            />
-                                        </label>
-                                    </div>) : null}
-
-
-                                    {confirmButtons}
-                                </div>
-                            </Tab>
-
-
-                            {isBitAsset ? (
-                            <Tab title="account.user_issued_assets.bitasset_opts">
-                                <div className="small-12 large-8 grid-content">
-                                    <BitAssetOptions
-                                        bitasset_opts={bitasset_opts}
-                                        onUpdate={this.onChangeBitAssetOpts.bind(this)}
-                                        backingAsset={bitasset_opts.short_backing_asset}
-                                        assetPrecision={asset.get("precision")}
-                                        assetSymbol={asset.get("symbol")}
-                                    />
-                                {confirmButtons}
-                                </div>
-                            </Tab>) : null}
-
                             <Tab title="account.user_issued_assets.update_owner">
                                 <div className="small-12 large-8 grid-content">
                                     <Translate component="h3" content="account.user_issued_assets.update_owner" />
@@ -709,67 +633,6 @@ class AccountAssetUpdate extends React.Component {
                                         error={null}
                                         tabIndex={1}
                                      />
-                                    {confirmButtons}
-                                </div>
-                            </Tab>
-
-                            <Tab title="account.permissions">
-                                <div className="small-12 large-8 grid-content">
-                                    <HelpContent
-                                        path = {"components/AccountAssetCreate"}
-                                        section="permissions"
-                                    />
-                                    <p className="grid-content has-error"><Translate content="account.user_issued_assets.perm_warning" /></p>
-                                    {permissions}
-                                {confirmButtons}
-
-                                </div>
-                            </Tab>
-
-                            <Tab title="account.user_issued_assets.flags">
-                                <div className="small-12 large-8 grid-content">
-                                    <HelpContent
-                                        path = {"components/AccountAssetCreate"}
-                                        section="flags"
-                                    />
-                                    {originalPermissions["charge_market_fee"] ? (
-                                        <div>
-                                            <Translate component="h3" content="account.user_issued_assets.market_fee" />
-                                            <table className="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style={{border: "none", width: "80%"}}><Translate content="account.user_issued_assets.charge_market_fee" />:</td>
-                                                        <td style={{border: "none"}}>
-                                                            <div className="switch" style={{marginBottom: "10px"}} onClick={this._onFlagChange.bind(this, "charge_market_fee")}>
-                                                                <input type="checkbox" onChange={() => {}} checked={flagBooleans.charge_market_fee} />
-                                                                <label />
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div className={cnames({disabled: !flagBooleans.charge_market_fee})}>
-                                            <label><Translate content="account.user_issued_assets.market_fee" /> (%)
-                                                <input type="number" value={update.market_fee_percent} onChange={this._onUpdateInput.bind(this, "market_fee_percent")}/>
-                                            </label>
-
-                                            <label>
-                                                <AmountSelector
-                                                    label="account.user_issued_assets.max_market_fee"
-                                                    amount={update.max_market_fee}
-                                                    onChange={this._onUpdateInput.bind(this, "max_market_fee")}
-                                                    asset={asset.get("id")}
-                                                    assets={[asset.get("id")]}
-                                                    placeholder="0.0"
-                                                    tabIndex={1}
-                                                />
-                                            </label>
-                                            { errors.max_market_fee ? <p className="grid-content has-error">{errors.max_market_fee}</p> : null}
-                                            </div>
-                                        </div>) : null}
-
-                                    <h3><Translate content="account.user_issued_assets.flags" /></h3>
-                                    {flags}
                                     {confirmButtons}
                                 </div>
                             </Tab>
@@ -858,10 +721,6 @@ class AccountAssetUpdate extends React.Component {
                                 </div>
                             </Tab>
                         </Tabs>
-
-
-
-
                 </div>
             </div>
         );

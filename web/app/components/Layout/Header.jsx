@@ -168,7 +168,7 @@ class Header extends React.Component {
             <a
                 style={{paddingTop: 12, paddingBottom: 12}}
                 className={cnames({active: active === "/" || active.indexOf("dashboard") !== -1})}
-                onClick={this._onNavigate.bind(this, "/dashboard")}
+                onClick={this._onNavigate.bind(this, myAccounts.length>0?`/account/${currentAccount}/overview`:"/dashboard")}
             >
                 <img style={{margin: 0, height: 40}} src={logo}/>
             </a>
@@ -358,9 +358,6 @@ class Header extends React.Component {
                         {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`}
                                                             className={cnames({active: active.indexOf("account/") !== -1})}><Translate
                             content="header.account"/></Link></li>}
-                        {<li><Link to={`/data-market`}
-                                   className={cnames({active: active.indexOf("data-market") !== -1})}><Translate
-                            content="header.data_market"/></Link></li>}
                         {<li><a className={cnames({active: active.indexOf("explorer") !== -1})}
                                 onClick={this._onNavigate.bind(this, "/explorer")}><Translate component="span"
                                                                                               content="header.explorer"/></a>

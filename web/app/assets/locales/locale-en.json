@@ -83,6 +83,7 @@
   "propose": "Propose",
   "cancel": "Cancel",
   "data_market": {
+    "title": "Data Market",
     "free_market": "Free Market",
     "league_market": "Alliance Market"
   },

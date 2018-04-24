@@ -94,6 +94,7 @@ class AccountLeftPanel extends React.Component {
 						<section className="block-list">
 							<ul className="account-left-menu" style={{marginBottom: 0}}>
 								<li><Link to={`/account/${account_name}/overview/`} activeClassName="active"><Translate content="account.overview"/></Link></li>
+                                {isMyAccount?<li><Link to={`/account/${account_name}/assets/`} activeClassName="active"><Translate content="account.asset"/></Link></li>:null}
 								<li><Link to={`/account/${account_name}/member-stats/`} activeClassName="active"><Translate content="account.member.stats"/></Link></li>
 								{isMyAccount?<li><Link to={`/account/${account_name}/whitelist/`} activeClassName="active"><Translate content="account.whitelist.title"/></Link></li>:null}
 								<li><Link to={`/account/${account_name}/voting/`} activeClassName="active"><Translate content="account.voting"/></Link></li>
