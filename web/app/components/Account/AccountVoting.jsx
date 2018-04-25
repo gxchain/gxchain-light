@@ -317,7 +317,7 @@ class AccountVoting extends React.Component {
     }
 
     render() {
-        let preferredUnit = this.props.settings.get("unit") || "1.3.0";
+        let preferredUnit = "1.3.0";
         let proxy_is_set = this.props.account.getIn(["options", "voting_account"]) !== "1.2.5";
         let publish_buttons_class = cnames("button", {disabled: !this.isChanged()});
 

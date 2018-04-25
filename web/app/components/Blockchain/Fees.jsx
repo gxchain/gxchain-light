@@ -52,7 +52,7 @@ class FeeGroup extends React.Component {
         let current_fees = globalObject.parameters.current_fees;
         let scale   = current_fees.scale;
         let feesRaw = current_fees.parameters;
-        let preferredUnit = settings.get("unit") || core_asset.get("symbol");
+        let preferredUnit = core_asset.get("symbol");
 
         let trxTypes = counterpart.translate("transaction.trxTypes");
 

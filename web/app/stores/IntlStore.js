@@ -31,7 +31,7 @@ addLocaleData(zh);
 
 class IntlStore {
     constructor() {
-        this.currentLocale = ss.has("settings_v3") ? ss.get("settings_v3").locale : "cn";
+        this.currentLocale = ss.has("settings_v4") ? ss.get("settings_v4").locale : "cn";
 
         this.locales = ["cn"];
         this.localesObject = {cn: locale_cn};

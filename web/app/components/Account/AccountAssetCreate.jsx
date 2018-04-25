@@ -4,7 +4,6 @@ import classnames from "classnames";
 import AssetActions from "actions/AssetActions";
 import utils from "common/utils";
 import {ChainStore, ChainValidation} from "gxbjs/es";
-import FormattedAsset from "../Utility/FormattedAsset";
 import counterpart from "counterpart";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
@@ -31,6 +30,8 @@ class BitAssetOptions extends React.Component {
         super (props);
         this.state = {
             backingAsset: props.backingAsset.get ("symbol"),
+            feeAsset: null,
+            fee_asset_id: "1.3.0",
             error: null
         };
     }
@@ -198,7 +199,7 @@ class AccountAssetCreate extends React.Component {
         e.preventDefault ();
         let {
             update, flagBooleans, permissionBooleans, core_exchange_rate,
-            isBitAsset, is_prediction_market, bitasset_opts
+            isBitAsset, is_prediction_market, bitasset_opts,feeAsset
         } = this.state;
 
         let {account} = this.props;
@@ -469,28 +470,84 @@ class AccountAssetCreate extends React.Component {
         this.forceUpdate ();
     }
 
+    _getAvailableAssets () {
+        const {account} = this.props;
+        let asset_types = [], fee_asset_types = [];
+        if (!(account && account.get ("balances"))) {
+            return {asset_types, fee_asset_types};
+        }
+        let account_balances = account.get ("balances").toJS ();
+        asset_types = Object.keys (account_balances).sort (utils.sortID);
+        fee_asset_types = Object.keys (account_balances).sort (utils.sortID);
+        for (let key in account_balances) {
+            let asset = ChainStore.getObject (key);
+            let balanceObject = ChainStore.getObject (account_balances[key]);
+            if (balanceObject && balanceObject.get ("balance") === 0) {
+                asset_types.splice (asset_types.indexOf (key), 1);
+                if (fee_asset_types.indexOf (key) !== -1) {
+                    fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
+                }
+            }
+
+            if (asset) {
+                if (asset.get ("id") !== "1.3.0" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
+                    fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
+                }
+            }
+        }
+
+        return {asset_types, fee_asset_types};
+    }
+
+    onFeeChanged ({asset}) {
+        this.setState ({feeAsset: asset, error: null});
+    }
+
     render () {
         let {globalObject, core} = this.props;
         let {
             errors, isValid, update, flagBooleans, permissionBooleans,
-            core_exchange_rate, is_prediction_market, isBitAsset, bitasset_opts
+            core_exchange_rate, is_prediction_market, isBitAsset, bitasset_opts, fee_asset_id, feeAsset
         } = this.state;
 
         // Estimate the asset creation fee from the symbol character length
         let symbolLength = update.symbol.length, createFee = "N/A";
 
+        let {asset_types, fee_asset_types} = this._getAvailableAssets ();
+
         if (symbolLength === 3) {
-            createFee = <FormattedAsset amount={utils.estimateFee ("asset_create", ["symbol3"], globalObject)}
-                                        asset={"1.3.0"}/>;
+            createFee = utils.estimateFee ("asset_create", ["symbol3"], globalObject);
         }
         else if (symbolLength === 4) {
-            createFee = <FormattedAsset amount={utils.estimateFee ("asset_create", ["symbol4"], globalObject)}
-                                        asset={"1.3.0"}/>;
+            createFee = utils.estimateFee ("asset_create", ["symbol4"], globalObject);
         }
         else if (symbolLength > 4) {
-            createFee = <FormattedAsset amount={utils.estimateFee ("asset_create", ["long_symbol"], globalObject)}
-                                        asset={"1.3.0"}/>;
+            createFee = utils.estimateFee ("asset_create", ["long_symbol"], globalObject);
         }
+
+        // Finish fee estimation
+        if (feeAsset && feeAsset.get ("id") !== "1.3.0" && core) {
+
+            let price = utils.convertPrice (core, feeAsset.getIn (["options", "core_exchange_rate"]).toJS (), null, feeAsset.get ("id"));
+            createFee = utils.convertValue (price, createFee, core, feeAsset);
+
+            if (parseInt (createFee, 10) !== createFee) {
+                createFee += 1; // Add 1 to round up;
+            }
+        }
+        if (core && createFee !== 'N/A') {
+            createFee = utils.limitByPrecision (utils.get_asset_amount (createFee, feeAsset || core), feeAsset ? feeAsset.get ("precision") : core.get ("precision"));
+        }
+
+        createFee = <AmountSelector
+            label="account.user_issued_assets.approx_fee"
+            disabled={true}
+            amount={createFee}
+            onChange={this.onFeeChanged.bind (this)}
+            asset={fee_asset_types.length && feeAsset ? feeAsset.get ("id") : (fee_asset_types.length === 1 ? fee_asset_types[0] : fee_asset_id ? fee_asset_id : fee_asset_types[0])}
+            assets={fee_asset_types}
+            tabIndex={2}
+        />;
 
         // Loop over flags
         let flags = [];
@@ -574,14 +631,14 @@ class AccountAssetCreate extends React.Component {
                             <p className="grid-content has-error">{errors.max_supply}</p> : null}
 
                         {/*<label>*/}
-                            {/*<Translate content="account.user_issued_assets.decimals"/>*/}
-                            {/*<input min="0" max="8" step="1" type="range" value={update.precision}*/}
-                                   {/*onChange={this._onUpdateInput.bind (this, "precision")}/>*/}
+                        {/*<Translate content="account.user_issued_assets.decimals"/>*/}
+                        {/*<input min="0" max="8" step="1" type="range" value={update.precision}*/}
+                        {/*onChange={this._onUpdateInput.bind (this, "precision")}/>*/}
                         {/*</label>*/}
                         {/*<p>{update.precision}</p>*/}
 
                         {/*<div style={{marginBottom: 10}} className="txtlabel cancel"><Translate*/}
-                            {/*content="account.user_issued_assets.precision_warning"/></div>*/}
+                        {/*content="account.user_issued_assets.precision_warning"/></div>*/}
 
                         {/* CER */}
                         <Translate component="h5" content="account.user_issued_assets.core_exchange_rate"/>
@@ -634,6 +691,9 @@ class AccountAssetCreate extends React.Component {
                                 </h5>
                             </div>
                         </label>
+                        <label>
+                            {createFee}
+                        </label>
                     </div>
 
                     <hr/>
@@ -648,7 +708,7 @@ class AccountAssetCreate extends React.Component {
                         </button>
                         <br/>
                         <br/>
-                        <p><Translate content="account.user_issued_assets.approx_fee"/>: {createFee}</p>
+
                     </div>
 
                 </div>

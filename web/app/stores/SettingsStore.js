@@ -7,7 +7,7 @@ import ls from "common/localStorage";
 import { Apis } from "gxbjs-ws";
 import { settingsAPIs } from "api/apiConfig";
 
-const CORE_ASSET = "GXC"; // Setting this to GXC to prevent loading issues when used with GXChain which is the most usual case currently
+// const CORE_ASSET = "GXB.GXC"; // Setting this to GXC to prevent loading issues when used with GXChain which is the most usual case currently
 
 const STORAGE_KEY = "__gxb__";
 let ss = new ls(STORAGE_KEY);
@@ -21,7 +21,7 @@ class SettingsStore {
             apiServer: settingsAPIs.DEFAULT_WS_NODE,
             faucet_address: settingsAPIs.DEFAULT_FAUCET,
             statistics_address: settingsAPIs.DEFAULT_STATISTICS,
-            unit: CORE_ASSET,
+            // unit: CORE_ASSET,
             showSettles: false,
             showAssetPercent: false,
             walletLockTimeout: 60 * 10,
@@ -45,14 +45,6 @@ class SettingsStore {
                 // "ru"
             ],
             apiServer: [],
-            unit: [
-                CORE_ASSET,
-                // "USD",
-                // "CNY",
-                // "BTC",
-                // "EUR",
-                // "GBP"
-            ],
             showSettles: [
                 {translate: "yes"},
                 {translate: "no"}
@@ -92,7 +84,7 @@ class SettingsStore {
             onSwitchLocale: IntlActions.switchLocale
         });
 
-        this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
+        this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v4")));
 
         let savedDefaults = ss.get("defaults_v2", {});
         this.defaults = merge({}, defaults, savedDefaults);
@@ -139,52 +131,7 @@ class SettingsStore {
     init() {
         return new Promise((resolve) => {
             if (this.initDone) resolve();
-            this.marketsString = this._getChainKey("markets");
-            // Default markets setup
-            let topMarkets = {
-                markets_4018d784: [ // BTS MAIN NET
-                    "OPEN.MKR", "BTS", "OPEN.ETH", "ICOO", "BTC", "OPEN.LISK", "BKT",
-                    "OPEN.STEEM", "OPEN.GAME", "PEERPLAYS", "USD", "CNY", "BTSR", "OBITS",
-                    "OPEN.DGD", "EUR", "GOLD", "SILVER", "IOU.CNY", "OPEN.DASH",
-                    "OPEN.USDT", "OPEN.EURT", "OPEN.BTC", "CADASTRAL", "BLOCKPAY", "BTWTY",
-                    "OPEN.INCNT", "KAPITAL"
-                ],
-                markets_39f5e2ed: [ // TESTNET
-                    "PEG.FAKEUSD", "BTWTY"
-                ]
-            };
 
-            let bases = {
-                markets_4018d784: [ // BTS MAIN NET
-                    "USD", "OPEN.BTC", "CNY", "BTS", "BTC"
-                ],
-                markets_39f5e2ed: [ // TESTNET
-                    "TEST"
-                ]
-            };
-
-            let coreAssets = {markets_4018d784: "BTS", markets_39f5e2ed: "TEST"};
-            let coreAsset = coreAssets[this.marketsString] || "BTS";
-            this.defaults.unit[0] = coreAsset;
-
-            let chainBases = bases[this.marketsString] || bases.markets_4018d784;
-            this.preferredBases = Immutable.List(chainBases);
-
-            function addMarkets(target, base, markets) {
-                markets.filter(a => {
-                    return a !== base;
-                }).forEach(market => {
-                    target.push([`${market}_${base}`, {"quote": market,"base": base}]);
-                });
-            }
-
-            let defaultMarkets = [];
-            let chainMarkets = topMarkets[this.marketsString] || [];
-            this.preferredBases.forEach(base => {
-                addMarkets(defaultMarkets, base, chainMarkets);
-            });
-
-            this.starredMarkets = Immutable.Map(ss.get(this.marketsString, defaultMarkets));
             this.starredAccounts = Immutable.Map(ss.get(this._getChainKey("starredAccounts")));
 
             this.initDone = true;
@@ -202,7 +149,7 @@ class SettingsStore {
             payload.value
         );
 
-        ss.set("settings_v3", this.settings.toJS());
+        ss.set("settings_v4", this.settings.toJS());
         if (payload.setting === "walletLockTimeout") {
             ss.set("lockTimeout", payload.value);
         }
@@ -289,10 +236,10 @@ class SettingsStore {
     }
 
     onClearSettings(resolve) {
-        ss.remove("settings_v3");
+        ss.remove("settings_v4");
         this.settings = this.defaultSettings;
 
-        ss.set("settings_v3", this.settings.toJS());
+        ss.set("settings_v4", this.settings.toJS());
 
         if (resolve) {
             resolve();
