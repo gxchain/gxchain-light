@@ -177,6 +177,7 @@
       "optional": "可选设定",
       "approx_fee": "资产创建费用预估",
       "update_fee": "资产更新费用预估",
+      "issue_fee": "资产发行费用预估",
       "exists": "资产代码已存在",
       "max_positive": "最大供应量必须是个大于0",
       "core_exchange_rate": "手续费汇率",

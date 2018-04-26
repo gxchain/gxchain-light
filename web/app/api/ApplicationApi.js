@@ -197,7 +197,8 @@ class ApplicationApi {
         amount,
         memo,
         encrypt_memo = true,
-        optional_nonce = null
+        optional_nonce = null,
+        fee_asset_id = '1.3.0'
         ) {
 
         let unlock_promise = WalletUnlockActions.unlock();
@@ -259,7 +260,7 @@ class ApplicationApi {
             tr.add_type_operation("asset_issue", {
                 fee: {
                     amount: 0,
-                    asset_id: 0
+                    asset_id: fee_asset_id
                 },
                 issuer: from_account,
                 asset_to_issue: {

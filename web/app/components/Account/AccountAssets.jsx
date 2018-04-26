@@ -283,6 +283,7 @@ class AccountAssets extends React.Component {
                     <div className="grid-block vertical">
                         <IssueModal
                             asset_to_issue={this.state.issue.asset_id}
+                            account={this.props.account}
                             onClose={() => {
                                 ZfApi.publish ("issue_asset", "close");
                             }}

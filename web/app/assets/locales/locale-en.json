@@ -216,6 +216,7 @@
       "optional": "Optional settings",
       "approx_fee": "Approximate fee",
       "update_fee": "Update fee",
+      "issue_fee": "Issue fee",
       "exists": "That asset already exists",
       "max_positive": "Max supply should be a positive number",
       "core_exchange_rate": "Core exchange rate",

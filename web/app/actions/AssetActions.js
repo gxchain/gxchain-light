@@ -221,9 +221,8 @@ class AssetActions {
         });
     }
 
-    issueAsset (to_account, from_account, asset_id, amount, memo) {
-
-        application_api.issue_asset (to_account, from_account, asset_id, amount, memo);
+    issueAsset (to_account, from_account, asset_id, amount, memo, fee_asset_id = '1.3.0') {
+        application_api.issue_asset (to_account, from_account, asset_id, amount, memo, true, null, fee_asset_id);
     }
 
     // issueAsset(account_id, issueObject) {
