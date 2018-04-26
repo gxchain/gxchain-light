@@ -30,8 +30,6 @@ class BitAssetOptions extends React.Component {
         super (props);
         this.state = {
             backingAsset: props.backingAsset.get ("symbol"),
-            feeAsset: null,
-            fee_asset_id: "1.3.0",
             error: null
         };
     }
@@ -163,6 +161,8 @@ class AccountAssetCreate extends React.Component {
             permissionBooleans: permissionBooleans,
             isBitAsset: isBitAsset,
             is_prediction_market: false,
+            fee_asset_id: '1.3.0',
+            feeAsset: null,
             core_exchange_rate: {
                 quote: {
                     asset_id: null,
@@ -199,7 +199,7 @@ class AccountAssetCreate extends React.Component {
         e.preventDefault ();
         let {
             update, flagBooleans, permissionBooleans, core_exchange_rate,
-            isBitAsset, is_prediction_market, bitasset_opts,feeAsset
+            isBitAsset, is_prediction_market, bitasset_opts, feeAsset
         } = this.state;
 
         let {account} = this.props;
@@ -212,7 +212,7 @@ class AccountAssetCreate extends React.Component {
         }
         let description = JSON.stringify (update.description);
 
-        AssetActions.createAsset (account.get ("id"), update, flags, permissions, core_exchange_rate, isBitAsset, is_prediction_market, bitasset_opts, description).then (result => {
+        AssetActions.createAsset (account.get ("id"), update, flags, permissions, core_exchange_rate, isBitAsset, is_prediction_market, bitasset_opts, description,feeAsset.get('id')).then (result => {
             console.log ("... AssetActions.createAsset(account_id, update)", account.get ("id"), update, flags, permissions);
         });
     }

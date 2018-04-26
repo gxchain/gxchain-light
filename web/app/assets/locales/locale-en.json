@@ -215,6 +215,7 @@
       "primary": "Primary settings",
       "optional": "Optional settings",
       "approx_fee": "Approximate fee",
+      "update_fee": "Update fee",
       "exists": "That asset already exists",
       "max_positive": "Max supply should be a positive number",
       "core_exchange_rate": "Core exchange rate",
@@ -491,7 +492,7 @@
     "data_transaction_datasource_validate_error": "{account} returned an error when processing the data upload",
     "balance_lock":"{account} locked {amount} for loyalty program",
     "balance_unlock":"{account} complete a loyalty program",
-    "proxy_transfer": "{account} created a proxy transaction: {from} sent {amount} to {to}"
+    "proxy_transfer": "{from} sent {amount} to {to} delegated by {account}"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
