@@ -168,7 +168,7 @@ class Header extends React.Component {
             <a
                 style={{paddingTop: 12, paddingBottom: 12}}
                 className={cnames({active: active === "/" || active.indexOf("dashboard") !== -1})}
-                onClick={this._onNavigate.bind(this, myAccounts.length>0?`/account/${currentAccount}/overview`:"/dashboard")}
+                onClick={this._onNavigate.bind(this, '/')}
             >
                 <img style={{margin: 0, height: 40}} src={logo}/>
             </a>

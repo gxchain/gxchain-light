@@ -141,48 +141,48 @@ class DashboardList extends React.Component {
 				let accountName = account.get("name");
 				let isLTM = account.get("lifetime_referrer_name") === accountName;
 
-				if (account.get("orders")) {
-					account.get("orders").forEach( (orderID, key) => {
-						let order = ChainStore.getObject(orderID);
-						if (order) {
-							let orderAsset = order.getIn(["sell_price", "base", "asset_id"]);
-							if (!openOrders[orderAsset]) {
-								openOrders[orderAsset] = parseInt(order.get("for_sale"), 10);
-							} else {
-								openOrders[orderAsset] += parseInt(order.get("for_sale"), 10);
-							}
-						}
-					});
-				}
-
-				// console.log("openOrders:", openOrders);
-
-				if (account.get("call_orders")) {
-					account.get("call_orders").forEach( (callID, key) => {
-						let position = ChainStore.getObject(callID);
-						if (position) {
-							collateral += parseInt(position.get("collateral"), 10);
-
-							let debtAsset = position.getIn(["call_price", "quote", "asset_id"]);
-							if (!debt[debtAsset]) {
-								debt[debtAsset] = parseInt(position.get("debt"), 10);
-							} else {
-								debt[debtAsset] += parseInt(position.get("debt"), 10);
-							}
-						}
-					});
-				}
-
-				let account_balances = account.get("balances");
-				if (account.get("balances")) {
-					account_balances.forEach( balance => {
-						let balanceAmount = ChainStore.getObject(balance);
-						if (!balanceAmount || !balanceAmount.get("balance")) {
-							return null;
-						}
-						balanceList = balanceList.push(balance);
-					});
-				}
+				// if (account.get("orders")) {
+				// 	account.get("orders").forEach( (orderID, key) => {
+				// 		let order = ChainStore.getObject(orderID);
+				// 		if (order) {
+				// 			let orderAsset = order.getIn(["sell_price", "base", "asset_id"]);
+				// 			if (!openOrders[orderAsset]) {
+				// 				openOrders[orderAsset] = parseInt(order.get("for_sale"), 10);
+				// 			} else {
+				// 				openOrders[orderAsset] += parseInt(order.get("for_sale"), 10);
+				// 			}
+				// 		}
+				// 	});
+				// }
+                //
+				// // console.log("openOrders:", openOrders);
+                //
+				// if (account.get("call_orders")) {
+				// 	account.get("call_orders").forEach( (callID, key) => {
+				// 		let position = ChainStore.getObject(callID);
+				// 		if (position) {
+				// 			collateral += parseInt(position.get("collateral"), 10);
+                //
+				// 			let debtAsset = position.getIn(["call_price", "quote", "asset_id"]);
+				// 			if (!debt[debtAsset]) {
+				// 				debt[debtAsset] = parseInt(position.get("debt"), 10);
+				// 			} else {
+				// 				debt[debtAsset] += parseInt(position.get("debt"), 10);
+				// 			}
+				// 		}
+				// 	});
+				// }
+                //
+				// let account_balances = account.get("balances");
+				// if (account.get("balances")) {
+				// 	account_balances.forEach( balance => {
+				// 		let balanceAmount = ChainStore.getObject(balance);
+				// 		if (!balanceAmount || !balanceAmount.get("balance")) {
+				// 			return null;
+				// 		}
+				// 		balanceList = balanceList.push(balance);
+				// 	});
+				// }
 
 				let isMyAccount = AccountStore.isMyAccount(account);
 
@@ -197,18 +197,18 @@ class DashboardList extends React.Component {
 						<td onClick={this._goAccount.bind(this, `${accountName}/overview`)} className={isMyAccount ? "my-account" : ""}>
 							<span className={isLTM ? "lifetime" : ""}>{accountName}</span>
 						</td>
-						<td onClick={this._goAccount.bind(this, `${accountName}/orders`)} style={{textAlign: "right"}}>
-							<TotalBalanceValue balances={[]} openOrders={openOrders}/>
-						</td>
-						{width >= 750 ? <td onClick={this._goAccount.bind(this, `${accountName}/overview`)} style={{textAlign: "right"}}>
-							<TotalBalanceValue balances={[]} collateral={collateral}/>
-						</td> : null}
-						{width >= 1200 ? <td onClick={this._goAccount.bind(this, `${accountName}/overview`)} style={{textAlign: "right"}}>
-							<TotalBalanceValue balances={[]} debt={debt}/>
-						</td> : null}
-						<td onClick={this._goAccount.bind(this, `${accountName}/overview`)} style={{textAlign: "right"}}>
-							<TotalBalanceValue balances={balanceList} collateral={collateral} debt={debt} openOrders={openOrders}/>
-						</td>
+						{/*<td onClick={this._goAccount.bind(this, `${accountName}/orders`)} style={{textAlign: "right"}}>*/}
+							{/*<TotalBalanceValue balances={[]} openOrders={openOrders}/>*/}
+						{/*</td>*/}
+						{/*{width >= 750 ? <td onClick={this._goAccount.bind(this, `${accountName}/overview`)} style={{textAlign: "right"}}>*/}
+							{/*<TotalBalanceValue balances={[]} collateral={collateral}/>*/}
+						{/*</td> : null}*/}
+						{/*{width >= 1200 ? <td onClick={this._goAccount.bind(this, `${accountName}/overview`)} style={{textAlign: "right"}}>*/}
+							{/*<TotalBalanceValue balances={[]} debt={debt}/>*/}
+						{/*</td> : null}*/}
+						{/*<td onClick={this._goAccount.bind(this, `${accountName}/overview`)} style={{textAlign: "right"}}>*/}
+							{/*<TotalBalanceValue balances={balanceList} collateral={collateral} debt={debt} openOrders={openOrders}/>*/}
+						{/*</td>*/}
 					</tr>
 				);
 			}
@@ -240,10 +240,10 @@ class DashboardList extends React.Component {
 						<tr>
 							<th onClick={this._setSort.bind(this, "star")} className="clickable"><Icon className="grey-star" name="fi-star"/></th>
 							<th onClick={this._setSort.bind(this, "name")} className="clickable"><Translate content="header.account" /></th>
-							<th style={{textAlign: "right"}}><Translate content="account.open_orders" /></th>
-							{width >= 750 ? <th style={{textAlign: "right"}}><Translate content="account.as_collateral" /></th> : null}
-							{width >= 1200 ? <th style={{textAlign: "right"}}><Translate content="transaction.borrow_amount" /></th> : null}
-							<th style={{textAlign: "right"}}><Translate content="account.total_value" /></th>
+							{/*<th style={{textAlign: "right"}}><Translate content="account.open_orders" /></th>*/}
+							{/*{width >= 750 ? <th style={{textAlign: "right"}}><Translate content="account.as_collateral" /></th> : null}*/}
+							{/*{width >= 1200 ? <th style={{textAlign: "right"}}><Translate content="transaction.borrow_amount" /></th> : null}*/}
+							{/*<th style={{textAlign: "right"}}><Translate content="account.total_value" /></th>*/}
 						</tr>
 					</thead>) : null}
 					<tbody>
