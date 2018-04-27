@@ -25,26 +25,6 @@ class Explorer extends React.Component {
             <div className="grid-block page-layout flex-start">
                 <div className="grid-block regular-padding small-up-1 medium-up-2 large-up-3">
                     <ExplorerCard>
-                        <Link to="data-market">
-                            <div>
-                                <Icon name="markets" size="5x" fillClass="fill-black"/>
-                            </div>
-                            <div className="card-divider text-center">
-                                <Translate component="span" content="data_market.title"/>
-                            </div>
-                        </Link>
-                    </ExplorerCard>
-                    <ExplorerCard>
-                        <Link to="explorer/statistics">
-                            <div>
-                                <Icon name="statistics" size="5x" fillClass="fill-black"/>
-                            </div>
-                            <div className="card-divider text-center">
-                                <Translate component="span" content="explorer.statistics.title"/>
-                            </div>
-                        </Link>
-                    </ExplorerCard>
-                    <ExplorerCard>
                         <Link to="explorer/blocks">
                             <div>
                                 <Icon name="blocks" size="5x" fillClass="fill-black"/>
@@ -102,6 +82,26 @@ class Explorer extends React.Component {
                             </div>
                             <div className="card-divider text-center">
                                 <Translate component="span" content="fees.title"/>
+                            </div>
+                        </Link>
+                    </ExplorerCard>
+                    <ExplorerCard>
+                        <Link to="data-market">
+                            <div>
+                                <Icon name="markets" size="5x" fillClass="fill-black"/>
+                            </div>
+                            <div className="card-divider text-center">
+                                <Translate component="span" content="data_market.title"/>
+                            </div>
+                        </Link>
+                    </ExplorerCard>
+                    <ExplorerCard>
+                        <Link to="explorer/statistics">
+                            <div>
+                                <Icon name="statistics" size="5x" fillClass="fill-black"/>
+                            </div>
+                            <div className="card-divider text-center">
+                                <Translate component="span" content="explorer.statistics.title"/>
                             </div>
                         </Link>
                     </ExplorerCard>
