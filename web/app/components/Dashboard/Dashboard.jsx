@@ -92,21 +92,24 @@ class Dashboard extends React.Component {
 
         if (!accountCount) {
             return (
-                <div ref="wrapper" className="grid-block" id="dashboard">
-                    <div className="grid-block left">
-                        <div className="grid-block" dangerouslySetInnerHTML={{__html: svg}}></div>
-                        <div onClick={this.refreshSVG.bind (this)} className="mask"></div>
-                    </div>
-                    <div className="right" ref='right' style={{background: `url(${rightBg})`}}>
-                        <div className="right-wrapper">
-                            <img src={logoSlogan} className="slogan"/>
-                            <div className="buttons">
-                                <button onClick={(() => {
-                                    this.props.router.push ('/create-account');
-                                }).bind (this)}
-                                        className="button info float-left">
-                                    <Translate content="dashboard.create_account"></Translate>
-                                </button>
+                <div ref="wrapper" className="grid-block page-layout"
+                     id="dashboard">
+                    <div className='grid-block small-12 medium-10 medium-offset-1 main-content vertical'>
+                        <div className="grid-block left">
+                            <div className="grid-block" dangerouslySetInnerHTML={{__html: svg}}></div>
+                            <div onClick={this.refreshSVG.bind (this)} className="mask"></div>
+                        </div>
+                        <div className="right" ref='right' style={{background: `url(${rightBg})`}}>
+                            <div className="right-wrapper">
+                                <img src={logoSlogan} className="slogan"/>
+                                <div className="buttons">
+                                    <button onClick={(() => {
+                                        this.props.router.push ('/create-account');
+                                    }).bind (this)}
+                                            className="button info float-left">
+                                        <Translate content="dashboard.create_account"></Translate>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -116,22 +119,7 @@ class Dashboard extends React.Component {
 
         return (
             <div ref="wrapper" className="grid-block page-layout vertical">
-                <div className="" style={{padding: "25px 10px 0 10px"}}>
-                    {/*<div className="block-content-header" style={{marginBottom: 15}}>*/}
-                    {/*<Translate content="dashboard.hot_products"/>*/}
-                    {/*</div>*/}
-                    {/*<HotProducts {...this.props} />*/}
-                    {/*<a onClick={this.goMarket.bind(this,'FREE')}  className="float-right">
-                     <Translate content="dashboard.more_products"/>
-                     </a>*/}
-                    {/*<div className="block-content-header" style={{marginBottom: 15,marginTop:35}}>*/}
-                    {/*<Translate content="dashboard.active_league"/>*/}
-                    {/*</div>*/}
-                    {/*<ActiveLeagues  {...this.props}  />*/}
-                    {/*<a onClick={this.goMarket.bind(this,'LEAGUE')} className="float-right">
-                     <Translate content="dashboard.more_league"/>
-                     </a>*/}
-
+                <div className="grid-block vertical medium-6 medium-offset-3">
                     {<div className="generic-bordered-box" style={{marginBottom: 5}}>
                         <div className="block-content-header" style={{marginBottom: 15}}>
                             <Translate content="account.accounts"/>

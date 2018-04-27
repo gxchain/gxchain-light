@@ -191,9 +191,9 @@ class DashboardList extends React.Component {
 
 				return (
 					<tr key={accountName}>
-						<td onClick={this._onStar.bind(this, accountName, isStarred)}>
-							<Icon className={starClass} name="fi-star"/>
-						</td>
+						{/*<td onClick={this._onStar.bind(this, accountName, isStarred)}>*/}
+							{/*<Icon className={starClass} name="fi-star"/>*/}
+						{/*</td>*/}
 						<td onClick={this._goAccount.bind(this, `${accountName}/overview`)} className={isMyAccount ? "my-account" : ""}>
 							<span className={isLTM ? "lifetime" : ""}>{accountName}</span>
 						</td>
@@ -238,7 +238,7 @@ class DashboardList extends React.Component {
 					{!this.props.compact ? (
 					<thead>
 						<tr>
-							<th onClick={this._setSort.bind(this, "star")} className="clickable"><Icon className="grey-star" name="fi-star"/></th>
+							{/*<th onClick={this._setSort.bind(this, "star")} className="clickable"><Icon className="grey-star" name="fi-star"/></th>*/}
 							<th onClick={this._setSort.bind(this, "name")} className="clickable"><Translate content="header.account" /></th>
 							{/*<th style={{textAlign: "right"}}><Translate content="account.open_orders" /></th>*/}
 							{/*{width >= 750 ? <th style={{textAlign: "right"}}><Translate content="account.as_collateral" /></th> : null}*/}
