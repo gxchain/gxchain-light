@@ -108,7 +108,7 @@ class AccountAssetUpdate extends React.Component {
         e.preventDefault ();
         let {
             update, issuer, new_issuer_account, core_exchange_rate, flagBooleans,
-            permissionBooleans, isBitAsset, bitasset_opts, original_bitasset_opts,feeAsset
+            permissionBooleans, isBitAsset, bitasset_opts, original_bitasset_opts, feeAsset
         } = this.state;
 
         let flags = assetUtils.getFlags (flagBooleans);
@@ -128,7 +128,7 @@ class AccountAssetUpdate extends React.Component {
         let description = JSON.stringify (update.description);
 
         AssetActions.updateAsset (issuer, new_issuer_account, update, core_exchange_rate, this.props.asset,
-            flags, permissions, isBitAsset, bitasset_opts, original_bitasset_opts, description,feeAsset.get('id')).then (result => {
+            flags, permissions, isBitAsset, bitasset_opts, original_bitasset_opts, description, feeAsset.get ('id')).then (result => {
             console.log ("... AssetActions.updateAsset(account_id, update)", issuer, new_issuer_account, this.props.asset.get ("id"), update);
             setTimeout (() => {
                 AssetActions.getAsset (this.props.asset.get ("id"));
@@ -411,6 +411,10 @@ class AccountAssetUpdate extends React.Component {
         fee_asset_types = Object.keys (account_balances).sort (utils.sortID);
         for (let key in account_balances) {
             let asset = ChainStore.getObject (key);
+            if (asset.get ('id') !== '1.3.0' && asset.get ('id') !== '1.3.1') {
+                fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
+                continue;
+            }
             let balanceObject = ChainStore.getObject (account_balances[key]);
             if (balanceObject && balanceObject.get ("balance") === 0) {
                 asset_types.splice (asset_types.indexOf (key), 1);
@@ -430,7 +434,7 @@ class AccountAssetUpdate extends React.Component {
     }
 
     _onClaimFees (e) {
-        AssetActions.claimPoolFees (this.props.account.get ("id"), this.props.asset, this.state.claimFeesAmount.replace (/,/g, ""),this.state.feeAsset?this.state.feeAsset.get('id'):"1.3.0");
+        AssetActions.claimPoolFees (this.props.account.get ("id"), this.props.asset, this.state.claimFeesAmount.replace (/,/g, ""), this.state.feeAsset ? this.state.feeAsset.get ('id') : "1.3.0");
     }
 
     render () {
