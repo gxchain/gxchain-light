@@ -11,6 +11,10 @@ var svg = require ("assets/images/d.svg");
 
 class Dashboard extends React.Component {
 
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    }
+
     constructor () {
         super ();
 
@@ -40,6 +44,9 @@ class Dashboard extends React.Component {
                     }
                 }
             });
+        }
+        if(this.props.currentAccount){
+            this.context.router.replace(`/account/${this.props.currentAccount}/overview`);
         }
     }
 
@@ -94,22 +101,20 @@ class Dashboard extends React.Component {
             return (
                 <div ref="wrapper" className="grid-block page-layout"
                      id="dashboard">
-                    <div className='grid-block small-12 medium-10 medium-offset-1 main-content vertical'>
-                        <div className="grid-block left">
-                            <div className="grid-block" dangerouslySetInnerHTML={{__html: svg}}></div>
-                            <div onClick={this.refreshSVG.bind (this)} className="mask"></div>
-                        </div>
-                        <div className="right" ref='right' style={{background: `url(${rightBg})`}}>
-                            <div className="right-wrapper">
-                                <img src={logoSlogan} className="slogan"/>
-                                <div className="buttons">
-                                    <button onClick={(() => {
-                                        this.props.router.push ('/create-account');
-                                    }).bind (this)}
-                                            className="button info float-left">
-                                        <Translate content="dashboard.create_account"></Translate>
-                                    </button>
-                                </div>
+                    <div className="grid-block left">
+                        <div className="grid-block" dangerouslySetInnerHTML={{__html: svg}}></div>
+                        <div onClick={this.refreshSVG.bind (this)} className="mask"></div>
+                    </div>
+                    <div className="right" ref='right' style={{background: `url(${rightBg})`}}>
+                        <div className="right-wrapper">
+                            <img src={logoSlogan} className="slogan"/>
+                            <div className="buttons">
+                                <button onClick={(() => {
+                                    this.props.router.push ('/create-account');
+                                }).bind (this)}
+                                        className="button info float-left">
+                                    <Translate content="dashboard.create_account"></Translate>
+                                </button>
                             </div>
                         </div>
                     </div>
