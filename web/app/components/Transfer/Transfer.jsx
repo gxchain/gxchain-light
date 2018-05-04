@@ -102,7 +102,7 @@ class Transfer extends React.Component {
         if (!asset) {
             return;
         }
-        this.setState({amount, asset, feeAsset: asset, asset_id: asset.get("id"), error: null});
+        this.setState({amount, asset, asset_id: asset.get("id"), error: null});
     }
 
     onFeeChanged({asset}) {
