@@ -257,6 +257,42 @@ class AccountAssetUpdate extends React.Component {
         }
     }
 
+    _onUpdateDescription (value, e) {
+        let {update} = this.state;
+        let updateState = true;
+
+        switch (value) {
+            case "condition":
+                if (e.target.value.length > 60) {
+                    updateState = false;
+                    return;
+                }
+                update.description[value] = e.target.value;
+                break;
+
+            case "short_name":
+                if (e.target.value.length > 32) {
+                    updateState = false;
+                    return;
+                }
+                update.description[value] = e.target.value;
+                break;
+
+            case "market":
+                update.description[value] = e;
+                break;
+
+            default:
+                update.description[value] = e.target.value;
+                break;
+        }
+
+        if (updateState) {
+            this.forceUpdate ();
+            this._validateEditFields (update);
+        }
+    }
+
     _validateEditFields (new_state) {
         let cer = new_state.core_exchange_rate;
         let {asset, core} = this.props;
@@ -597,6 +633,15 @@ class AccountAssetUpdate extends React.Component {
                           contentClass="grid-block shrink small-vertical medium-horizontal">
                         <Tab title="account.user_issued_assets.primary">
                             <div className="small-12 large-8 grid-content">
+                                <Translate component="h5" content="account.user_issued_assets.description"/>
+                                <label>
+                                    <textarea
+                                        style={{height: "7rem"}}
+                                        rows="1"
+                                        value={update.description.main}
+                                        onChange={this._onUpdateDescription.bind (this, "main")}
+                                    />
+                                </label>
                                 <h3><Translate content="account.user_issued_assets.primary"/></h3>
                                 <label><Translate content="account.user_issued_assets.precision"/>
                                     <span>: {asset.get ("precision")}</span>
