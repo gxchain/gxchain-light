@@ -10,13 +10,12 @@ import {Link} from "react-router";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import utils from "common/utils";
-import GXBDepositModal from '../Modal/GXBDepositModal';
 import GXBLoyaltyPlanModal from '../Modal/GXBLoyaltyPlanModal';
 import AccountImage from "./AccountImage";
 
 let logos = {
-    GXC: require ('assets/logo-gxc.png'),
-    GXS: require ('assets/logo-gxs.png')
+    GXC: require('assets/logo-gxc.png'),
+    GXS: require('assets/logo-gxs.png')
 };
 
 class AccountOverview extends React.Component {
@@ -30,8 +29,8 @@ class AccountOverview extends React.Component {
         globalObject: "2.0.0"
     };
 
-    constructor () {
-        super ();
+    constructor() {
+        super();
         this.state = {
             showHidden: false,
             depositAsset: null,
@@ -39,25 +38,25 @@ class AccountOverview extends React.Component {
         };
     }
 
-    shouldComponentUpdate (nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         return (
-            !utils.are_equal_shallow (nextProps.balanceAssets, this.props.balanceAssets) || !utils.are_equal_shallow (nextProps.balances, this.props.balances) ||
+            !utils.are_equal_shallow(nextProps.balanceAssets, this.props.balanceAssets) || !utils.are_equal_shallow(nextProps.balances, this.props.balances) ||
             nextProps.account !== this.props.account ||
             nextProps.settings !== this.props.settings ||
-            nextProps.hiddenAssets !== this.props.hiddenAssets || !utils.are_equal_shallow (nextState, this.state)
+            nextProps.hiddenAssets !== this.props.hiddenAssets || !utils.are_equal_shallow(nextState, this.state)
         );
     }
 
-    _hideAsset (asset, status) {
-        SettingsActions.hideAsset (asset, status);
+    _hideAsset(asset, status) {
+        SettingsActions.hideAsset(asset, status);
     }
 
-    showGXBDeposit (asset) {
-        this.refs['gxb-deposit-modal'].refs['bound_component'].show (asset);
+    showGXBDeposit(asset) {
+        this.refs['gxb-deposit-modal'].refs['bound_component'].show(asset);
     }
 
-    showLoyaltyPlanModal (balanceObject) {
-        this.refs['gxb-loyalty-program-modal'].refs['bound_component'].show (balanceObject);
+    showLoyaltyPlanModal(balanceObject) {
+        this.refs['gxb-loyalty-program-modal'].refs['bound_component'].show(balanceObject);
     }
 
     // _showDepositWithdraw(action, asset, fiatModal, e) {
@@ -70,79 +69,79 @@ class AccountOverview extends React.Component {
     //     });
     // }
 
-    _getSeparator (render) {
+    _getSeparator(render) {
         return render ? <span> | </span> : null;
     }
 
-    _onNavigate (route, e) {
-        e.preventDefault ();
-        this.props.router.push (route);
+    _onNavigate(route, e) {
+        e.preventDefault();
+        this.props.router.push(route);
     }
 
-    _renderBalances (balanceList) {
+    _renderBalances(balanceList) {
         let {settings, account} = this.props;
-        let showAssetPercent = settings.get ("showAssetPercent", false);
+        let showAssetPercent = settings.get("showAssetPercent", false);
         let balances = [];
-        let programs = this.props.globalObject.getIn (['parameters', 'extensions']).find (function (arr) {
-            return arr.toJS ()[0] == 6;
+        let programs = this.props.globalObject.getIn(['parameters', 'extensions']).find(function (arr) {
+            return arr.toJS()[0] == 6;
         });
 
-        balanceList.forEach (balance => {
+        balanceList.forEach(balance => {
 
             let balanceObject = null;
 
             if (balance.balance_id != '2.5.-1') {
-                balanceObject = ChainStore.getObject (balance.balance_id);
+                balanceObject = ChainStore.getObject(balance.balance_id);
             }
             else {
-                balanceObject = Immutable.fromJS ({
-                    id: balance.balance_id, owner: account.get ('id'), asset_type: balance.asset_type, balance: "0"
+                balanceObject = Immutable.fromJS({
+                    id: balance.balance_id, owner: account.get('id'), asset_type: balance.asset_type, balance: "0"
                 });
             }
-            let asset_type = balanceObject.get ("asset_type");
-            let asset = ChainStore.getObject (asset_type);
+            let asset_type = balanceObject.get("asset_type");
+            let asset = ChainStore.getObject(asset_type);
 
             let assetInfoLinks;
             let transferLink;
             if (!asset) return null;
 
             /* Table content */
-            const assetDetailURL = `/asset/${asset.get ("symbol")}`;
+            const assetDetailURL = `/asset/${asset.get("symbol")}`;
 
-            transferLink = <Link to={`/transfer?asset=${asset.get ("id")}`}><Translate
+            transferLink = <Link to={`/transfer?asset=${asset.get("id")}`}><Translate
                 content="transaction.trxTypes.transfer"/></Link>;
 
             /* Popover content */
             assetInfoLinks = (
                 <ul>
-                    <li><a href={assetDetailURL} onClick={this._onNavigate.bind (this, assetDetailURL)}><Translate
+                    <li><a href={assetDetailURL} onClick={this._onNavigate.bind(this, assetDetailURL)}><Translate
                         content="account.asset_details"/></a></li>
                 </ul>);
 
-            const hasBalance = !!balanceObject.get ("balance") && balance.balance_id != '2.5.-1';
+            const hasBalance = !!balanceObject.get("balance") && balance.balance_id != '2.5.-1';
 
-            balances.push (
-                <div key={asset.get ('symbol')} className="grid-content assets-card">
+            balances.push(
+                <div key={asset.get('symbol')} className="grid-content assets-card">
                     <div className="card">
-                        <h4 className="title text-center">{asset.get ('symbol')}</h4>
+                        <h4 className="title text-center">{asset && asset.get('symbol') && utils.replaceName(asset.get('symbol')).name}</h4>
                         <div className="card-content">
                             <div className="text-center">
-                                {logos[asset.get ('symbol')] ?
+                                {logos[asset.get('symbol')] ?
                                     <img className="align-center" style={{width: '3rem', height: '3rem'}}
-                                         src={`${logos[asset.get ('symbol')]}`}></img> :
-                                    <AccountImage size={{width: 35, height: 35}} account={asset.get ('symbol')}/>}
+                                         src={`${logos[asset.get('symbol')]}`}></img> :
+                                    <AccountImage size={{width: 35, height: 35}} account={asset.get('symbol')}/>}
                             </div>
                             {programs && asset_type == '1.3.1' && this.props.isMyAccount ?
-                                <a onClick={this.showLoyaltyPlanModal.bind (this, balanceObject)}
+                                <a onClick={this.showLoyaltyPlanModal.bind(this, balanceObject)}
                                    className="btn-loyalty-program"><Translate
                                     content="loyalty_program.join"/></a> : null}
                             <table className="table key-value-table">
                                 <tbody>
                                 <tr>
                                     <td><Translate content="account.asset"/></td>
-                                    <td>{hasBalance ? <BalanceComponent balance={balanceObject.get ('id')}
+                                    <td>{hasBalance ? <BalanceComponent balance={balanceObject.get('id')}
                                                                         assetInfo={assetInfoLinks}/> :
-                                        <BalanceComponent amount={0} asset_type={asset.get ('symbol')}
+                                        <BalanceComponent amount={0} asset_type={asset.get('symbol')}
                                                           assetInfo={assetInfoLinks}/>}</td>
                                 </tr>
                                 <tr>
@@ -194,23 +193,23 @@ class AccountOverview extends React.Component {
             );
         });
 
-        function sortAlphabetic (a, b) {
+        function sortAlphabetic(a, b) {
             if (a.key > b.key) return 1;
             if (a.key < b.key) return -1;
             return 0;
         };
 
-        balances.sort (sortAlphabetic);
+        balances.sort(sortAlphabetic);
         return {balances};
     }
 
-    _toggleHiddenAssets () {
-        this.setState ({
+    _toggleHiddenAssets() {
+        this.setState({
             showHidden: !this.state.showHidden
         });
     }
 
-    render () {
+    render() {
         let {account, hiddenAssets} = this.props;
 
         if (!account) {
@@ -218,19 +217,19 @@ class AccountOverview extends React.Component {
         }
 
         let includedBalances, hiddenBalances;
-        let account_balances = account.get ("balances") || new Immutable.Map ();
-        if (!account_balances.has ('1.3.0')) {
-            account_balances = account_balances.merge ({
+        let account_balances = account.get("balances") || new Immutable.Map();
+        if (!account_balances.has('1.3.0')) {
+            account_balances = account_balances.merge({
                 '1.3.0': '2.5.-1'
             });
         }
-        if (!account_balances.has ('1.3.1')) {
-            account_balances = account_balances.merge ({
+        if (!account_balances.has('1.3.1')) {
+            account_balances = account_balances.merge({
                 '1.3.1': '2.5.-1'
             });
         }
 
-        let includedBalancesList = Immutable.List (), hiddenBalancesList = Immutable.List ();
+        let includedBalancesList = Immutable.List(), hiddenBalancesList = Immutable.List();
         if (account_balances) {
             // Filter out balance objects that have 0 balance or are not included in open orders
             // account_balances = account_balances.filter((a, index) => {
@@ -244,15 +243,15 @@ class AccountOverview extends React.Component {
             // });
 
             // Separate balances into hidden and included
-            account_balances.forEach ((a, asset_type) => {
-                if (hiddenAssets.includes (asset_type)) {
-                    hiddenBalancesList = hiddenBalancesList.push ({asset_type: asset_type, balance_id: a});
+            account_balances.forEach((a, asset_type) => {
+                if (hiddenAssets.includes(asset_type)) {
+                    hiddenBalancesList = hiddenBalancesList.push({asset_type: asset_type, balance_id: a});
                 } else {
-                    includedBalancesList = includedBalancesList.push ({asset_type: asset_type, balance_id: a});
+                    includedBalancesList = includedBalancesList.push({asset_type: asset_type, balance_id: a});
                 }
             });
 
-            let included = this._renderBalances (includedBalancesList, true);
+            let included = this._renderBalances(includedBalancesList, true);
             includedBalances = included.balances;
         }
 
@@ -270,17 +269,17 @@ class AccountOverview extends React.Component {
                         </div>
                     </div>
 
-                    {account.get ("proposals") && account.get ("proposals").size ?
+                    {account.get("proposals") && account.get("proposals").size ?
                         <div className="content-block">
                             <div className="block-content-header">
                                 <Translate content="explorer.proposals.title"/>
                             </div>
-                            <Proposals account={account.get ("id")}/>
+                            <Proposals account={account.get("id")}/>
                         </div> : null}
 
                     <div className="content-block">
                         <RecentTransactions
-                            accountsList={Immutable.fromJS ([account.get ("id")])}
+                            accountsList={Immutable.fromJS([account.get("id")])}
                             compactView={false}
                             showMore={true}
                             fullHeight={true}
@@ -296,7 +295,7 @@ class AccountOverview extends React.Component {
     }
 }
 
-AccountOverview = BindToChainState (AccountOverview);
+AccountOverview = BindToChainState(AccountOverview);
 
 class BalanceWrapper extends React.Component {
 
@@ -306,43 +305,43 @@ class BalanceWrapper extends React.Component {
     };
 
     static defaultProps = {
-        balances: Immutable.List (),
-        orders: Immutable.List ()
+        balances: Immutable.List(),
+        orders: Immutable.List()
     };
 
-    componentWillMount () {
+    componentWillMount() {
 
     }
 
-    render () {
-        let balanceAssets = this.props.balances.map (b => {
-            return b && b.get ("asset_type");
-        }).filter (b => !!b);
-        if (balanceAssets.indexOf ('1.3.0') == -1) {
-            balanceAssets.push ('1.3.0');
+    render() {
+        let balanceAssets = this.props.balances.map(b => {
+            return b && b.get("asset_type");
+        }).filter(b => !!b);
+        if (balanceAssets.indexOf('1.3.0') == -1) {
+            balanceAssets.push('1.3.0');
         }
-        if (balanceAssets.indexOf ('1.3.1') == -1) {
-            balanceAssets.push ('1.3.1');
+        if (balanceAssets.indexOf('1.3.1') == -1) {
+            balanceAssets.push('1.3.1');
         }
 
-        let ordersByAsset = this.props.orders.reduce ((orders, o) => {
-            let asset_id = o.getIn (["sell_price", "base", "asset_id"]);
+        let ordersByAsset = this.props.orders.reduce((orders, o) => {
+            let asset_id = o.getIn(["sell_price", "base", "asset_id"]);
             if (!orders[asset_id]) orders[asset_id] = 0;
-            orders[asset_id] += parseInt (o.get ("for_sale"), 10);
+            orders[asset_id] += parseInt(o.get("for_sale"), 10);
             return orders;
         }, {});
 
         for (let id in ordersByAsset) {
-            if (balanceAssets.indexOf (id) === -1) {
-                balanceAssets.push (id);
+            if (balanceAssets.indexOf(id) === -1) {
+                balanceAssets.push(id);
             }
         }
 
         return (
             <AccountOverview {...this.state} {...this.props} orders={ordersByAsset}
-                             balanceAssets={Immutable.List (balanceAssets)}/>
+                             balanceAssets={Immutable.List(balanceAssets)}/>
         );
     };
 }
 
-export default BindToChainState (BalanceWrapper);
+export default BindToChainState(BalanceWrapper);

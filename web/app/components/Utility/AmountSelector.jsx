@@ -5,6 +5,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import FormattedAsset from "./FormattedAsset";
 import FloatingDropdown from "./FloatingDropdown";
 import Immutable from "immutable";
+import utils from "common/utils";
 
 class AssetSelector extends React.Component {
 
@@ -15,12 +16,16 @@ class AssetSelector extends React.Component {
     };
 
     render() {
-        if(this.props.assets.length === 0) return null;
+        if (this.props.assets.length === 0) return null;
 
         return <FloatingDropdown
-            entries={this.props.assets.map(a => a && a.get("symbol")).filter(a => !!a)}
-            values={this.props.assets.reduce((map, a) => {if (a && a.get("symbol")) map[a.get("symbol")] = a; return map;}, {})}
-            singleEntry={this.props.assets[0] ? <FormattedAsset asset={this.props.assets[0].get("id")} amount={0} hide_amount={true}/> : null}
+            entries={this.props.assets.map(a => a && utils.replaceName(a.get("symbol")).name).filter(a => !!a)}
+            values={this.props.assets.reduce((map, a) => {
+                if (a && a.get("symbol")) map[utils.replaceName(a.get("symbol")).name] = a;
+                return map;
+            }, {})}
+            singleEntry={this.props.assets[0] ?
+                <FormattedAsset asset={this.props.assets[0].get("id")} amount={0} hide_amount={true}/> : null}
             value={this.props.value}
             onChange={this.props.onChange}
         />;
@@ -59,7 +64,7 @@ class AmountSelector extends React.Component {
             value = value.substring(1);
         if (value[0] === ".") value = "0" + value;
         else if (value.length) {
-            let n = Number(value)
+            let n = Number(value);
             if (isNaN(n)) {
                 value = parseFloat(value);
                 if (isNaN(value)) return "";
@@ -92,22 +97,23 @@ class AmountSelector extends React.Component {
                         type="text"
                         value={value || ""}
                         placeholder={this.props.placeholder}
-                        onChange={this._onChange.bind(this) }
+                        onChange={this._onChange.bind(this)}
                         tabIndex={this.props.tabIndex}
                     />
                     <div className="form-label select floating-dropdown">
                         <AssetSelector
                             ref={this.props.refCallback}
-                            value={this.props.asset.get("symbol")}
+                            value={utils.replaceName(this.props.asset.get("symbol")).name}
                             assets={Immutable.List(this.props.assets)}
                             onChange={this.onAssetChange.bind(this)}
                         />
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
+
 AmountSelector = BindToChainState(AmountSelector);
 
 export default AmountSelector;

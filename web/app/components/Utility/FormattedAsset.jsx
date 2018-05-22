@@ -94,7 +94,7 @@ class FormattedAsset extends React.Component {
             <HelpContent
                 path={"assets/Asset"}
                 section="summary"
-                symbol={asset.symbol}
+                symbol={utils.replaceName(asset.symbol).name}
                 description={description.short_name ? description.short_name : description.main}
                 issuer={issuerName}
             />

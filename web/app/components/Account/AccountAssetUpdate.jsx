@@ -627,7 +627,7 @@ class AccountAssetUpdate extends React.Component {
         return (
             <div className="grid-block">
                 <div className="grid-content">
-                    <h3><Translate content="header.update_asset"/>: {symbol}</h3>
+                    <h3><Translate content="header.update_asset"/>: {utils.replaceName(symbol).name}</h3>
 
                     <Tabs setting="updateAssetTab" style={{maxWidth: "800px"}}
                           contentClass="grid-block shrink small-vertical medium-horizontal">
