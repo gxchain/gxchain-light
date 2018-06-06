@@ -559,10 +559,6 @@ var Utils = {
         let prefix = isBitAsset ? "bit" : toReplace[i] ? toReplace[i].toLowerCase () : null;
         if (prefix === "open.") prefix = "";
 
-        if (name.toUpperCase() === 'LVCOIN') {
-            name = 'LV';
-        }
-
         return {
             name,
             prefix
