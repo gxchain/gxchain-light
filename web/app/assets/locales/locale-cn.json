@@ -1342,7 +1342,8 @@
     "free_data_product_update": "{issuer} 更新自由市场数据产品 {product}",
     "league_data_product_update": "{issuer} 发起更新联盟数据产品 {product}",
     "league_update": "{issuer} 更新联盟 {league}",
-    "fund_pool": "转入资产资金池"
+    "fund_pool": "转入资产资金池",
+    "lifetime_upgrade_account": "{account} 升级到终身会员"
   },
   "proposal_create": {
     "review_period": "复审期开始",

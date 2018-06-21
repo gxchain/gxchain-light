@@ -529,7 +529,8 @@
     "free_data_product_update": "{issuer} update free market data product {product}",
     "league_data_product_update": "{issuer} update league market data product {product}",
     "league_update": "{issuer} update league {league}",
-    "fund_pool": "funded fee pool with"
+    "fund_pool": "funded fee pool with",
+    "lifetime_upgrade_account": "{account} was upgraded to lifetime member"
   },
   "transaction": {
     "confirm": "Please confirm the transaction",
