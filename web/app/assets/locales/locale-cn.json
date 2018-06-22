@@ -423,7 +423,7 @@
     "amount": "金额",
     "to": "发往",
     "account": "代理转账人",
-    "proxy_memo": "记账备注(memo)",
+    "proxy_memo": "代理备注(memo)",
     "memo": "备注(memo)",
     "memo_unlock": "解锁钱包以查看交易备注",
     "fee": "手续费",
