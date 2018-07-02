@@ -2,7 +2,6 @@ import React from "react";
 import Translate from "react-translate-component";
 import LogoCard from "../Dashboard/LogoCard";
 import DataTransactionCard from "../Dashboard/DataTransactionCard";
-import DataProductList from "../Dashboard/DataProductList";
 import notify from "actions/NotificationActions";
 import SettingsStore from "stores/SettingsStore";
 
@@ -21,7 +20,6 @@ class Statistics extends React.Component {
                 transaction_pay_fees: 0,
                 merchants_total_count: 0
             },
-            products_data: [],
             currentIndex: 0,
         };
     }
@@ -60,11 +58,9 @@ class Statistics extends React.Component {
                         transaction_pay_fees: data.transactionTotalPrice/10,
                         merchants_total_count: data.merchantCertNum
                     };
-                    let products_data = data.statisticsProductLog;
                     this.setState({
                         loading: false,
-                        transaction_data : transaction_data,
-                        products_data: products_data
+                        transaction_data : transaction_data
                     });
                 }else{
                     notify.addNotification({
@@ -145,14 +141,6 @@ class Statistics extends React.Component {
                                 <div className="mouse-bar"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="home-content page1 vh" id="page1">
-                    <div className="page-text">
-                        <h1><Translate component="span" content="explorer.statistics.transaction_product"/></h1>
-                        <p><Translate component="span" content="explorer.statistics.transaction_product_subtitle"/>
-                        </p>
-                        <DataProductList {...this.state}/>
                     </div>
                 </div>
             </div>
