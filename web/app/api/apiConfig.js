@@ -3,23 +3,20 @@ export const settingsAPIs = (() => {
         return {
             DEFAULT_WS_NODE: "ws://192.168.1.118:28090",
             WS_NODE_LIST: [
-                {url: "ws://192.168.1.118:28090", location: "测试环境"}
+                {url: "ws://192.168.1.118:28090", location: "开发环境"}
             ],
             DEFAULT_FAUCET: "http://192.168.1.118:1337/gateway",
             DEFAULT_STATISTICS: "http://192.168.1.124:8218/getStatisticsInfo"
         };
     }
-    if (__PRE__) {
+    if (__TESTNET__) {
         return {
-            DEFAULT_WS_NODE: "ws://192.168.2.244:28090",
+            DEFAULT_WS_NODE: "wss://testnet.gxchain.org",
             WS_NODE_LIST: [
-                {url: "ws://192.168.2.244:28090", location: "244节点"},
-                {url: "ws://192.168.2.245:28090", location: "245节点"},
-                {url: "ws://192.168.2.246:28090", location: "246节点"},
-                {url: "ws://192.168.2.247:28090", location: "247节点"}
+                {url: "wss://testnet.gxchain.org", location: "testnet"}
             ],
-            DEFAULT_FAUCET: "http://192.168.2.244:1337/gateway",
-            DEFAULT_STATISTICS: "http://192.168.1.124:8218/getStatisticsInfo"
+            DEFAULT_FAUCET: "https://testnet.faucet.gxchain.org",
+            DEFAULT_STATISTICS: "https://wallet.gxb.io/statistics/getStatisticsInfo"
         };
     }
     return {

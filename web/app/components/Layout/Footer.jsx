@@ -69,8 +69,8 @@ class Footer extends React.Component {
         if (__TEST__) {
             tip = '测试';
         }
-        if (__PRE__) {
-            tip = '预发布';
+        if (__TESTNET__) {
+            tip = 'testnet';
         }
 
         return (

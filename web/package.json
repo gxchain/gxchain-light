@@ -28,7 +28,7 @@
     "profile-nougly": "NODE_ENV=production webpack --env.prod --env.profile --env.noUgly --profile --json > stats-prod-nougly.json",
     "start": "NODE_ENV=development node server.js",
     "build": "NODE_ENV=production webpack --env.prod --progress --display-error-details --colors",
-    "build-pre": "NODE_ENV=production webpack  --env.hash --env.pre --progress --display-error-details --colors",
+    "build-testnet": "NODE_ENV=production webpack  --env.hash --env.testnet --progress --display-error-details --colors",
     "build-test": "NODE_ENV=production webpack  --env.hash --env.test --progress --display-error-details --colors",
     "build-hash": "NODE_ENV=production webpack --env.prod --env.hash --env.baseUrl='' --progress --display-error-details --colors",
     "build-github": "NODE_ENV=production webpack --env.prod --env.hash --env.baseUrl='/wallet/' --progress --display-error-details --colors",

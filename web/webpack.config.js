@@ -61,17 +61,12 @@ module.exports = function (env) {
         })
     ];
 
-    // Pre production environment
-    plugins.push(new webpack.DefinePlugin({
-        __PRE__: !!env.pre
-    }))
-
     // test environment
     plugins.push(new webpack.DefinePlugin({
         __TEST__: !!env.test
     }))
 
-    var isProd = env.prod || env.test || env.pre
+    var isProd = env.prod || env.test || env.testnet
 
     if (isProd) {
         // PROD OUTPUT PATH
