@@ -8,9 +8,7 @@ import WalletActions from "actions/WalletActions";
 import AccountActions from "actions/AccountActions";
 import BindToChainState from "../Utility/BindToChainState";
 import {Apis} from "gxbjs-ws";
-import {Tabs, Tab} from "../Utility/Tabs";
-import notify from "actions/NotificationActions";
-import Form from "antd/es/form/Form";
+import {Tab, Tabs} from "../Utility/Tabs";
 
 
 class VestingBalance extends React.Component {
@@ -37,10 +35,22 @@ class VestingBalance extends React.Component {
         if (vb) {
             balance = vb.balance.amount;
             cvbAsset = ChainStore.getAsset(vb.balance.asset_id);
-            earned = vb.policy[1].coin_seconds_earned;
-            vestingPeriod = vb.policy[1].vesting_seconds;
-
-            availablePercent = earned / (vestingPeriod * balance);
+            if (vb.policy[0] == 1) {
+                earned = vb.policy[1].coin_seconds_earned;
+                vestingPeriod = vb.policy[1].vesting_seconds;
+                availablePercent =
+                    vestingPeriod === 0 ? 1 : earned / (vestingPeriod * balance);
+            } else {
+                let cliffSeconds = vb.policy[1].vesting_cliff_seconds;
+                vestingPeriod = vb.policy[1].vesting_duration_seconds;
+                let beginTimestamp = new Date(vb.policy[1].begin_timestamp + 'Z');
+                let deltaTimestamp = new Date().getTime() - beginTimestamp;
+                if (deltaTimestamp < cliffSeconds * 1000) {
+                    deltaTimestamp = 0;
+                }
+                earned = Math.min(vestingPeriod, deltaTimestamp / 1000) * balance;
+                availablePercent = Math.min(vestingPeriod, deltaTimestamp / 1000) / vestingPeriod;
+            }
         }
 
         let account_name = account.name;
@@ -119,7 +129,7 @@ class LockedBalance extends React.Component {
         if (!account || !balance) {
             return null;
         }
-        let start_date = this.toDate(balance.create_date_time)
+        let start_date = this.toDate(balance.create_date_time);
         let end_date = new Date(start_date.getTime());
         end_date.setDate(end_date.getDate() + Number(balance.lock_days));
         let canUnlock = new Date() - end_date >= 0;
@@ -129,15 +139,16 @@ class LockedBalance extends React.Component {
             <tr>
                 <td>#{balance.id}</td>
                 <td>{start_date.toLocaleString()}</td>
-                <td style={{textAlign:'right'}}><FormattedAsset amount={balance.amount.amount} asset={balance.amount.asset_id}/></td>
-                <td style={{textAlign:'right'}}><FormattedAsset amount={bonus} asset={balance.amount.asset_id}/></td>
-                <td style={{textAlign:'right'}}>{(balance.interest_rate / 100).toFixed(1)}%</td>
-                <td style={{textAlign:'right'}}>{lock_days}</td>
+                <td style={{textAlign: 'right'}}><FormattedAsset amount={balance.amount.amount}
+                                                                 asset={balance.amount.asset_id}/></td>
+                <td style={{textAlign: 'right'}}><FormattedAsset amount={bonus} asset={balance.amount.asset_id}/></td>
+                <td style={{textAlign: 'right'}}>{(balance.interest_rate / 100).toFixed(1)}%</td>
+                <td style={{textAlign: 'right'}}>{lock_days}</td>
                 <td>{end_date.toLocaleString()}</td>
                 <td>{canUnlock ? <button onClick={this._onUnlock.bind(this)} className="button outline"><Translate
                     content="loyalty_program.unlock"/></button> : <Translate content="loyalty_program.locking"/>}</td>
             </tr>
-        )
+        );
     }
 
     _onUnlock() {
@@ -197,7 +208,7 @@ class AccountVesting extends React.Component {
             let {locked_balances} = full_account;
             this.setState({
                 lbs: locked_balances
-            })
+            });
         }).catch(err => {
             console.log("error:", err);
         });
@@ -222,7 +233,7 @@ class AccountVesting extends React.Component {
 
         let locked_balances = lbs ? lbs.map(balance => {
             return <LockedBalance key={`${balance.id}`} account={account} balance={balance}
-                                  handleChanged={this.reload.bind(this)}/>
+                                  handleChanged={this.reload.bind(this)}/>;
         }) : [];
 
         return (
@@ -240,10 +251,12 @@ class AccountVesting extends React.Component {
                                 <tr>
                                     <th><Translate content="loyalty_program.id"/></th>
                                     <th><Translate content="loyalty_program.start_date"/></th>
-                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.lock_amount"/></th>
-                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.bonus"/></th>
-                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.yearly_bonus"/></th>
-                                    <th style={{textAlign:'right'}}><Translate content="loyalty_program.term"/></th>
+                                    <th style={{textAlign: 'right'}}><Translate content="loyalty_program.lock_amount"/>
+                                    </th>
+                                    <th style={{textAlign: 'right'}}><Translate content="loyalty_program.bonus"/></th>
+                                    <th style={{textAlign: 'right'}}><Translate content="loyalty_program.yearly_bonus"/>
+                                    </th>
+                                    <th style={{textAlign: 'right'}}><Translate content="loyalty_program.term"/></th>
                                     <th><Translate content="loyalty_program.due_date"/></th>
                                     <th><Translate content="loyalty_program.status"/></th>
                                 </tr>
