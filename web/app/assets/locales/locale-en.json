@@ -436,6 +436,18 @@
     "fee": "Fee",
     "percentage": "Proxy Bonus"
   },
+  "create_contract": {
+    "account": "Account",
+    "contract_name": "Contract Name",
+    "fee": "Fee"
+  },
+  "call_contract": {
+    "account": "Account",
+    "contract_name": "Contract Name",
+    "method_name": "Method Name",
+    "data": "Method Data",
+    "fee": "Fee"
+  },
   "operation": {
     "pending": "pending %(blocks)s blocks",
     "no_recent": "No recent transactions",
@@ -493,7 +505,9 @@
     "data_transaction_datasource_validate_error": "{account} returned an error when processing the data upload",
     "balance_lock":"{account} locked {amount} for loyalty program",
     "balance_unlock":"{account} complete a loyalty program",
-    "proxy_transfer": "{from} sent {amount} to {to} delegated by {account}"
+    "proxy_transfer": "{from} sent {amount} to {to} delegated by {account}",
+    "create_contract": "{account} created the contract {contract_name}",
+    "call_contract": "{account} call the contract {contract_name} 's {method_name} method"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -661,7 +675,9 @@
       "data_transaction_datasource_validate_error": "Data transaction fail",
       "balance_lock":"Balance Lock",
       "balance_unlock":"Balance Unlock",
-      "proxy_transfer": "Proxy Transfer"
+      "proxy_transfer": "Proxy Transfer",
+      "create_contract": "Create Contract",
+      "call_contract": "Call Contract"
     },
     "trxOps": {
       "data_transaction_create": {

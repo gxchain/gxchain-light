@@ -1277,6 +1277,51 @@ class Transaction extends React.Component {
                     );
                     break;
 
+                case "create_contract":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="create_contract.account"/></td>
+                            <td>{this.linkToAccount(op[1].account)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="create_contract.contract_name"/></td>
+                            <td>{this.linkToAccount(op[1].name)}</td>
+                        </tr>
+                    );
+                    break;
+
+                case "call_contract":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="call_contract.account"/></td>
+                            <td>{this.linkToAccount(op[1].account)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="call_contract.contract_name"/></td>
+                            <td>{this.linkToAccount(op[1].contract_id)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="call_contract.method_name"/></td>
+                            <td>{op[1].method_name}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++} style={{wordBreak: "break-all"}}>
+                            <td><Translate component="span" content="call_contract.data"/></td>
+                            <td>{op[1].data}</td>
+                        </tr>
+                    );
+
+                    break;
+
                 default:
                     console.log("unimplemented op:", op);
 
