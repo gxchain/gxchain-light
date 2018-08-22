@@ -1278,7 +1278,7 @@ class Transaction extends React.Component {
                     break;
 
                 case "create_contract":
-                    color = "success";
+                    color = "info";
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="create_contract.account"/></td>

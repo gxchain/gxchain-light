@@ -1089,7 +1089,7 @@ class Operation extends React.Component {
 
             case "create_contract":
 
-                color = "success";
+                color = "info";
                 column = (
                     <span className="right-td">
                         <TranslateWithLinks
