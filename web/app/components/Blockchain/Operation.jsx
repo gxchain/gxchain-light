@@ -1087,6 +1087,41 @@ class Operation extends React.Component {
 
                 break;
 
+            case "create_contract":
+
+                color = "info";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.create_contract"
+                            keys={[
+                                {type: "account", value: op[1].account, arg: "account"},
+                                {type: "", value: op[1].name, arg: "contract_name"}
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+
+            case "call_contract":
+
+                color = "success";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.call_contract"
+                            keys={[
+                                {type: "account", value: op[1].account, arg: "account"},
+                                {type: "account", value: op[1].contract_id, arg: "contract_name"},
+                                {type: "", value: op[1].method_name, arg: "method_name"}
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+
             default:
                 console.log("unimplemented op:", op);
                 column = (
