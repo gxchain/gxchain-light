@@ -65,7 +65,6 @@ class AssetActions {
 
     createAsset (account_id, createObject, flags, permissions, cer, isBitAsset, is_prediction_market, bitasset_opts, description, fee_asset_id = '1.3.0') {
         // Create asset action here...
-        debugger; //eslint-disable-line
         console.log ("create asset:", createObject, "flags:", flags, "isBitAsset:", isBitAsset, "bitasset_opts:", bitasset_opts);
         let tr = wallet_api.new_transaction ();
         let precision = utils.get_asset_precision (createObject.precision);

@@ -32,7 +32,6 @@ class GXBDepositModal extends React.Component {
         }
         let isCore = asset.get('symbol') == ChainStore.getAsset('1.3.0').get('symbol');
         let assetName = asset.get('symbol');
-        debugger;//eslint-disable-line
         let deposit_title = counterpart.translate('modal.deposit.title',{
             assetName
         });
