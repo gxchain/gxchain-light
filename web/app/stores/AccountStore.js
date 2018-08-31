@@ -284,6 +284,7 @@ class AccountStore extends BaseStore {
     }
 
     tryToSetCurrentAccount() {
+        debugger; // eslint-disable-line
         const key = this._getCurrentAccountKey();
         if (accountStorage.has(key)) {
             return this.setCurrentAccount(accountStorage.get(key, null));
