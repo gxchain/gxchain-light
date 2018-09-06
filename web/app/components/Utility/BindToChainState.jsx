@@ -1,5 +1,5 @@
 import React from "react";
-import {curry, flow, reject, clone, toPairs as pairs, omit, get, pick} from "lodash";
+import {curry, flow, reject, clone, toPairs as pairs, omit, get, map} from "lodash-es";
 import {ChainStore} from "gxbjs/es";
 import ChainTypes from "./ChainTypes";
 import utils from "common/utils";
@@ -124,7 +124,8 @@ function BindToChainState(Component, options = {}) {
             if(options && options.all_props) {
                 this.chain_objects = reject(Object.keys(next_props), (e) => e === "children" || e === "keep_updating" || e === "show_loader");
                 this.all_chain_props = this.chain_objects;
-                this.state = pick(this.state, this.chain_objects);
+                // this.state = pick(this.state, this.chain_objects);
+                this.state = map(this.state, this.chain_objects);
             }
             let props_obj = null;
             for(let k in this.dynamic_props) {

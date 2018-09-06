@@ -4,7 +4,7 @@ import { connect } from "alt-react";
 import ChainTypes from "components/Utility/ChainTypes";
 import BindToChainState from "components/Utility/BindToChainState";
 import AccountStore from "stores/AccountStore";
-import {toPairs as pairs} from "lodash";
+import {toPairs as pairs} from "lodash-es";
 
 class ResolveLinkedAccountsChainState extends Component {
 

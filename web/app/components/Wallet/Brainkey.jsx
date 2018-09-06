@@ -7,7 +7,7 @@ import BrainkeyStoreFactory from "stores/BrainkeyStore";
 import BindToChainState from "components/Utility/BindToChainState";
 import ChainTypes from "components/Utility/ChainTypes";
 import BrainkeyInput from "components/Wallet/BrainkeyInput";
-import {toPairs as pairs} from "lodash";
+import {toPairs as pairs} from "lodash-es";
 import Translate from "react-translate-component";
 import AccountCard from "components/Dashboard/AccountCard";
 

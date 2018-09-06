@@ -1,5 +1,5 @@
 import React from "react";
-import {reduce, zipObject} from "lodash";
+import {reduce, zipObject} from "lodash-es";
 import counterpart from "counterpart";
 import utils from "common/utils";
 import {withRouter} from "react-router";
