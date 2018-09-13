@@ -691,7 +691,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transfer.amount"/></td>
-                            <td><FormattedAsset amount={op[1].amount} asset="1.3.0"/></td>
+                            <td><FormattedAsset amount={op[1].amount} asset={op[1].asset_id}/></td>
                         </tr>
                     );
 

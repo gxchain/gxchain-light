@@ -1,7 +1,7 @@
 
 
 == Account 1.2.0
-The Genesis account and contains a very large testing 
+The Genesis account and contains a very large testing
 balance.  The funds may be transferred using the genesis_private key.
 
 Genesis Private Key: 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
@@ -71,7 +71,7 @@ ex: short_sell_asset 1.2.15 1000 USD 1000 true
 
 Generic transaction support with visual aid from template:
 $g.wallet.template("account_upgrade")
-{"fee":{"amount":"0","asset_id":"1.3.0"},"account_to_upgrade":"1.2.0","upgrade_to_lifetime_member":false}
+{"fee":{"amount":"0","asset_id":"1.3.1"},"account_to_upgrade":"1.2.0","upgrade_to_lifetime_member":false}
 Graphene > var tr = $g.wallet.new_transaction()
 Graphene > tr.add_type_operation("account_upgrade", {"account_to_upgrade":"1.2.15","upgrade_to_lifetime_member":true})
 Graphene > $g.wallet.sign_and_broadcast(tr)
@@ -83,9 +83,9 @@ var trx = ["short_order_cancel", {"fee_paying_account": "1.2.15","order": "1.9.3
 
 var trx = ["account_upgrade", {"account_to_upgrade":"1.2.15","upgrade_to_lifetime_member":true}]
 
-var trx = ["asset_update", {"issuer":"1.2.15","asset_to_update":"1.3.2", "new_options": {"max_supply": "1000000000000", "market_fee_percent": 1, "max_market_fee": "1000000000000", "min_market_fee": 0, "issuer_permissions": 0, "flags": 0, "core_exchange_rate": {"base": {"amount": 1, "asset_id": "1.3.0"}, "quote": {"amount": 1, "asset_id": "1.3.2"}}, "whitelist_authorities": [], "blacklist_authorities": [], "whitelist_markets": [], "blacklist_markets": []}}]
+var trx = ["asset_update", {"issuer":"1.2.15","asset_to_update":"1.3.2", "new_options": {"max_supply": "1000000000000", "market_fee_percent": 1, "max_market_fee": "1000000000000", "min_market_fee": 0, "issuer_permissions": 0, "flags": 0, "core_exchange_rate": {"base": {"amount": 1, "asset_id": "1.3.1"}, "quote": {"amount": 1, "asset_id": "1.3.2"}}, "whitelist_authorities": [], "blacklist_authorities": [], "whitelist_markets": [], "blacklist_markets": []}}]
 
-var trx = ["asset_update_bitasset", {"issuer":"1.2.15","asset_to_update":"1.3.1","new_options":{"feed_lifetime_sec":55,"force_settlement_delay_sec":0,"force_settlement_offset_percent":0,"maximum_force_settlement_volume":0,"short_backing_asset":"1.3.0"}}]
+var trx = ["asset_update_bitasset", {"issuer":"1.2.15","asset_to_update":"1.3.1","new_options":{"feed_lifetime_sec":55,"force_settlement_delay_sec":0,"force_settlement_offset_percent":0,"maximum_force_settlement_volume":0,"short_backing_asset":"1.3.1"}}]
 
 var trx = ["asset_update_feed_producers", {"issuer":"1.2.15","asset_to_update":"1.3.1","new_feed_producers":["1.2.5", "1.2.15"]}]
 
@@ -93,7 +93,7 @@ var trx = ["asset_issue", {"issuer":"1.2.15","asset_to_issue":{"amount":"1245470
 
 var trx = ["asset_burn", {"payer":"1.2.15","amount_to_burn":{"amount":"1000","asset_id":"1.3.4"}}]
 
-var trx = ["asset_fund_fee_pool", {"from_account":"1.2.15","asset_id":"1.3.0","amount":"15410"}]
+var trx = ["asset_fund_fee_pool", {"from_account":"1.2.15","asset_id":"1.3.1","amount":"15410"}]
 
 var trx = ["asset_settle", {"account":"1.2.15","amount":{"amount":"1000","asset_id":"1.3.1"}}]
 
@@ -107,6 +107,6 @@ var trx = ["account_update", {"account": "1.2.15", "num_witness":0,"num_committe
 
 var trx = ["account_transfer", {"account_id":"1.2.12","new_owner":"1.2.5"}] // Crashes the node currently
 
-var trx = ["asset_publish_feed", {"publisher":"1.2.15","asset_id":"1.3.1","feed":{"call_limit":{"base":{"amount":"1","asset_id":"1.3.0"},"quote":{"amount":"1","asset_id":"1.3.1"}},"short_limit":{"base":{"amount":"1","asset_id":"1.3.1"},"quote":{"amount":"2","asset_id":"1.3.0"}},"settlement_price":{"base":{"amount":"1","asset_id":"1.3.0"},"quote":{"amount":"2","asset_id":"1.3.1"}},"max_margin_period_sec":1500,"required_initial_collateral":2000,"required_maintenance_collateral":1750}}]
+var trx = ["asset_publish_feed", {"publisher":"1.2.15","asset_id":"1.3.1","feed":{"call_limit":{"base":{"amount":"1","asset_id":"1.3.1"},"quote":{"amount":"1","asset_id":"1.3.1"}},"short_limit":{"base":{"amount":"1","asset_id":"1.3.1"},"quote":{"amount":"2","asset_id":"1.3.1"}},"settlement_price":{"base":{"amount":"1","asset_id":"1.3.1"},"quote":{"amount":"2","asset_id":"1.3.1"}},"max_margin_period_sec":1500,"required_initial_collateral":2000,"required_maintenance_collateral":1750}}]
 
-var trx = ["proposal_create", {"fee_paying_account":"1.2.15","expiration_time":131232,"proposed_ops":[[0,{"fee":{"amount":"0","asset_id":"1.3.0"},"from":"1.2.9","to":"1.2.15","amount":{"amount":"100000","asset_id":"1.3.0"},"memo":{"from":"1.2.0","to":"1.2.1","nonce":"0","message":"test"}}]]}]
+var trx = ["proposal_create", {"fee_paying_account":"1.2.15","expiration_time":131232,"proposed_ops":[[0,{"fee":{"amount":"0","asset_id":"1.3.1"},"from":"1.2.9","to":"1.2.15","amount":{"amount":"100000","asset_id":"1.3.1"},"memo":{"from":"1.2.0","to":"1.2.1","nonce":"0","message":"test"}}]]}]

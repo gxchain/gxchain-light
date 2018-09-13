@@ -20,7 +20,7 @@ class AccountRow extends React.Component {
 
     render() {
         let {account} = this.props;
-        let balance = account.getIn(["balances", "1.3.0"]) || null;
+        let balance = account.getIn(["balances", "1.3.1"]) || null;
 
         return (
             <tr key={account.get("id")}>

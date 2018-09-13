@@ -21,7 +21,7 @@ class MarketLink extends React.Component {
     };
 
     static defaultProps = {
-        base: "1.3.0"
+        base: "1.3.1"
     };
 
     render() {

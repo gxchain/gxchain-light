@@ -23,7 +23,7 @@ import FormattedPrice from "../Utility/FormattedPrice";
  *         example:
  *         [{
  *             type: "account"|"amount"|"asset"|"price",
- *             value: "1.2.1"|{amount: 10, asset_id: "1.3.0"}|"1.3.1"|{base: {amount: 1, asset_id: "1.3.0"}, quote: {amount: 100, asset_id: "1.3.20"}}},
+ *             value: "1.2.1"|{amount: 10, asset_id: "1.3.1"}|"1.3.1"|{base: {amount: 1, asset_id: "1.3.1"}, quote: {amount: 100, asset_id: "1.3.20"}}},
  *             arg: "account"|"amount"|"asset"|"price",
  *             decimalOffset: 1 (optional, only used for amounts)
  *         }

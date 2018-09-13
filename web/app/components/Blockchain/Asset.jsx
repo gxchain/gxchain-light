@@ -169,7 +169,7 @@ class Asset extends React.Component {
         let urls = desc.match(urlTest);
 
         // Add market link
-        const core_asset = ChainStore.getAsset("1.3.0");
+        const core_asset = ChainStore.getAsset("1.3.1");
         let preferredMarket = description.market ? description.market : core_asset ? core_asset.get("symbol") : "BTS";
         if ("bitasset" in asset && asset.bitasset.is_prediction_market) {
             preferredMarket = ChainStore.getAsset(asset.bitasset.options.short_backing_asset);
@@ -323,7 +323,7 @@ class Asset extends React.Component {
                         </tr>
                         <tr>
                             <td> <Translate content="explorer.asset.fee_pool.pool_balance"/> </td>
-                            <td> {dynamic ? <FormattedAsset asset="1.3.0" amount={dynamic.fee_pool} /> : null} </td>
+                            <td> {dynamic ? <FormattedAsset asset={dynamic.asset_id} amount={dynamic.fee_pool} /> : null} </td>
                         </tr>
                         <tr>
                             <td> <Translate content="explorer.asset.fee_pool.unclaimed_issuer_income"/> </td>

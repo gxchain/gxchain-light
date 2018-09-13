@@ -311,7 +311,7 @@ class TransactionWrapper extends React.Component {
     };
 
     static defaultProps = {
-        asset: "1.3.0"
+        asset: "1.3.1"
     };
 
     render() {

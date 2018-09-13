@@ -36,7 +36,7 @@ class FormattedFee extends React.Component {
 
         let amount = utils.estimateFee(opType, options, globalObject);
 
-        return <FormattedAsset amount={amount} asset="1.3.0"/>;
+        return <FormattedAsset amount={amount} asset="1.3.1"/>;
     }
 }
 

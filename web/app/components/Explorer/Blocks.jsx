@@ -56,7 +56,7 @@ class Blocks extends React.Component {
     static defaultProps = {
         globalObject: "2.0.0",
         dynGlobalObject: "2.1.0",
-        coreAsset: "1.3.0",
+        coreAsset: "1.3.1",
         latestBlocks: {},
         assets: {},
         accounts: {},

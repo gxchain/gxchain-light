@@ -559,12 +559,10 @@ class WalletDb extends BaseStore {
                 console.log("WalletDb format error", e);
             }
             this.state.wallet = wallet;
-            console.log(wallet);
             this.setState({wallet});
             return false; //stop iterating
         });
     }
-
 }
 
 const WalletDbWrapped = alt.createStore(WalletDb, "WalletDb");

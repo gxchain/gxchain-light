@@ -71,13 +71,13 @@ class MarketsStore {
         this.lowVolumeMarkets = Immutable.Map(marketStorage.get("lowVolumeMarkets", {}));
 
         this.baseAsset = {
-            id: "1.3.0",
-            symbol: "BTS",
+            id: "1.3.1",
+            symbol: "GXS",
             precision: 5
         };
 
         this.coreAsset = {
-            id: "1.3.0",
+            id: "1.3.1",
             symbol: "CORE",
             precision: 5
         };
@@ -1007,8 +1007,8 @@ class MarketsStore {
         volumeBase = utils.get_asset_amount(volumeBase, baseAsset);
         volumeQuote = utils.get_asset_amount(volumeQuote, quoteAsset);
 
-        let coreVolume = volumeBaseAsset.asset_id === "1.3.0" ? volumeBaseAsset.getAmount({real: true}) :
-            volumeQuoteAsset.asset_id === "1.3.0" ? volumeQuoteAsset.getAmount({real: true}) : null;
+        let coreVolume = volumeBaseAsset.asset_id === "1.3.1" ? volumeBaseAsset.getAmount({real: true}) :
+            volumeQuoteAsset.asset_id === "1.3.1" ? volumeQuoteAsset.getAmount({real: true}) : null;
         let usdVolume = !!coreVolume ? null : volumeBaseAsset.asset_id === "1.3.121" ? volumeBaseAsset.getAmount({real: true}) :
             volumeQuoteAsset.asset_id === "1.3.121" ? volumeQuoteAsset.getAmount({real: true}) : null;
         let btcVolume = (!!coreVolume || !!usdVolume) ? null : (volumeBaseAsset.asset_id === "1.3.861" || volumeBaseAsset.asset_id === "1.3.103") ? volumeBaseAsset.getAmount({real: true}) :

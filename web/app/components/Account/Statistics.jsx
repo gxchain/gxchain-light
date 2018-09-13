@@ -16,15 +16,15 @@ class Statistics extends React.Component {
             <tbody>
                 <tr>
                     <td><Translate content="account.member.fees_paid"/> </td>
-                    <td><FormattedAsset amount={parseFloat(stat_object.lifetime_fees_paid)} asset="1.3.0" /></td>
+                    <td><FormattedAsset amount={parseFloat(stat_object.lifetime_fees_paid)} asset="1.3.5" /></td>
                 </tr>
                 <tr>
                     <td><Translate content="account.member.fees_pending"/> </td>
-                    <td><FormattedAsset amount={parseFloat(stat_object.pending_fees)} asset="1.3.0" /></td>
+                    <td><FormattedAsset amount={parseFloat(stat_object.pending_fees)} asset="1.3.5" /></td>
                 </tr>
                 <tr>
                     <td><Translate content="account.member.fees_vested"/> </td>
-                    <td><FormattedAsset amount={parseFloat(stat_object.pending_vested_fees)} asset="1.3.0" /></td>
+                    <td><FormattedAsset amount={parseFloat(stat_object.pending_vested_fees)} asset="1.3.5" /></td>
                 </tr>
             </tbody>
         );

@@ -29,7 +29,7 @@ class ValueComponent extends React.Component {
     };
 
     static defaultProps = {
-        toAsset: "1.3.0",
+        toAsset: "1.3.1",
         fullPrecision: true,
         noDecimals: false
     };
@@ -42,22 +42,22 @@ class ValueComponent extends React.Component {
     }
 
     componentWillMount() {
-        let coreAsset = ChainStore.getAsset("1.3.0");
-        if (coreAsset) {
-            if (this.props.fromAsset.get("id") !== coreAsset.get("id")) {
-                MarketsActions.getMarketStats(coreAsset, this.props.fromAsset);
-                this.fromStatsInterval = setInterval(MarketsActions.getMarketStats.bind(this, coreAsset, this.props.fromAsset), 5 * 60 * 1000);
-            }
-
-            if (this.props.toAsset.get("id") !== coreAsset.get("id")) {
-                // wrap this in a timeout to prevent dispatch in the middle of a dispatch
-                // MarketsActions.getMarketStats.bind(this, this.props.toAsset, coreAsset);
-                MarketsActions.getMarketStats.defer(coreAsset, this.props.toAsset);
-                this.toStatsInterval = setInterval(() => {
-                    MarketsActions.getMarketStats.defer(coreAsset, this.props.toAsset);
-                }, 5 * 60 * 1000);
-            }
-        }
+        // let coreAsset = ChainStore.getAsset("1.3.1");
+        // if (coreAsset) {
+        //     if (this.props.fromAsset.get("id") !== coreAsset.get("id")) {
+        //         MarketsActions.getMarketStats(coreAsset, this.props.fromAsset);
+        //         this.fromStatsInterval = setInterval(MarketsActions.getMarketStats.bind(this, coreAsset, this.props.fromAsset), 5 * 60 * 1000);
+        //     }
+        //
+        //     if (this.props.toAsset.get("id") !== coreAsset.get("id")) {
+        //         // wrap this in a timeout to prevent dispatch in the middle of a dispatch
+        //         // MarketsActions.getMarketStats.bind(this, this.props.toAsset, coreAsset);
+        //         MarketsActions.getMarketStats.defer(coreAsset, this.props.toAsset);
+        //         this.toStatsInterval = setInterval(() => {
+        //             MarketsActions.getMarketStats.defer(coreAsset, this.props.toAsset);
+        //         }, 5 * 60 * 1000);
+        //     }
+        // }
     }
 
     componentWillUnmount() {
@@ -71,7 +71,7 @@ class ValueComponent extends React.Component {
 
     getValue() {
         let {amount, toAsset, fromAsset, fullPrecision, marketStats} = this.props;
-        let coreAsset = ChainStore.getAsset("1.3.0");
+        let coreAsset = ChainStore.getAsset("1.3.1");
         let toStats, fromStats;
 
         let toID = toAsset.get("id");
@@ -97,7 +97,7 @@ class ValueComponent extends React.Component {
 
     render() {
         let {amount, toAsset, fromAsset, fullPrecision, marketStats} = this.props;
-        let coreAsset = ChainStore.getAsset("1.3.0");
+        let coreAsset = ChainStore.getAsset("1.3.1");
         let toStats, fromStats;
 
         let toID = toAsset.get("id");
@@ -117,9 +117,9 @@ class ValueComponent extends React.Component {
         }
 
         let price = utils.convertPrice(fromStats && fromStats.close ? fromStats.close :
-                                        fromID === "1.3.0" || fromAsset.has("bitasset") ? fromAsset : null,
+                                        fromID === "1.3.1" || fromAsset.has("bitasset") ? fromAsset : null,
                                         toStats && toStats.close ? toStats.close :
-                                        (toID === "1.3.0" || toAsset.has("bitasset")) ? toAsset : null,
+                                        (toID === "1.3.1" || toAsset.has("bitasset")) ? toAsset : null,
                                         fromID,
                                         toID);
 

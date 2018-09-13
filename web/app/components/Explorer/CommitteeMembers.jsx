@@ -41,7 +41,7 @@ class CommitteeMemberCard extends React.Component {
                             <AccountImage account={this.props.committee_member.get("name")} size={{height: 64, width: 64}}/>
                         </div>
                         <ul className="balances">
-                            <li><Translate content="account.votes.votes" />: <FormattedAsset decimalOffset={5} amount={committee_member_data.get("total_votes")} asset={"1.3.0"}/></li>
+                            <li><Translate content="account.votes.votes" />: <FormattedAsset decimalOffset={5} amount={committee_member_data.get("total_votes")} asset={"1.3.1"}/></li>
                         </ul>
                     </div>
                 </div>

@@ -84,7 +84,7 @@ class Assets extends React.Component {
         let {assets} = this.props;
 
         let placeholder = counterpart.translate("markets.filter").toUpperCase();
-        let coreAsset = ChainStore.getAsset("1.3.0");
+        let coreAsset = ChainStore.getAsset("1.3.1");
 
         let uia = assets.filter(a => {
             return !a.market_asset && a.symbol.indexOf(this.state.filterUIA) !== -1;

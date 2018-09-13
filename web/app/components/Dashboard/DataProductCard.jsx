@@ -17,7 +17,7 @@ class DataProductCard extends React.Component {
                     <p className="desc">{this.props.desc}</p>
                     <p className="price">
                         <Translate content="data_product.price"/>:&nbsp;&nbsp;
-                        <FormattedAsset amount={this.props.price} asset='1.3.0'/>
+                        <FormattedAsset amount={this.props.price} asset='1.3.5'/>
                     </p>
                 </div>
             </div>

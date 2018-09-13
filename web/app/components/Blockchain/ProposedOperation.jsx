@@ -148,7 +148,7 @@ class ProposedOperation extends React.Component {
                             string="proposal.transfer"
                             keys={[
                                 {type: "account", value: op[1].from, arg: "from"},
-                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null},
+                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: 5 },
                                 {type: "account", value: op[1].to, arg: "to"}
                             ]}
                         />
@@ -406,7 +406,7 @@ class ProposedOperation extends React.Component {
                     <span>
                         {this.linkToAccount(op[1].from_account)} &nbsp;
                         <Translate component="span" content="proposal.fund_pool"/>
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset="1.3.0"/>
+                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset={op[1].asset_id}/>
                     </span>
                 );
                 break;
@@ -481,7 +481,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.witness_pay"/>
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset={"1.3.0"}/>
+                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset={op[1].asset_id}/>
                             <Translate component="span" content="proposal.to"/>
                             &nbsp;{this.linkToAccount(op[1].witness_account)}
                         </span>
@@ -490,7 +490,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.received"/>
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset={"1.3.0"}/>
+                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset={op[1].asset_id}/>
                             <Translate component="span" content="proposal.from"/>
                             &nbsp;{this.linkToAccount(op[1].witness_account)}
                         </span>
@@ -720,7 +720,7 @@ class ProposedOperation extends React.Component {
                 column = (
                     <span>
                         <Translate component="span" content="proposal.create_worker"/>
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].daily_pay} asset={"1.3.0"}/>
+                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].daily_pay} asset={"1.3.1"}/>
                     </span>
                 );
                 break;

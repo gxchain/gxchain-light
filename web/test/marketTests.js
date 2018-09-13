@@ -3,10 +3,10 @@ import {LimitOrderCreate, Price, FeedPrice, Asset, limitByPrecision,
 import assert from "assert";
 
 console.log("**** Starting market tests here ****");
-const asset1 = {asset_id: "1.3.0", precision: 5};
+const asset1 = {asset_id: "1.3.1", precision: 5};
 const asset2 = {asset_id: "1.3.121", precision: 4}; // bitUSD
 const asset3 = {asset_id: "1.3.113", precision: 4}; // bitCNY
-const assets = {"1.3.0": asset1, "1.3.121": asset2, "1.3.113": asset3};
+const assets = {"1.3.1": asset1, "1.3.121": asset2, "1.3.113": asset3};
 
 describe("Utility functions", function() {
 
@@ -35,7 +35,7 @@ describe("Asset", function() {
 
     it("Instantiates empty", function() {
         let asset = new Asset();
-        assert.equal(asset.asset_id, "1.3.0", "Default asset should be 1.3.0");
+        assert.equal(asset.asset_id, "1.3.1", "Default asset should be 1.3.1");
         assert.equal(asset.amount, 0, "Default amount should be 0");
         assert.equal(asset.satoshi, 100000, "Satoshi should be 100000");
     });
@@ -48,8 +48,8 @@ describe("Asset", function() {
     });
 
     it("Instantiates from real number", function() {
-        let asset = new Asset({asset_id: "1.3.0", real: 1});
-        assert.equal(asset.asset_id, "1.3.0", "Asset should be 1.3.0");
+        let asset = new Asset({asset_id: "1.3.1", real: 1});
+        assert.equal(asset.asset_id, "1.3.1", "Asset should be 1.3.1");
         assert.equal(asset.amount, 100000, "Amount should be 242");
         assert.equal(asset.satoshi, 100000, "Satoshi should be 10000");
     });
@@ -72,7 +72,7 @@ describe("Asset", function() {
 
     it("Throws when adding or subtracting unequal assets", function() {
         let asset = new Asset({asset_id: "1.3.121", amount: 242});
-        let asset2 = new Asset({asset_id: "1.3.0", amount: 242});
+        let asset2 = new Asset({asset_id: "1.3.1", amount: 242});
         assert.throws(function() {
             asset.plus(asset2);
         }, Error);
@@ -124,23 +124,23 @@ describe("Asset", function() {
     });
 
     it("Can be multiplied with a price", function() {
-        let asset = new Asset({asset_id: "1.3.0", real: 100});
+        let asset = new Asset({asset_id: "1.3.1", real: 100});
         let asset2 = new Asset({asset_id: "1.3.121", precision: 4, real: 55});
 
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 200
         });
 
         let price2 = new Price({
             base: new Asset({asset_id: "1.3.121", precision: 4}),
-            quote: new Asset({asset_id: "1.3.0"}),
+            quote: new Asset({asset_id: "1.3.1"}),
             real: 0.001
         });
 
         let price3 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 250
         });
@@ -174,7 +174,7 @@ describe("Asset", function() {
     });
 
     it("Throws when multiplied with an incorrect price", function() {
-        let asset = new Asset({asset_id: "1.3.0", amount: 100});
+        let asset = new Asset({asset_id: "1.3.1", amount: 100});
         let price = new Price({
             base: new Asset({asset_id: "1.3.12", amount: 25}),
             quote: new Asset({asset_id: "1.3.121", amount: 500})
@@ -204,13 +204,13 @@ describe("Asset", function() {
 
 describe("Price", function() {
 
-    let base = new Asset({asset_id: "1.3.0", amount: 50});
+    let base = new Asset({asset_id: "1.3.1", amount: 50});
     let quote = new Asset({asset_id: "1.3.121", amount: 250, precision: 4});
 
     it("Instantiates", function() {
         let price = new Price({base, quote});
 
-        assert.equal(price.base.asset_id, "1.3.0", "Base asset should be 1.3.0");
+        assert.equal(price.base.asset_id, "1.3.1", "Base asset should be 1.3.1");
         assert.equal(price.base.amount, 50, "Base amount should be 50");
         assert.equal(price.quote.asset_id, "1.3.121", "Quote asset should be 1.3.121");
         assert.equal(price.quote.amount, 250, "Quote amount should be 250");
@@ -230,7 +230,7 @@ describe("Price", function() {
     it("Instantiates from real number", function() {
         let priceNum = 250;
         let price = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: priceNum
         });
@@ -240,7 +240,7 @@ describe("Price", function() {
         assert.equal(price.quote.amount, 1, "Quote amount should equal 1");
 
         let price2 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
@@ -251,7 +251,7 @@ describe("Price", function() {
 
         priceNum = 121000.52323231;
         let price3 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.103", precision: 8}),
             real: priceNum
         });
@@ -300,19 +300,19 @@ describe("Price", function() {
 
     it("Can be compared with equals", function() {
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 2312.151
         });
 
         let price2 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
 
         let price3 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 2312.151
         });
@@ -323,13 +323,13 @@ describe("Price", function() {
 
     it("Can be compared with less than", function() {
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 2312.151
         });
 
         let price2 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
@@ -340,19 +340,19 @@ describe("Price", function() {
 
     it("Can be compared with less than or equal", function() {
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.151
         });
 
         let price2 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
 
         let price3 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.151
         });
@@ -364,13 +364,13 @@ describe("Price", function() {
 
     it("Can be compared with not equal", function() {
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.151
         });
 
         let price2 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
@@ -380,19 +380,19 @@ describe("Price", function() {
 
     it("Can be compared with greater than", function() {
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.151
         });
 
         let price2 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
 
         let price3 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
@@ -404,19 +404,19 @@ describe("Price", function() {
 
     it("Can be compared with greater than or equal", function() {
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.151
         });
 
         let price2 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
 
         let price3 = new Price({
-            base: new Asset({asset_id: "1.3.0"}),
+            base: new Asset({asset_id: "1.3.1"}),
             quote: new Asset({asset_id: "1.3.121", precision: 4}),
             real: 212.23323
         });
@@ -428,7 +428,7 @@ describe("Price", function() {
 
     it("Can be inverted", function() {
         let price1 = new Price({
-            base: new Asset({asset_id: "1.3.0", amount: 10000}),
+            base: new Asset({asset_id: "1.3.1", amount: 10000}),
             quote: new Asset({asset_id: "1.3.121", precision: 4, amount: 500}),
         });
 
@@ -436,7 +436,7 @@ describe("Price", function() {
 
         let price2 = new Price({
             base: new Asset({asset_id: "1.3.121", precision: 4, amount: 500}),
-            quote: new Asset({asset_id: "1.3.0", amount: 10000}),
+            quote: new Asset({asset_id: "1.3.1", amount: 10000}),
         });
 
         assert(price1.equals(price2));
@@ -446,15 +446,15 @@ describe("Price", function() {
 describe("FeedPrice", function() {
 
     let base = new Asset({asset_id: "1.3.121", amount: 36, precision: 4});
-    let quote = new Asset({asset_id: "1.3.0", amount: 86275});
+    let quote = new Asset({asset_id: "1.3.1", amount: 86275});
 
     it("Instantiates", function() {
-        let price = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.0", sqr: 1100, assets});
+        let price = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.1", sqr: 1100, assets});
         let price2 = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.121", sqr: 1100, assets});
 
         assert.equal(price.base.asset_id, "1.3.121", "Base asset should be 1.3.121");
         assert.equal(price.base.amount, 36, "Base amount should be 36");
-        assert.equal(price.quote.asset_id, "1.3.0", "Quote asset should be 1.3.0");
+        assert.equal(price.quote.asset_id, "1.3.1", "Quote asset should be 1.3.1");
         assert.equal(price.quote.amount, 86275, "Quote amount should be 86275");
         assert.equal(price.toReal(), 0.0041727, "Real price should be 0.0041727");
 
@@ -463,7 +463,7 @@ describe("FeedPrice", function() {
 
     it("Returns short squeeze price", function() {
         let price = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.121", sqr: 1100, assets});
-        let price2 = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.0", sqr: 1100, assets});
+        let price2 = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.1", sqr: 1100, assets});
 
         assert.equal(price.getSqueezePrice({real: true}), 263.61666667, "Squeeze price should equal 263.61666667");
         assert.equal(price2.getSqueezePrice({real: true}), 0.00379339, "Squeeze price should equal 0.00379339");
@@ -471,7 +471,7 @@ describe("FeedPrice", function() {
 
     it("Returns the settlement price", function() {
         let price = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.121", sqr: 1100, assets});
-        let price2 = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.0", sqr: 1100, assets});
+        let price2 = new FeedPrice({priceObject: {base, quote}, market_base: "1.3.1", sqr: 1100, assets});
 
         assert.equal(price.toReal(), 239.65277778, "Squeeze price should equal 239.65277778");
         assert.equal(price2.toReal(), 0.0041727, "Squeeze price should equal 0.0041727");
@@ -557,7 +557,7 @@ describe("LimitOrder", function() {
         "sell_price": {
             "base": {
                 "amount":40652748,
-                "asset_id":"1.3.0"
+                "asset_id":"1.3.1"
             },
             "quote":{
                 "amount":16186,
@@ -579,7 +579,7 @@ describe("LimitOrder", function() {
             },
             "quote":{
                 "amount":40652748,
-                "asset_id":"1.3.0"
+                "asset_id":"1.3.1"
             }
         }
         ,"deferred_fee":14676
@@ -597,7 +597,7 @@ describe("LimitOrder", function() {
             },
             "quote":{
                 "amount": 150000000,
-                "asset_id":"1.3.0"
+                "asset_id":"1.3.1"
             }
         }
         ,"deferred_fee":14676
@@ -611,7 +611,7 @@ describe("LimitOrder", function() {
         "sell_price": {
             "base":{
                 "amount": 150000000,
-                "asset_id":"1.3.0"
+                "asset_id":"1.3.1"
             },
             "quote": {
                 "amount":47554,
@@ -622,7 +622,7 @@ describe("LimitOrder", function() {
     };
 
     it("Instantiates", function() {
-        let order = new LimitOrder(o, assets, "1.3.0");
+        let order = new LimitOrder(o, assets, "1.3.1");
         assert(order.id === o.id);
         assert(order.seller === o.seller);
         assert(order.for_sale === o.for_sale);
@@ -632,27 +632,27 @@ describe("LimitOrder", function() {
     it("Returns the price of the order", function() {
         let order = new LimitOrder(o, assets, "1.3.121");
         assert.equal(order.getPrice(), 251.15994069, "Price should equal 251.15994069");
-        let order2 = new LimitOrder(o, assets, "1.3.0");
+        let order2 = new LimitOrder(o, assets, "1.3.1");
         assert.equal(order2.getPrice(), 0.00398153, "Price should equal 0.00398153");
     });
 
     it("Returns the amount for sale as an asset", function() {
-        let order = new LimitOrder(o, assets, "1.3.0");
+        let order = new LimitOrder(o, assets, "1.3.1");
         let forSale = order.amountForSale();
         assert.equal(forSale.getAmount(), 600548, "Satoshi amount for sale should equal 600548");
         assert.equal(forSale.getAmount({real: true}), 6.00548, "Real amount for sale should equal 6.00548");
     });
 
     it("Returns the amount to receive as an asset", function() {
-        let order = new LimitOrder(o, assets, "1.3.0");
+        let order = new LimitOrder(o, assets, "1.3.1");
         let toReceive = order.amountToReceive();
         assert.equal(toReceive.getAmount(), 239, "Satoshi amount to receive should equal 239");
         assert.equal(toReceive.getAmount({real: true}), 0.0239, "Real amount for sale should equal 0.0239");
 
         let order3 = new LimitOrder(o3, assets, "1.3.121");
         let order4 = new LimitOrder(o4, assets, "1.3.121");
-        let order5 = new LimitOrder(o3, assets, "1.3.0");
-        let order6 = new LimitOrder(o4, assets, "1.3.0");
+        let order5 = new LimitOrder(o3, assets, "1.3.1");
+        let order6 = new LimitOrder(o4, assets, "1.3.1");
 
         assert.equal(order3.amountToReceive().getAmount(), 3154, "As an ask, amountToReceive should equal 3154");
         assert.equal(order4.amountToReceive().getAmount(), 1, "Order4 should equal 1");
@@ -662,15 +662,15 @@ describe("LimitOrder", function() {
     });
 
     it("Returns the order type", function() {
-        let order = new LimitOrder(o, assets, "1.3.0");
-        let order2 = new LimitOrder(o2, assets, "1.3.0");
+        let order = new LimitOrder(o, assets, "1.3.1");
+        let order2 = new LimitOrder(o2, assets, "1.3.1");
         assert.equal(order.isBid(), false, "Order type should be ASK/false");
         assert.equal(order2.isBid(), true, "Order type should be BID/true");
     });
 
     it("Can be summed with another order", function() {
-        let o1 = new LimitOrder(o, assets, "1.3.0");
-        let o2 = new LimitOrder(o, assets, "1.3.0");
+        let o1 = new LimitOrder(o, assets, "1.3.1");
+        let o2 = new LimitOrder(o, assets, "1.3.1");
 
         o1.sum(o2);
 
@@ -678,8 +678,8 @@ describe("LimitOrder", function() {
     });
 
     it("Can be compared to another order with equals / ne", function() {
-        let o1 = new LimitOrder(o, assets, "1.3.0");
-        let o2 = new LimitOrder(o, assets, "1.3.0");
+        let o1 = new LimitOrder(o, assets, "1.3.1");
+        let o2 = new LimitOrder(o, assets, "1.3.1");
 
         assert.equal(o1.ne(o2), false, "Orders are the same");
         assert.equal(o1.equals(o2), true, "Orders are the same");
@@ -695,7 +695,7 @@ describe("CallOrder", function() {
 
     let quote = {
         amount: 10624,
-        asset_id: "1.3.0"
+        asset_id: "1.3.1"
     };
 
     let settlePrice_0 = new FeedPrice({
@@ -703,7 +703,7 @@ describe("CallOrder", function() {
             base,
             quote
         },
-        market_base: "1.3.0",
+        market_base: "1.3.1",
         sqr: 1100,
         assets
     });
@@ -726,7 +726,7 @@ describe("CallOrder", function() {
         "call_price": {
             "base": {
                 "amount": "13558072233"
-                ,"asset_id": "1.3.0"
+                ,"asset_id": "1.3.1"
             },
             "quote": {
                 "amount": 34930000,
@@ -743,7 +743,7 @@ describe("CallOrder", function() {
         "call_price": {
             "base": {
                 "amount": "13558072233"
-                ,"asset_id": "1.3.0"
+                ,"asset_id": "1.3.1"
             },
             "quote": {
                 "amount": 349300000,
@@ -753,7 +753,7 @@ describe("CallOrder", function() {
     };
 
     it("Instantiates", function() {
-        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let order = new CallOrder(o, assets, "1.3.1", settlePrice_0);
         assert.equal(order.id, o.id, "Id should be 1.8.2317");
         assert.equal(order.for_sale, o.collateral);
         assert.equal(order.to_receive, o.debt);
@@ -762,13 +762,13 @@ describe("CallOrder", function() {
     it("Returns the call price of the order", function() {
         let order = new CallOrder(o, assets, "1.3.113", settlePrice_113);
         assert.equal(order.getPrice(false), 38.8149792, "Price should equal 38.8149792");
-        let order2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let order2 = new CallOrder(o, assets, "1.3.1", settlePrice_0);
         assert.equal(order2.getPrice(false), 0.02576325, "Price should equal 0.02576325");
     });
 
 
     it("Returns the order type", function() {
-        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let order = new CallOrder(o, assets, "1.3.1", settlePrice_0);
         assert.equal(order.isBid(), false, "Order type should be ASK/false");
 
         let order2 = new CallOrder(o, assets, "1.3.113", settlePrice_113);
@@ -782,8 +782,8 @@ describe("CallOrder", function() {
         assert.equal(order.isMarginCalled(), false, "Order is not margin called: " + order.getPrice() + " > " + settlePrice_113.toReal());
         assert.equal(order2.isMarginCalled(), true, "Order2 is margin called: " + order2.getPrice() + " < " + settlePrice_113.toReal());
 
-        let order3 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-        let order4 = new CallOrder(o2, assets, "1.3.0", settlePrice_0);
+        let order3 = new CallOrder(o, assets, "1.3.1", settlePrice_0);
+        let order4 = new CallOrder(o2, assets, "1.3.1", settlePrice_0);
 
         assert.equal(order3.isMarginCalled(), false, "order3 is not margin called: " + order3.getPrice() + " < " + settlePrice_0.toReal());
         assert.equal(order4.isMarginCalled(), true, "Order4 is margin called: " + order4.getPrice() + " > " + settlePrice_0.toReal());
@@ -791,7 +791,7 @@ describe("CallOrder", function() {
     });
 
     it("Returns the amount for sale as an asset", function() {
-        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let order = new CallOrder(o, assets, "1.3.1", settlePrice_0);
         let forSale = order.amountForSale();
 
         assert.equal(forSale.getAmount(), 188039049032, "Satoshi amount for sale should equal 188039049032");
@@ -799,7 +799,7 @@ describe("CallOrder", function() {
     });
 
     it("Returns the amount to receive as an asset based on squeeze price", function() {
-        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let order = new CallOrder(o, assets, "1.3.1", settlePrice_0);
         let toReceive = order.amountToReceive();
 
         assert.equal(toReceive.getAmount(), 498820000, "Satoshi amount to receive should equal 498820000");
@@ -807,16 +807,16 @@ describe("CallOrder", function() {
     });
 
     it("Can be summed with another order", function() {
-        let o1 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-        let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let o1 = new CallOrder(o, assets, "1.3.1", settlePrice_0);
+        let o2 = new CallOrder(o, assets, "1.3.1", settlePrice_0);
         const o3 = o1.sum(o2);
 
         assert.equal(o3.amountForSale().getAmount(), 188039049032*2, "The amount should equal 376078098064");
     });
 
     it("Can be compared to another order with equals / ne", function() {
-        let o1 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-        let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let o1 = new CallOrder(o, assets, "1.3.1", settlePrice_0);
+        let o2 = new CallOrder(o, assets, "1.3.1", settlePrice_0);
 
         assert.equal(o1.ne(o2), false, "Orders are the same");
         assert.equal(o1.equals(o2), true, "Orders are the same");
@@ -831,7 +831,7 @@ describe("Settle Order", function() {
 
     let quote = {
         amount: 10624,
-        asset_id: "1.3.0"
+        asset_id: "1.3.1"
     };
 
     let settlePrice_0 = new FeedPrice({
@@ -839,7 +839,7 @@ describe("Settle Order", function() {
             base,
             quote
         },
-        market_base: "1.3.0",
+        market_base: "1.3.1",
         sqr: 1100,
         assets
     });
@@ -877,19 +877,19 @@ describe("Settle Order", function() {
     const bitasset_options = {force_settlement_offset_percent:  150};
 
     it("Instantiates", function() {
-        new SettleOrder(so, assets, "1.3.0", settlePrice_0, bitasset_options);
+        new SettleOrder(so, assets, "1.3.1", settlePrice_0, bitasset_options);
     });
 
     it("Can be compared by date with isBefore", function() {
-        let order = new SettleOrder(so, assets, "1.3.0", settlePrice_0, bitasset_options);
-        let order2 = new SettleOrder(so2, assets, "1.3.0", settlePrice_0, bitasset_options);
+        let order = new SettleOrder(so, assets, "1.3.1", settlePrice_0, bitasset_options);
+        let order2 = new SettleOrder(so2, assets, "1.3.1", settlePrice_0, bitasset_options);
 
         assert.equal(order.isBefore(order2), false, "Order 1 settles after order 2");
         assert.equal(order2.isBefore(order), true, "Order 2 settles before order 1");
     });
 
     it("Returns the settle order price", function() {
-        let order = new SettleOrder(so, assets, "1.3.0", settlePrice_0, bitasset_options);
+        let order = new SettleOrder(so, assets, "1.3.1", settlePrice_0, bitasset_options);
         let order2 = new SettleOrder(so, assets, "1.3.113", settlePrice_113, bitasset_options);
 
         assert.equal(order.getPrice(), 0.02917922, "Price should be 0.02917922");
@@ -905,7 +905,7 @@ describe("Settle Order", function() {
 
     it("Returns the amount to receive using offset percent", function() {
         let order = new SettleOrder(so, assets, "1.3.113", settlePrice_113, bitasset_options);
-        assert.equal(order.amountToReceive().asset_id, "1.3.0", "Asset to receive should be 1.3.0");
+        assert.equal(order.amountToReceive().asset_id, "1.3.1", "Asset to receive should be 1.3.1");
         assert.equal(order.amountToReceive().getAmount(), 16878451611, "Amount should be 16878451611")
         assert.equal(order.amountToReceive().getAmount({real: true}), 168784.51611, "Amount should be 168784.51611")
     });
@@ -913,7 +913,7 @@ describe("Settle Order", function() {
     it("Returns the order type", function() {
         let order = new SettleOrder(so, assets, "1.3.113", settlePrice_113, bitasset_options);
 
-        let order2 = new SettleOrder(so, assets, "1.3.0", settlePrice_0, bitasset_options);
+        let order2 = new SettleOrder(so, assets, "1.3.1", settlePrice_0, bitasset_options);
         assert.equal(order.isBid(), false, "Order is not a a bid");
         assert.equal(order2.isBid(), true, "Order is a bid");
     })

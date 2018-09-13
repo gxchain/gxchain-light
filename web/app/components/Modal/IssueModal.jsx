@@ -19,13 +19,13 @@ class IssueModal extends React.Component {
 
     static defaultProps = {
         globalObject: "2.0.0",
-        core: "1.3.0"
+        core: "1.3.1"
     };
 
     constructor (props) {
         super (props);
         this.state = {
-            fee_asset_id: '1.3.0',
+            fee_asset_id: '1.3.1',
             feeAsset: null,
             amount: props.amount,
             to: props.to,
@@ -45,7 +45,7 @@ class IssueModal extends React.Component {
         fee_asset_types = Object.keys (account_balances).sort (utils.sortID);
         for (let key in account_balances) {
             let asset = ChainStore.getObject (key);
-            if (key !== '1.3.0' && key !== '1.3.1') {
+            if (key !== '1.3.1') {
                 fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
                 continue;
             }
@@ -57,7 +57,7 @@ class IssueModal extends React.Component {
                         fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
                     }
                 }
-                if (asset.get ("id") !== "1.3.0" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
+                if (asset.get ("id") !== "1.3.1" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
                     fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
                 }
             }
@@ -95,7 +95,7 @@ class IssueModal extends React.Component {
             asset_to_issue.get ("id"),
             amount,
             this.state.memo ? new Buffer (this.state.memo, "utf-8") : this.state.memo,
-            this.state.feeAsset ? this.state.feeAsset.get ('id') : '1.3.0'
+            this.state.feeAsset ? this.state.feeAsset.get ('id') : '1.3.1'
         );
 
         this.setState ({
@@ -123,7 +123,7 @@ class IssueModal extends React.Component {
         fee = utils.estimateFee ('asset_issue', null, globalObject);
 
         // Finish fee estimation
-        if (feeAsset && feeAsset.get ("id") !== "1.3.0" && core) {
+        if (feeAsset && feeAsset.get ("id") !== "1.3.1" && core) {
             let price = utils.convertPrice (core, feeAsset.getIn (["options", "core_exchange_rate"]).toJS (), null, feeAsset.get ("id"));
             fee = utils.convertValue (price, fee, core, feeAsset);
 

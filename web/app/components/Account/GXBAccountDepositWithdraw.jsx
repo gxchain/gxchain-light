@@ -5,7 +5,7 @@ import BindToChainState from "../Utility/BindToChainState";
 class GXBAccountDepositWithdraw extends React.Component{
     _renderBalances(balanceList, optionalAssets, visible) {
         let {settings, hiddenAssets} = this.props;
-        let preferredUnit = "1.3.0";
+        let preferredUnit = "1.3.1";
         let showAssetPercent = settings.get("showAssetPercent", false);
 
         let balances = [];

@@ -43,7 +43,7 @@ class BitAssetOptions extends React.Component {
 
     _onFoundBackingAsset (asset) {
         if (asset) {
-            if (asset.get ("id") === "1.3.0" || (asset.get ("bitasset_data_id") && !asset.getIn (["bitasset", "is_prediction_market"]))) {
+            if (asset.get ("id") === "1.3.1" || (asset.get ("bitasset_data_id") && !asset.getIn (["bitasset", "is_prediction_market"]))) {
                 if (asset.get ("precision") !== parseInt (this.props.assetPrecision, 10)) {
                     this.setState ({
                         error: counterpart.translate ("account.user_issued_assets.error_precision", {asset: this.props.assetSymbol})
@@ -120,7 +120,7 @@ class AccountAssetCreate extends React.Component {
 
     static defaultProps = {
         globalObject: "2.0.0",
-        core: "1.3.0"
+        core: "1.3.1"
     };
 
     constructor (props) {
@@ -141,7 +141,7 @@ class AccountAssetCreate extends React.Component {
         // let permissions = assetUtils.getPermissions(permissionBooleans, isBitAsset);
         // console.log("all permissions:", permissionBooleans, permissions)
 
-        let coreRateBaseAssetName = ChainStore.getAsset ("1.3.0").get ("symbol");
+        let coreRateBaseAssetName = ChainStore.getAsset ("1.3.1").get ("symbol");
 
         return {
 
@@ -161,7 +161,7 @@ class AccountAssetCreate extends React.Component {
             permissionBooleans: permissionBooleans,
             isBitAsset: isBitAsset,
             is_prediction_market: false,
-            fee_asset_id: '1.3.0',
+            fee_asset_id: '1.3.1',
             feeAsset: null,
             core_exchange_rate: {
                 quote: {
@@ -169,7 +169,7 @@ class AccountAssetCreate extends React.Component {
                     amount: 1
                 },
                 base: {
-                    asset_id: "1.3.0",
+                    asset_id: "1.3.1",
                     amount: 1
                 }
             },
@@ -179,7 +179,7 @@ class AccountAssetCreate extends React.Component {
                 "force_settlement_delay_sec": 60 * 60 * 24,
                 "force_settlement_offset_percent": 1 * assetConstants.GRAPHENE_1_PERCENT,
                 "maximum_force_settlement_volume": 20 * assetConstants.GRAPHENE_1_PERCENT,
-                "short_backing_asset": "1.3.0"
+                "short_backing_asset": "1.3.1"
             },
             marketInput: ""
         };
@@ -481,7 +481,7 @@ class AccountAssetCreate extends React.Component {
         fee_asset_types = Object.keys (account_balances).sort (utils.sortID);
         for (let key in account_balances) {
             let asset = ChainStore.getObject (key);
-            if (key !== '1.3.0' && key !== '1.3.1') {
+            if (key !== '1.3.1') {
                 fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
                 continue;
             }
@@ -493,7 +493,7 @@ class AccountAssetCreate extends React.Component {
                         fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
                     }
                 }
-                if (asset.get ("id") !== "1.3.0" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
+                if (asset.get ("id") !== "1.3.1" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
                     fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
                 }
             }
@@ -529,7 +529,7 @@ class AccountAssetCreate extends React.Component {
         }
 
         // Finish fee estimation
-        if (feeAsset && feeAsset.get ("id") !== "1.3.0" && core) {
+        if (feeAsset && feeAsset.get ("id") !== "1.3.1" && core) {
 
             let price = utils.convertPrice (core, feeAsset.getIn (["options", "core_exchange_rate"]).toJS (), null, feeAsset.get ("id"));
             createFee = utils.convertValue (price, createFee, core, feeAsset);

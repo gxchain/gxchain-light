@@ -396,7 +396,7 @@ class LeagueDetail extends React.Component {
                                     <FormattedAsset noPrefix
                                                     color={'warning'}
                                                     amount={this.state.product.refer_price}
-                                                    asset={'1.3.0'}>
+                                                    asset={'1.3.5'}>
                                     </FormattedAsset>/条</label>
                             </div>
                         </div>

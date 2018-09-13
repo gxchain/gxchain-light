@@ -24,7 +24,7 @@ class DataProductList extends React.Component {
 
     static defaultProps = {
         className: "details-switch-demo",
-        coreAsset: "1.3.0",
+        coreAsset: "1.3.1",
     };
 
     constructor(props) {

@@ -6,16 +6,13 @@ import accountUtils from "common/account_utils";
 import WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb.js";
 import {ChainStore, FetchChainObjects} from "gxbjs/es";
-import WorkerApproval from "./WorkerApproval";
 import AccountVotingProxy from "./AccountVotingProxy";
 import AccountsList from "./AccountsList";
 import HelpContent from "../Utility/HelpContent";
 import cnames from "classnames";
-import {Tabs, Tab} from "../Utility/Tabs";
-import FormattedAsset from "../Utility/FormattedAsset";
+import {Tab, Tabs} from "../Utility/Tabs";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
-import {EquivalentValueComponent} from "../Utility/EquivalentValueComponent";
 import {Link} from "react-router";
 
 let wallet_api = new WalletApi();
@@ -68,6 +65,9 @@ class AccountVoting extends React.Component {
 
         let votes = options.get("votes");
         let vote_ids = votes.toArray();
+        vote_ids = vote_ids.filter(id => {
+            return id.split(":")[0] != '2';
+        });
         let vids = Immutable.Set(vote_ids);
         ChainStore.getObjectsByVoteIds(vote_ids);
         FetchChainObjects(ChainStore.getObjectByVoteID, vote_ids, 5000).then(vote_objs => {
@@ -285,11 +285,11 @@ class AccountVoting extends React.Component {
                 this.forceUpdate();
             }
         } else {
-            if (lastBudgetObject&&lastBudgetObject !== "2.13.1") {
+            if (lastBudgetObject && lastBudgetObject !== "2.13.1") {
                 let newBudgetObjectId = parseInt(lastBudgetObject.split(".")[2], 10) - 1;
                 this.setState({
                     lastBudgetObject: "2.13." + (newBudgetObjectId - 1)
-                })
+                });
             }
         }
     }
@@ -317,7 +317,7 @@ class AccountVoting extends React.Component {
     }
 
     render() {
-        let preferredUnit = "1.3.0";
+        let preferredUnit = "1.3.1";
         let proxy_is_set = this.props.account.getIn(["options", "voting_account"]) !== "1.2.5";
         let publish_buttons_class = cnames("button", {disabled: !this.isChanged()});
 
@@ -385,7 +385,7 @@ class AccountVoting extends React.Component {
                         </Tab>
 
                         <Tab title="explorer.witnesses.title">
-                            <div className={cnames("content-block", {disabled : proxy_is_set})}>
+                            <div className={cnames("content-block", {disabled: proxy_is_set})}>
                                 <HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingWitnesses"/>
                                 <AccountsList
                                     type="witness"
@@ -415,7 +415,7 @@ class AccountVoting extends React.Component {
                         </Tab>
 
                         <Tab title="explorer.committee_members.title">
-                            <div className={cnames("content-block", {disabled : proxy_is_set})}>
+                            <div className={cnames("content-block", {disabled: proxy_is_set})}>
                                 <HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingCommittee"/>
                                 <AccountsList
                                     type="committee"
@@ -449,5 +449,6 @@ class AccountVoting extends React.Component {
         );
     }
 }
+
 // export default AccountVoting;
 export default BindToChainState(AccountVoting);

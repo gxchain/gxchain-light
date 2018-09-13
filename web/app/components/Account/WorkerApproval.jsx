@@ -110,13 +110,13 @@ class WorkerApproval extends React.Component{
                 </td>
 
                 <td className="hide-column-small">
-                    <FormattedAsset amount={total_votes} asset="1.3.0" decimalOffset={5}/>
+                    <FormattedAsset amount={total_votes} asset="1.3.1" decimalOffset={5}/>
                 </td>
 
                 <td className="hide-column-small">
-                    <FormattedAsset amount={worker.daily_pay} asset="1.3.0" decimalOffset={5}/>
-                    {this.props.preferredUnit !== "1.3.0" ?<div style={{paddingTop: 5}}>
-                        (<EquivalentValueComponent fromAsset="1.3.0" toAsset={this.props.preferredUnit} amount={worker.daily_pay}/>)
+                    <FormattedAsset amount={worker.daily_pay} asset="1.3.1" decimalOffset={5}/>
+                    {this.props.preferredUnit !== "1.3.1" ?<div style={{paddingTop: 5}}>
+                        (<EquivalentValueComponent fromAsset="1.3.1" toAsset={this.props.preferredUnit} amount={worker.daily_pay}/>)
                     </div> : null}
                 </td>
 
@@ -124,7 +124,7 @@ class WorkerApproval extends React.Component{
                     {worker.worker[1].balance ?
                         <VestingBalance balance={worker.worker[1].balance} decimalOffset={5}/> :
                         worker.worker[1].total_burned ?
-                        <span>(<FormattedAsset amount={worker.worker[1].total_burned} asset="1.3.0" decimalOffset={5} />)</span> :
+                        <span>(<FormattedAsset amount={worker.worker[1].total_burned} asset="1.3.1" decimalOffset={5} />)</span> :
                             null}
                 </td>
 

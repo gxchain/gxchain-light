@@ -177,9 +177,9 @@ var Utils = {
             "1.3.113": 5, // bitCNY
             "1.3.121": 5 // bitUSD
         };
-        if (quoteID === "1.3.0") {
+        if (quoteID === "1.3.1") {
             priceText = this.format_number (price, quotePrecision);
-        } else if (baseID === "1.3.0") {
+        } else if (baseID === "1.3.1") {
             priceText = this.format_number (price, Math.min (maxDecimals, quotePrecision + 2));
         } else if (fixedPrecisionAssets[quoteID]) {
             priceText = this.format_number (price, fixedPrecisionAssets[quoteID]);
@@ -367,10 +367,10 @@ var Utils = {
     },
 
     getFee: function ({opType, options, globalObject, asset, coreAsset, balances}) {
-        let coreFee = {asset: "1.3.0"};
+        let coreFee = {asset: "1.3.1"};
         coreFee.amount = this.estimateFee (opType, options, globalObject) || 0;
 
-        if (!asset || asset.get ("id") === "1.3.0") return coreFee; // Desired fee is in core asset
+        if (!asset || asset.get ("id") === "1.3.1") return coreFee; // Desired fee is in core asset
 
         let cer = asset.getIn (["options", "core_exchange_rate"]).toJS ();
         if (!coreAsset || cer.base.asset_id === cer.quote.asset_id) return coreFee;
@@ -384,7 +384,7 @@ var Utils = {
         let useCoreFee = true; // prefer CORE fee by default
         if (balances && balances.length) {
             balances.forEach (b => {
-                if (b.get ("asset_type") === "1.3.0" && b.get ("balance") < coreFee.amount) { // User has sufficient CORE, use it (cheapeest)
+                if (b.get ("asset_type") === "1.3.1" && b.get ("balance") < coreFee.amount) { // User has sufficient CORE, use it (cheapeest)
                     useCoreFee = false;
                 }
             });

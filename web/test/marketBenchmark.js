@@ -1,10 +1,10 @@
 var Benchmark = require("benchmark");
 var marketClasses = require("./MarketClasses");
 
-const asset1 = {asset_id: "1.3.0", precision: 5};
+const asset1 = {asset_id: "1.3.1", precision: 5};
 const asset2 = {asset_id: "1.3.121", precision: 4}; // bitUSD
 const asset3 = {asset_id: "1.3.113", precision: 4}; // bitCNY
-const assets = {"1.3.0": asset1, "1.3.121": asset2, "1.3.113": asset3};
+const assets = {"1.3.1": asset1, "1.3.121": asset2, "1.3.113": asset3};
 
 /* marketClasses.Asset creation */
 let suite = new Benchmark.Suite;
@@ -45,7 +45,7 @@ suite.add("Asset#empty", function() {
 
 /* Price creation */
 let base = new marketClasses.Asset({asset_id: "1.3.121", amount: 36, precision: 4});
-let quote = new marketClasses.Asset({asset_id: "1.3.0", amount: 86275});
+let quote = new marketClasses.Asset({asset_id: "1.3.1", amount: 86275});
 
 suite = new Benchmark.Suite;
 
@@ -60,7 +60,7 @@ suite.add("Price#from_sats", function() {
     priceToClone.clone();
 })
 .add("FeedPrice#from_sats", function() {
-    new marketClasses.FeedPrice({priceObject: {base: base, quote: quote}, market_base: "1.3.0", sqr: 1100, assets: assets});
+    new marketClasses.FeedPrice({priceObject: {base: base, quote: quote}, market_base: "1.3.1", sqr: 1100, assets: assets});
 })
 // add listeners
 .on("cycle", function(event) {

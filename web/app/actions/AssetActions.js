@@ -14,7 +14,7 @@ let inProgress = {};
 
 class AssetActions {
 
-    fundPool (account_id, core, asset, amount, fee_asset_id = '1.3.0') {
+    fundPool (account_id, core, asset, amount, fee_asset_id = '1.3.1') {
         let tr = wallet_api.new_transaction ();
         let precision = utils.get_asset_precision (core.get ("precision"));
         tr.add_type_operation ("asset_fund_fee_pool", {
@@ -38,7 +38,7 @@ class AssetActions {
 
     }
 
-    claimPoolFees (account_id, asset, amount, fee_asset_id = '1.3.0') {
+    claimPoolFees (account_id, asset, amount, fee_asset_id = '1.3.1') {
         let tr = wallet_api.new_transaction ();
         let precision = utils.get_asset_precision (asset.get ("precision"));
 
@@ -63,7 +63,7 @@ class AssetActions {
         };
     }
 
-    createAsset (account_id, createObject, flags, permissions, cer, isBitAsset, is_prediction_market, bitasset_opts, description, fee_asset_id = '1.3.0') {
+    createAsset (account_id, createObject, flags, permissions, cer, isBitAsset, is_prediction_market, bitasset_opts, description, fee_asset_id = '1.3.1') {
         // Create asset action here...
         console.log ("create asset:", createObject, "flags:", flags, "isBitAsset:", isBitAsset, "bitasset_opts:", bitasset_opts);
         let tr = wallet_api.new_transaction ();
@@ -130,7 +130,7 @@ class AssetActions {
     }
 
     updateAsset (issuer, new_issuer, update, core_exchange_rate, asset, flags, permissions,
-                 isBitAsset, bitasset_opts, original_bitasset_opts, description, fee_asset_id = '1.3.0') {
+                 isBitAsset, bitasset_opts, original_bitasset_opts, description, fee_asset_id = '1.3.1') {
 
         // Create asset action here...
         let tr = wallet_api.new_transaction ();
@@ -220,7 +220,7 @@ class AssetActions {
         });
     }
 
-    issueAsset (to_account, from_account, asset_id, amount, memo, fee_asset_id = '1.3.0') {
+    issueAsset (to_account, from_account, asset_id, amount, memo, fee_asset_id = '1.3.1') {
         application_api.issue_asset (to_account, from_account, asset_id, amount, memo, true, null, fee_asset_id);
     }
 

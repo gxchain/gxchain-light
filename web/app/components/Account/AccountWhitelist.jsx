@@ -48,7 +48,7 @@ class AccountList extends React.Component {
             tr.add_type_operation("account_whitelist", {
                 "fee": {
                     "amount": 0,
-                    "asset_id": "1.3.0"
+                    "asset_id": "1.3.1"
                 },
                 "authorizing_account": this.props.account.get("id"),
                 "account_to_list": account,
@@ -142,7 +142,7 @@ class AccountWhitelist extends React.Component {
             tr.add_type_operation("account_whitelist", {
                 "fee": {
                     "amount": 0,
-                    "asset_id": "1.3.0"
+                    "asset_id": "1.3.1"
                 },
                 "authorizing_account": account.get("id"),
                 "account_to_list": accountToList,

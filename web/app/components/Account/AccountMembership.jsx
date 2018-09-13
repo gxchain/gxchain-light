@@ -43,7 +43,7 @@ class AccountMembership extends React.Component {
     };
     static defaultProps = {
         gprops: "2.0.0",
-        core_asset: "1.3.0"
+        core_asset: "1.3.1"
     };
 
     upgradeAccount(id, lifetime, e) {

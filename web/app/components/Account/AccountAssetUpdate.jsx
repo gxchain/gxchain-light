@@ -30,7 +30,7 @@ class AccountAssetUpdate extends React.Component {
 
     static defaultProps = {
         globalObject: "2.0.0",
-        core: "1.3.0"
+        core: "1.3.1"
     };
 
     constructor (props) {
@@ -75,7 +75,7 @@ class AccountAssetUpdate extends React.Component {
                 market_fee_percent: asset.options.market_fee_percent,
                 description: assetUtils.parseDescription (asset.options.description)
             },
-            fee_asset_id: '1.3.0',
+            fee_asset_id: '1.3.1',
             feeAsset: null,
             core_exchange_rate: core_exchange_rate,
             issuer: asset.issuer,
@@ -423,7 +423,7 @@ class AccountAssetUpdate extends React.Component {
     }
 
     _onFundPool (e) {
-        AssetActions.fundPool (this.state.new_funder_account, this.props.core, this.props.asset, this.state.fundPoolAmount.replace (/,/g, ""), this.state.feeAsset ? this.state.feeAsset.get ('id') : "1.3.0");
+        AssetActions.fundPool (this.state.new_funder_account, this.props.core, this.props.asset, this.state.fundPoolAmount.replace (/,/g, ""), this.state.feeAsset ? this.state.feeAsset.get ('id') : "1.3.1");
     }
 
     _onClaimInput (asset) {
@@ -447,7 +447,7 @@ class AccountAssetUpdate extends React.Component {
         fee_asset_types = Object.keys (account_balances).sort (utils.sortID);
         for (let key in account_balances) {
             let asset = ChainStore.getObject (key);
-            if (key !== '1.3.0' && key !== '1.3.1') {
+            if (key !== '1.3.1') {
                 fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
                 continue;
             }
@@ -459,7 +459,7 @@ class AccountAssetUpdate extends React.Component {
                         fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
                     }
                 }
-                if (asset.get ("id") !== "1.3.0" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
+                if (asset.get ("id") !== "1.3.1" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
                     fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
                 }
             }
@@ -469,7 +469,7 @@ class AccountAssetUpdate extends React.Component {
     }
 
     _onClaimFees (e) {
-        AssetActions.claimPoolFees (this.props.account.get ("id"), this.props.asset, this.state.claimFeesAmount.replace (/,/g, ""), this.state.feeAsset ? this.state.feeAsset.get ('id') : "1.3.0");
+        AssetActions.claimPoolFees (this.props.account.get ("id"), this.props.asset, this.state.claimFeesAmount.replace (/,/g, ""), this.state.feeAsset ? this.state.feeAsset.get ('id') : "1.3.1");
     }
 
     render () {
@@ -488,7 +488,7 @@ class AccountAssetUpdate extends React.Component {
         updateFee = utils.estimateFee ('asset_update', null, globalObject);
 
         // Finish fee estimation
-        if (feeAsset && feeAsset.get ("id") !== "1.3.0" && core) {
+        if (feeAsset && feeAsset.get ("id") !== "1.3.1" && core) {
 
             let price = utils.convertPrice (core, feeAsset.getIn (["options", "core_exchange_rate"]).toJS (), null, feeAsset.get ("id"));
             updateFee = utils.convertValue (price, updateFee, core, feeAsset);
@@ -588,7 +588,7 @@ class AccountAssetUpdate extends React.Component {
 
         let balance = 0;
         if (account) {
-            let coreBalanceID = account.getIn (["balances", "1.3.0"]);
+            let coreBalanceID = account.getIn (["balances", "1.3.1"]);
 
             if (coreBalanceID) {
                 let balanceObject = ChainStore.getObject (coreBalanceID);
@@ -601,7 +601,7 @@ class AccountAssetUpdate extends React.Component {
         let balanceText = (
             <span>
                 <Translate component="span" content="transfer.available"/>:&nbsp;
-                <FormattedAsset amount={balance} asset={"1.3.0"}/>
+                <FormattedAsset amount={balance} asset={"1.3.1"}/>
             </span>
         );
 
@@ -617,7 +617,7 @@ class AccountAssetUpdate extends React.Component {
 
         let cerValid = false;
 
-        if ((cr_quote_asset.get ("id") === "1.3.0" || cr_base_asset.get ("id") === "1.3.0") &&
+        if ((cr_quote_asset.get ("id") === "1.3.1" || cr_base_asset.get ("id") === "1.3.1") &&
             (cr_quote_asset.get ("id") === asset.get ("id") || cr_base_asset.get ("id") === asset.get ("id"))) {
             cerValid = true;
         }

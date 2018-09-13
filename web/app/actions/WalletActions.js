@@ -127,7 +127,7 @@ class WalletActions {
             availablePercent = forceAll ? 1 : earned / (vestingPeriod * balance);
 
         tr.add_type_operation("vesting_balance_withdraw", {
-            fee: { amount: "0", asset_id: "1.3.0"},
+            fee: { amount: "0", asset_id: "1.3.1"},
             owner: account,
             vesting_balance: cvb.id,
             amount: {
@@ -190,7 +190,7 @@ class WalletActions {
 
                         signer_pubkeys[public_key_string] = true;
                         balance_claims.push({
-                            fee: { amount: "0", asset_id: "1.3.0"},
+                            fee: { amount: "0", asset_id: "1.3.1"},
                             deposit_to_account: account.get("id"),
                             balance_to_claim: balance.id,
                             balance_owner_key: public_key_string,

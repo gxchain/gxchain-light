@@ -240,7 +240,7 @@ class DataMarketDetail extends React.Component {
                                         <FormattedAsset noPrefix
                                                         color={'warning'}
                                                         amount={this.state.price}
-                                                        asset={'1.3.0'}>
+                                                        asset={'1.3.5'}>
                                         </FormattedAsset>/条</label>
                                 </div>
                             </div>

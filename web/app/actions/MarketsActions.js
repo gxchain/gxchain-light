@@ -310,8 +310,8 @@ class MarketsActions {
         var tr = wallet_api.new_transaction();
 
         let feeAsset = ChainStore.getAsset(fee_asset_id);
-        if( feeAsset.getIn(["options", "core_exchange_rate", "base", "asset_id"]) === "1.3.0" && feeAsset.getIn(["options", "core_exchange_rate", "quote", "asset_id"]) === "1.3.0" ) {
-            fee_asset_id = "1.3.0";
+        if( feeAsset.getIn(["options", "core_exchange_rate", "base", "asset_id"]) === "1.3.1" && feeAsset.getIn(["options", "core_exchange_rate", "quote", "asset_id"]) === "1.3.1" ) {
+            fee_asset_id = "1.3.1";
         }
 
         tr.add_type_operation("limit_order_create", {
@@ -349,8 +349,8 @@ class MarketsActions {
         var tr = wallet_api.new_transaction();
 
         // let feeAsset = ChainStore.getAsset(fee_asset_id);
-        // if( feeAsset.getIn(["options", "core_exchange_rate", "base", "asset_id"]) === "1.3.0" && feeAsset.getIn(["options", "core_exchange_rate", "quote", "asset_id"]) === "1.3.0" ) {
-        //     fee_asset_id = "1.3.0";
+        // if( feeAsset.getIn(["options", "core_exchange_rate", "base", "asset_id"]) === "1.3.1" && feeAsset.getIn(["options", "core_exchange_rate", "quote", "asset_id"]) === "1.3.1" ) {
+        //     fee_asset_id = "1.3.1";
         // }
 
         order.setExpiration();
@@ -367,7 +367,7 @@ class MarketsActions {
         });
     }
 
-    createPredictionShort(order, collateral, account, sellAmount, sellAsset, buyAmount, collateralAmount, buyAsset, expiration, isFillOrKill, fee_asset_id = "1.3.0") {
+    createPredictionShort(order, collateral, account, sellAmount, sellAsset, buyAmount, collateralAmount, buyAsset, expiration, isFillOrKill, fee_asset_id = "1.3.1") {
 
         var tr = wallet_api.new_transaction();
 

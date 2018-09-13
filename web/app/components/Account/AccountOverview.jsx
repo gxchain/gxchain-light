@@ -51,10 +51,6 @@ class AccountOverview extends React.Component {
         SettingsActions.hideAsset(asset, status);
     }
 
-    showGXBDeposit(asset) {
-        this.refs['gxb-deposit-modal'].refs['bound_component'].show(asset);
-    }
-
     showLoyaltyPlanModal(balanceObject) {
         this.refs['gxb-loyalty-program-modal'].refs['bound_component'].show(balanceObject);
     }
@@ -218,11 +214,6 @@ class AccountOverview extends React.Component {
 
         let includedBalances, hiddenBalances;
         let account_balances = account.get("balances") || new Immutable.Map();
-        if (!account_balances.has('1.3.0')) {
-            account_balances = account_balances.merge({
-                '1.3.0': '2.5.-1'
-            });
-        }
         if (!account_balances.has('1.3.1')) {
             account_balances = account_balances.merge({
                 '1.3.1': '2.5.-1'
@@ -288,7 +279,6 @@ class AccountOverview extends React.Component {
                         />
                     </div>
                 </div>
-                {/*<GXBDepositModal account={account} ref="gxb-deposit-modal"></GXBDepositModal>*/}
                 <GXBLoyaltyPlanModal account={account} ref="gxb-loyalty-program-modal"/>
             </div>
         );
@@ -317,9 +307,7 @@ class BalanceWrapper extends React.Component {
         let balanceAssets = this.props.balances.map(b => {
             return b && b.get("asset_type");
         }).filter(b => !!b);
-        if (balanceAssets.indexOf('1.3.0') == -1) {
-            balanceAssets.push('1.3.0');
-        }
+
         if (balanceAssets.indexOf('1.3.1') == -1) {
             balanceAssets.push('1.3.1');
         }

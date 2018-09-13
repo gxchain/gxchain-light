@@ -49,8 +49,8 @@ class AccountActions {
     /**
      *  TODO:  This is a function of teh wallet_api and has no business being part of AccountActions
      */
-    transfer(from_account, to_account, amount, asset, memo, propose_account = null, fee_asset_id = "1.3.0") {
-
+    transfer(from_account, to_account, amount, asset, memo, propose_account = null, fee_asset_id = "1.3.1") {
+        debugger; // eslint-disable-line
         // Set the fee asset to use
         fee_asset_id = accountUtils.getFinalFeeAsset(propose_account || from_account, "transfer", fee_asset_id);
 

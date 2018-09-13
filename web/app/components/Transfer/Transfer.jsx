@@ -54,7 +54,7 @@ class Transfer extends React.Component {
             propose: false,
             propose_account: "",
             feeAsset: null,
-            fee_asset_id: "1.3.0"
+            fee_asset_id: "1.3.1"
         };
     };
 
@@ -147,7 +147,7 @@ class Transfer extends React.Component {
             asset.get("id"),
             this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
             this.state.propose ? this.state.propose_account : null,
-            this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0"
+            this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.1"
         ).then(() => {
             TransactionConfirmStore.unlisten(this.onTrxIncluded);
             TransactionConfirmStore.listen(this.onTrxIncluded);
@@ -181,21 +181,27 @@ class Transfer extends React.Component {
         asset_types = Object.keys(account_balances).sort(utils.sortID);
         fee_asset_types = Object.keys(account_balances).sort(utils.sortID);
         for (let key in account_balances) {
-            let asset = ChainStore.getObject (key);
+            let asset = ChainStore.getObject(key);
             // if (key !== '1.3.0' && key !== '1.3.1') {
             //     fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
             //     continue;
             // }
             if (asset) {
-                let balanceObject = ChainStore.getObject (account_balances[key]);
-                if (balanceObject && balanceObject.get ("balance") === 0) {
-                    asset_types.splice (asset_types.indexOf (key), 1);
-                    if (fee_asset_types.indexOf (key) !== -1) {
-                        fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
+                let base_asset_id = asset.getIn(["options", "core_exchange_rate", 'base', 'asset_id']);
+                let quote_asset_id = asset.getIn(["options", "core_exchange_rate", 'quote', 'asset_id']);
+                if (base_asset_id !== '1.3.1' || quote_asset_id !== '1.3.1') {
+                    fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
+                    continue;
+                }
+                let balanceObject = ChainStore.getObject(account_balances[key]);
+                if (balanceObject && balanceObject.get("balance") === 0) {
+                    asset_types.splice(asset_types.indexOf(key), 1);
+                    if (fee_asset_types.indexOf(key) !== -1) {
+                        fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
                     }
                 }
-                if (asset.get ("id") !== "1.3.0" && !utils.isValidPrice (asset.getIn (["options", "core_exchange_rate"]))) {
-                    fee_asset_types.splice (fee_asset_types.indexOf (key), 1);
+                if (asset.get("id") !== "1.3.1" && !utils.isValidPrice(asset.getIn(["options", "core_exchange_rate"]))) {
+                    fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
                 }
             }
         }
@@ -241,8 +247,8 @@ class Transfer extends React.Component {
             let account_balances = from_account.get("balances").toJS();
 
             // Finish fee estimation
-            let core = ChainStore.getObject("1.3.0");
-            if (feeAsset && feeAsset.get("id") !== "1.3.0" && core) {
+            let core = ChainStore.getObject("1.3.1");
+            if (feeAsset && feeAsset.get("id") !== "1.3.1" && core) {
 
                 let price = utils.convertPrice(core, feeAsset.getIn(["options", "core_exchange_rate"]).toJS(), null, feeAsset.get("id"));
                 fee = utils.convertValue(price, fee, core, feeAsset);
@@ -258,7 +264,7 @@ class Transfer extends React.Component {
             if (asset_types.length === 1) asset = ChainStore.getAsset(asset_types[0]);
             if (asset_types.length > 0) {
                 let current_asset_id = asset ? asset.get("id") : asset_types[0];
-                let feeID = feeAsset ? feeAsset.get("id") : "1.3.0";
+                let feeID = feeAsset ? feeAsset.get("id") : "1.3.1";
                 balance = (<span style={{borderBottom: "#A09F9F 1px dotted", cursor: "pointer"}}
                                  onClick={this._setTotal.bind(this, current_asset_id, account_balances[current_asset_id], fee, feeID)}><Translate
                     component="span" content="transfer.available"/>: <BalanceComponent
@@ -267,8 +273,8 @@ class Transfer extends React.Component {
                 balance = "No funds";
             }
         } else {
-            let core = ChainStore.getObject("1.3.0");
-            fee_asset_types = ["1.3.0"];
+            let core = ChainStore.getObject("1.3.1");
+            fee_asset_types = ["1.3.1"];
             if (core) {
                 fee = utils.limitByPrecision(utils.get_asset_amount(fee, feeAsset || core), feeAsset ? feeAsset.get("precision") : core.get("precision"));
             }
@@ -325,7 +331,7 @@ class Transfer extends React.Component {
                                 label="transfer.amount"
                                 amount={amount}
                                 onChange={this.onAmountChanged.bind(this)}
-                                asset={asset_types.length > 0 && asset ? asset.get("id") : ( asset_id ? asset_id : asset_types[0])}
+                                asset={asset_types.length > 0 && asset ? asset.get("id") : (asset_id ? asset_id : asset_types[0])}
                                 assets={asset_types}
                                 display_balance={balance}
                                 tabIndex={tabIndex++}
@@ -356,7 +362,7 @@ class Transfer extends React.Component {
                                 disabled={true}
                                 amount={fee}
                                 onChange={this.onFeeChanged.bind(this)}
-                                asset={fee_asset_types.length && feeAsset ? feeAsset.get("id") : ( fee_asset_types.length === 1 ? fee_asset_types[0] : fee_asset_id ? fee_asset_id : fee_asset_types[0])}
+                                asset={fee_asset_types.length && feeAsset ? feeAsset.get("id") : (fee_asset_types.length === 1 ? fee_asset_types[0] : fee_asset_id ? fee_asset_id : fee_asset_types[0])}
                                 assets={fee_asset_types}
                                 tabIndex={tabIndex++}
                             />

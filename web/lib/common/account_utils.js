@@ -22,11 +22,11 @@ export default class AccountUtils {
     }
 
     static getPossibleFees(account, operation) {
-        let core = ChainStore.getAsset("1.3.0");
+        let core = ChainStore.getAsset("1.3.1");
         account = !account || account.toJS ? account : ChainStore.getAccount(account);
 
         if (!account || !core) {
-            return {assets: ["1.3.0"], fees: {"1.3.0": 0}};
+            return {assets: ["1.3.1"], fees: {"1.3.1": 0}};
         }
 
         let assets = [], fees = {};
@@ -37,7 +37,7 @@ export default class AccountUtils {
 
         let accountBalances = account.get("balances");
         if (!accountBalances) {
-            return {assets: ["1.3.0"], fees: {"1.3.0": 0}};
+            return {assets: ["1.3.1"], fees: {"1.3.1": 0}};
         }
 
         accountBalances.forEach((balanceID, assetID) => {
@@ -45,7 +45,7 @@ export default class AccountUtils {
             let balance = balanceObject ? parseInt(balanceObject.get("balance"), 10) : 0;
             let hasBalance = false, eqFee;
 
-            if (assetID === "1.3.0" && balance >= fee) {
+            if (assetID === "1.3.1" && balance >= fee) {
                 hasBalance = true;
             } else if (balance && ChainStore.getAsset(assetID)) {
                 let asset = ChainStore.getAsset(assetID);
@@ -68,7 +68,7 @@ export default class AccountUtils {
         return {assets, fees};
     }
 
-    static getFinalFeeAsset(account, operation, fee_asset_id = "1.3.0") {
+    static getFinalFeeAsset(account, operation, fee_asset_id = "1.3.1") {
         let {assets: feeAssets} = this.getPossibleFees(account, operation);
         if (feeAssets.length === 1) {
             fee_asset_id = feeAssets[0];

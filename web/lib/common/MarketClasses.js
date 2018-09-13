@@ -36,7 +36,7 @@ function didOrdersChange(newOrders, oldOrders) {
 }
 
 class Asset {
-    constructor({asset_id = "1.3.0", amount = 0, precision = 5, real = null} = {}) {
+    constructor({asset_id = "1.3.1", amount = 0, precision = 5, real = null} = {}) {
         this.satoshi = precisionToRatio(precision);
         this.asset_id = asset_id;
         if (real && typeof real === "number") {
@@ -348,7 +348,7 @@ class FeedPrice extends Price {
 }
 
 class LimitOrderCreate {
-    constructor({for_sale, to_receive, seller = "", expiration = new Date(), fill_or_kill = false, fee = {amount: 0, asset_id: "1.3.0"}} = {}) {
+    constructor({for_sale, to_receive, seller = "", expiration = new Date(), fill_or_kill = false, fee = {amount: 0, asset_id: "1.3.1"}} = {}) {
         if (!for_sale || !to_receive) {
             throw new Error("Missing order amounts");
         }
