@@ -14,8 +14,8 @@ import GXBLoyaltyPlanModal from '../Modal/GXBLoyaltyPlanModal';
 import AccountImage from "./AccountImage";
 
 let logos = {
-    GXC: require('assets/logo-gxc.png'),
-    GXS: require('assets/logo-gxs.png')
+    "1.3.0": require('assets/logo-gxc.png'),
+    "1.3.1": require('assets/logo-gxs.png')
 };
 
 class AccountOverview extends React.Component {
@@ -122,9 +122,9 @@ class AccountOverview extends React.Component {
                         <h4 className="title text-center">{asset && asset.get('symbol') && utils.replaceName(asset.get('symbol')).name}</h4>
                         <div className="card-content">
                             <div className="text-center">
-                                {logos[asset.get('symbol')] ?
+                                {logos[asset.get('id')] ?
                                     <img className="align-center" style={{width: '3rem', height: '3rem'}}
-                                         src={`${logos[asset.get('symbol')]}`}></img> :
+                                         src={`${logos[asset.get('id')]}`}></img> :
                                     <AccountImage size={{width: 35, height: 35}} account={asset.get('symbol')}/>}
                             </div>
                             {programs && asset_type == '1.3.1' && this.props.isMyAccount ?

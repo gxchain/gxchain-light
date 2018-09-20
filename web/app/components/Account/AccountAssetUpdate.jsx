@@ -661,6 +661,73 @@ class AccountAssetUpdate extends React.Component {
                                 </label>
                                 {errors.max_supply ?
                                     <p className="grid-content has-error">{errors.max_supply}</p> : null}
+                                <Translate component="h3" content="account.user_issued_assets.core_exchange_rate"/>
+                                <label>
+                                    <div className="grid-block no-margin">
+                                        {cerValid ? null : (<div className="grid-block no-margin small-12 medium-6">
+                                            <AssetSelector
+                                                label="account.user_issued_assets.quote_name"
+                                                onChange={this._onInputCoreAsset.bind (this, "quote")}
+                                                asset={this.state.quoteAssetInput}
+                                                assetInput={this.state.quoteAssetInput}
+                                                tabIndex={1}
+                                                style={{width: "100%", paddingRight: "10px"}}
+                                                onFound={this._onFoundCoreAsset.bind (this, "quote")}
+                                            />
+                                        </div>)}
+                                        {cerValid ? null : (<div className="grid-block no-margin small-12 medium-6">
+                                            <AssetSelector
+                                                label="account.user_issued_assets.base_name"
+                                                onChange={this._onInputCoreAsset.bind (this, "base")}
+                                                asset={this.state.baseAssetInput}
+                                                assetInput={this.state.baseAssetInput}
+                                                tabIndex={1}
+                                                style={{width: "100%", paddingLeft: "10px"}}
+                                                onFound={this._onFoundCoreAsset.bind (this, "base")}
+                                            />
+                                        </div>)}
+                                        {errors.quote_asset ?
+                                            <p className="grid-content has-error">{errors.quote_asset}</p> : null}
+                                        {errors.base_asset ?
+                                            <p className="grid-content has-error">{errors.base_asset}</p> : null}
+                                    </div>
+                                    <div className="grid-block no-margin">
+                                        <div className="grid-block no-margin small-12 medium-6">
+                                            <AmountSelector
+                                                label="account.user_issued_assets.quote"
+                                                amount={core_exchange_rate.quote.amount}
+                                                onChange={this._onCoreRateChange.bind (this, "quote")}
+                                                asset={core_exchange_rate.quote.asset_id}
+                                                assets={[core_exchange_rate.quote.asset_id]}
+                                                placeholder="0.0"
+                                                tabIndex={1}
+                                                style={{width: "100%", paddingRight: "10px"}}
+                                            />
+                                        </div>
+                                        <div className="grid-block no-margin small-12 medium-6">
+                                            <AmountSelector
+                                                label="account.user_issued_assets.base"
+                                                amount={core_exchange_rate.base.amount}
+                                                onChange={this._onCoreRateChange.bind (this, "base")}
+                                                asset={core_exchange_rate.base.asset_id}
+                                                assets={[core_exchange_rate.base.asset_id]}
+                                                placeholder="0.0"
+                                                tabIndex={1}
+                                                style={{width: "100%", paddingLeft: "10px"}}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h5><Translate content="exchange.price"/>: <FormattedPrice
+                                            invert
+                                            style={{fontWeight: "bold"}}
+                                            quote_amount={cr_quote_amount}
+                                            quote_asset={core_exchange_rate.quote.asset_id}
+                                            base_asset={core_exchange_rate.base.asset_id}
+                                            base_amount={cr_base_amount}
+                                        /></h5>
+                                    </div>
+                                </label>
 
                                 {confirmButtons}
                             </div>
@@ -689,6 +756,94 @@ class AccountAssetUpdate extends React.Component {
                                     tabIndex={1}
                                 />
                                 {confirmButtons}
+                            </div>
+                        </Tab>
+                        <Tab title="explorer.asset.fee_pool.title">
+                            <div className="small-12 large-8 grid-content">
+
+                                {/* Claim fees, disabled until witness node update gets pushed to openledger*/}
+
+                                <Translate component="h3" content="transaction.trxTypes.asset_claim_fees"/>
+                                <Translate component="p" content="explorer.asset.fee_pool.claim_text"/>
+                                <div style={{paddingBottom: "1rem"}}>
+                                    <Translate content="explorer.asset.fee_pool.unclaimed_issuer_income"/>:&nbsp;
+                                    <FormattedAsset amount={asset.getIn (["dynamic", "accumulated_fees"])}
+                                                    asset={asset.get ("id")}/>
+                                </div>
+
+                                <AmountSelector
+                                    label="transfer.amount"
+                                    display_balance={unclaimedBalanceText}
+                                    amount={claimFeesAmount}
+                                    onChange={this._onClaimInput.bind (this)}
+                                    asset={asset.get ("id")}
+                                    assets={[asset.get ("id")]}
+                                    placeholder="0.0"
+                                    tabIndex={1}
+                                    style={{width: "100%", paddingLeft: "10px"}}
+                                />
+
+                                <div style={{paddingTop: "0.5rem"}}>
+                                    <hr/>
+                                    <button className={classnames ("button", {disabled: !validClaim})}
+                                            onClick={this._onClaimFees.bind (this)}>
+                                        <Translate content="explorer.asset.fee_pool.claim_fees"/>
+                                    </button>
+                                    <button className="button outline" onClick={this._reset.bind (this)}>
+                                        <Translate content="account.perm.reset"/>
+                                    </button>
+                                    <br/>
+                                    <br/>
+                                    {/*<p><Translate content="account.user_issued_assets.approx_fee" />: <FormattedFee opType="asset_claim_fees" /></p>*/}
+                                </div>
+
+                                {/* Fund fee pool */}
+                                <Translate component="h3" content="transaction.trxTypes.asset_fund_fee_pool"/>
+                                <Translate component="p" content="explorer.asset.fee_pool.fund_text"
+                                           asset={asset.get ("symbol")} core={core.get ("symbol")}/>
+
+                                <div style={{paddingBottom: "1rem"}}>
+                                    <Translate content="explorer.asset.fee_pool.pool_balance"/><span>: </span>
+                                    <FormattedAsset amount={asset.getIn (["dynamic", "fee_pool"])} asset={"1.3.1"}/>
+                                </div>
+
+                                <AccountSelector
+                                    label="transaction.funding_account"
+                                    accountName={this.state.funder_account_name}
+                                    onChange={this.funderNameChanged.bind (this)}
+                                    onAccountChanged={this.onFunderAccountChanged.bind (this)}
+                                    account={this.state.funder_account_name}
+                                    error={null}
+                                    tabIndex={1}
+                                />
+
+                                <AmountSelector
+                                    label="transfer.amount"
+                                    display_balance={balanceText}
+                                    amount={fundPoolAmount}
+                                    onChange={this._onPoolInput.bind (this)}
+                                    asset={"1.3.1"}
+                                    assets={["1.3.1"]}
+                                    placeholder="0.0"
+                                    tabIndex={2}
+                                    style={{width: "100%", paddingLeft: "10px"}}
+                                />
+
+                                <div style={{paddingTop: "0.5rem"}}>
+                                    <hr/>
+                                    <button className={classnames ("button", {disabled: fundPoolAmount <= 0})}
+                                            onClick={this._onFundPool.bind (this)}>
+                                        <Translate content="transaction.trxTypes.asset_fund_fee_pool"/>
+                                    </button>
+                                    <button className="button outline" onClick={this._reset.bind (this)}>
+                                        <Translate content="account.perm.reset"/>
+                                    </button>
+                                    <br/>
+                                    <br/>
+                                    <p><Translate content="account.user_issued_assets.update_fee"/>: <FormattedFee
+                                        opType="asset_fund_fee_pool"/></p>
+                                </div>
+
                             </div>
                         </Tab>
                     </Tabs>

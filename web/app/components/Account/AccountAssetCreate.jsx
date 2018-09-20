@@ -643,57 +643,57 @@ class AccountAssetCreate extends React.Component {
                         {/*<div style={{marginBottom: 10}} className="txtlabel cancel"><Translate*/}
                         {/*content="account.user_issued_assets.precision_warning"/></div>*/}
 
-                        {/* CER */}
-                        {/*<Translate component="h5" content="account.user_issued_assets.core_exchange_rate"/>*/}
+                         {/*CER */}
+                        <Translate component="h5" content="account.user_issued_assets.core_exchange_rate"/>
 
-                        {/*<label>*/}
-                            {/*<div className="grid-block no-margin">*/}
-                                {/*{errors.quote_asset ?*/}
-                                    {/*<p className="grid-content has-error">{errors.quote_asset}</p> : null}*/}
-                                {/*{errors.base_asset ?*/}
-                                    {/*<p className="grid-content has-error">{errors.base_asset}</p> : null}*/}
-                                {/*<div className="grid-block no-margin small-12 medium-6">*/}
-                                    {/*<div className="amount-selector"*/}
-                                         {/*style={{width: "100%", paddingRight: "10px"}}>*/}
-                                        {/*<Translate component="label"*/}
-                                                   {/*content="account.user_issued_assets.quote"/>*/}
-                                        {/*<div className="inline-label">*/}
-                                            {/*<input*/}
-                                                {/*type="text"*/}
-                                                {/*placeholder="0.0"*/}
-                                                {/*onChange={this._onCoreRateChange.bind (this, "quote")}*/}
-                                                {/*value={core_exchange_rate.quote.amount}*/}
-                                            {/*/>*/}
-                                        {/*</div>*/}
-                                    {/*</div>*/}
+                        <label>
+                            <div className="grid-block no-margin">
+                                {errors.quote_asset ?
+                                    <p className="grid-content has-error">{errors.quote_asset}</p> : null}
+                                {errors.base_asset ?
+                                    <p className="grid-content has-error">{errors.base_asset}</p> : null}
+                                <div className="grid-block no-margin small-12 medium-6">
+                                    <div className="amount-selector"
+                                         style={{width: "100%", paddingRight: "10px"}}>
+                                        <Translate component="label"
+                                                   content="account.user_issued_assets.quote"/>
+                                        <div className="inline-label">
+                                            <input
+                                                type="text"
+                                                placeholder="0.0"
+                                                onChange={this._onCoreRateChange.bind (this, "quote")}
+                                                value={core_exchange_rate.quote.amount}
+                                            />
+                                        </div>
+                                    </div>
 
-                                {/*</div>*/}
-                                {/*<div className="grid-block no-margin small-12 medium-6">*/}
-                                    {/*<AmountSelector*/}
-                                        {/*label="account.user_issued_assets.base"*/}
-                                        {/*amount={core_exchange_rate.base.amount}*/}
-                                        {/*onChange={this._onCoreRateChange.bind (this, "base")}*/}
-                                        {/*asset={core_exchange_rate.base.asset_id}*/}
-                                        {/*assets={[core_exchange_rate.base.asset_id]}*/}
-                                        {/*placeholder="0.0"*/}
-                                        {/*tabIndex={1}*/}
-                                        {/*style={{width: "100%", paddingLeft: "10px"}}*/}
-                                    {/*/>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                                {/*<h5>*/}
-                                    {/*<Translate content="exchange.price"/>*/}
-                                    {/*<span>: {utils.format_number (utils.get_asset_price (*/}
-                                        {/*core_exchange_rate.quote.amount * utils.get_asset_precision (update.precision),*/}
-                                        {/*{precision: update.precision},*/}
-                                        {/*core_exchange_rate.base.amount * utils.get_asset_precision (core),*/}
-                                        {/*core*/}
-                                    {/*), 2 + (parseInt (update.precision, 10) || 8))}</span>*/}
-                                    {/*<span> {update.symbol}/{core.get ("symbol")}</span>*/}
-                                {/*</h5>*/}
-                            {/*</div>*/}
-                        {/*</label>*/}
+                                </div>
+                                <div className="grid-block no-margin small-12 medium-6">
+                                    <AmountSelector
+                                        label="account.user_issued_assets.base"
+                                        amount={core_exchange_rate.base.amount}
+                                        onChange={this._onCoreRateChange.bind (this, "base")}
+                                        asset={core_exchange_rate.base.asset_id}
+                                        assets={[core_exchange_rate.base.asset_id]}
+                                        placeholder="0.0"
+                                        tabIndex={1}
+                                        style={{width: "100%", paddingLeft: "10px"}}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <h5>
+                                    <Translate content="exchange.price"/>
+                                    <span>: {utils.format_number (utils.get_asset_price (
+                                        core_exchange_rate.quote.amount * utils.get_asset_precision (update.precision),
+                                        {precision: update.precision},
+                                        core_exchange_rate.base.amount * utils.get_asset_precision (core),
+                                        core
+                                    ), 2 + (parseInt (update.precision, 10) || 8))}</span>
+                                    <span> {update.symbol}/{core.get ("symbol")}</span>
+                                </h5>
+                            </div>
+                        </label>
                         <label>
                             {createFee}
                         </label>
