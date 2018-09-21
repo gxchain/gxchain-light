@@ -211,7 +211,6 @@ class AccountAssetCreate extends React.Component {
             update.description.market = "";
         }
         let description = JSON.stringify (update.description);
-
         AssetActions.createAsset (account.get ("id"), update, flags, permissions, core_exchange_rate, isBitAsset, is_prediction_market, bitasset_opts, description,feeAsset.get('id')).then (result => {
             console.log ("... AssetActions.createAsset(account_id, update)", account.get ("id"), update, flags, permissions);
         });

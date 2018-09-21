@@ -400,7 +400,6 @@ class Operation extends React.Component {
 
             case "asset_fund_fee_pool":
                 color = "warning";
-
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -408,7 +407,7 @@ class Operation extends React.Component {
                             keys={[
                                 {type: "account", value: op[1].from_account, arg: "account"},
                                 {type: "asset", value: op[1].asset_id, arg: "asset"},
-                                {type: "amount", value: {amount: op[1].amount, asset_id: op[1].asset_id}, arg: "amount"}
+                                {type: "amount", value: {amount: op[1].amount, asset_id: "1.3.1"}, arg: "amount"}
                             ]}
                         />
                     </span>
@@ -495,7 +494,7 @@ class Operation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="transaction.witness_pay"/>
-                            &nbsp;<FormattedAsset amount={op[1].amount} asset={op[1].asset_id}/>
+                            &nbsp;<FormattedAsset amount={op[1].amount} asset={"1.3.1"}/>
                             <Translate component="span" content="transaction.to"/>
                             &nbsp;{this.linkToAccount(op[1].witness_account)}
                         </span>
@@ -504,7 +503,7 @@ class Operation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="transaction.received"/>
-                            &nbsp;<FormattedAsset amount={op[1].amount} asset={op[1].asset_id}/>
+                            &nbsp;<FormattedAsset amount={op[1].amount} asset={"1.3.1"}/>
                             <Translate component="span" content="transaction.from"/>
                             &nbsp;{this.linkToAccount(op[1].witness_account)}
                         </span>

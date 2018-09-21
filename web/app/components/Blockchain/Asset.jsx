@@ -15,11 +15,10 @@ import utils from "common/utils";
 import {ChainStore} from "gxbjs/es";
 
 class AssetFlag extends React.Component {
-    render()
-    {
+    render() {
         let {isSet, name} = this.props;
         if (!isSet) {
-            return ( <span></span> );
+            return (<span></span>);
         }
 
         return (
@@ -35,12 +34,11 @@ class AssetFlag extends React.Component {
 
 //-------------------------------------------------------------
 class AssetPermission extends React.Component {
-    render()
-    {
+    render() {
         let {isSet, name} = this.props;
 
         if (!isSet) {
-            return ( <span></span> );
+            return (<span></span>);
         }
 
         return (
@@ -64,44 +62,42 @@ class Asset extends React.Component {
         asset: "props.symbol"
     };
 
-    constructor( props ) {
+    constructor(props) {
         super(props);
     }
 
 
     _assetType(asset) {
         return ('bitasset' in asset) ?
-               (asset.bitasset.is_prediction_market ? 'Prediction' : 'Smart') :
-               'Simple';
+            (asset.bitasset.is_prediction_market ? 'Prediction' : 'Smart') :
+            'Simple';
     }
 
 
-    renderFlagIndicators(flags, names)
-    {
+    renderFlagIndicators(flags, names) {
         return (
 
             <div>
                 {names.map((name) => {
-                    return <AssetFlag key={`flag_${name}`} name={name} isSet={flags[name]}/>
+                    return <AssetFlag key={`flag_${name}`} name={name} isSet={flags[name]}/>;
                 })}
             </div>
         );
     }
 
 
-    renderPermissionIndicators(permissions, names)
-    {
+    renderPermissionIndicators(permissions, names) {
         return (
             <div>
                 {names.map((name) => {
-                    return <AssetPermission key={`perm_${name}`}name={name} isSet={permissions[name]}/>
+                    return <AssetPermission key={`perm_${name}`} name={name} isSet={permissions[name]}/>;
                 })}
             </div>
         );
     }
 
 
-    formattedPrice(price, hide_symbols=false, hide_value=false) {
+    formattedPrice(price, hide_symbols = false, hide_value = false) {
         var base = price.base;
         var quote = price.quote;
         return (
@@ -183,23 +179,23 @@ class Asset extends React.Component {
             urls.forEach(url => {
                 let markdownUrl = `<a target="_blank" href="${url}">${url}</a>`;
                 desc = desc.replace(url, markdownUrl);
-            })
+            });
         }
 
         let {name, prefix} = utils.replaceName(asset.symbol, "bitasset" in asset && !asset.bitasset.is_prediction_market && asset.issuer === "1.2.0");
 
         return (
-                <div style={{overflow:"visible"}}>
-                    <HelpContent
-                        path = {"assets/" + asset.symbol}
-                        alt_path = "assets/Asset"
-                        section="summary"
-                        symbol={(prefix || "") + name}
-                        description={desc}
-                        issuer= {issuerName}
-                    />
-                    {short_name ? <p>{short_name}</p> : null}
-                </div>
+            <div style={{overflow: "visible"}}>
+                <HelpContent
+                    path={"assets/" + asset.symbol}
+                    alt_path="assets/Asset"
+                    section="summary"
+                    symbol={(prefix || "") + name}
+                    description={desc}
+                    issuer={issuerName}
+                />
+                {short_name ? <p>{short_name}</p> : null}
+            </div>
         );
     }
 
@@ -215,55 +211,55 @@ class Asset extends React.Component {
 
         var currentSupply = (dynamic) ? (
             <tr>
-                <td> <Translate content="explorer.asset.summary.current_supply"/> </td>
-                <td> <FormattedAsset amount={dynamic.current_supply} asset={asset.id}/> </td>
+                <td><Translate content="explorer.asset.summary.current_supply"/></td>
+                <td><FormattedAsset amount={dynamic.current_supply} asset={asset.id}/></td>
             </tr>
         ) : null;
 
         var stealthSupply = (dynamic) ? (
             <tr>
-                <td> <Translate content="explorer.asset.summary.stealth_supply"/> </td>
-                <td> <FormattedAsset amount={dynamic.confidential_supply} asset={asset.id}/> </td>
+                <td><Translate content="explorer.asset.summary.stealth_supply"/></td>
+                <td><FormattedAsset amount={dynamic.confidential_supply} asset={asset.id}/></td>
             </tr>
         ) : null;
 
 
         var marketFee = flagBooleans["charge_market_fee"] ? (
             <tr>
-                <td> <Translate content="explorer.asset.summary.market_fee"/> </td>
-                <td> {options.market_fee_percent / 100.0} % </td>
+                <td><Translate content="explorer.asset.summary.market_fee"/></td>
+                <td> {options.market_fee_percent / 100.0} %</td>
             </tr>
         ) : null;
 
         // options.max_market_fee initially a string
         var maxMarketFee = flagBooleans["charge_market_fee"] ? (
             <tr>
-                <td> <Translate content="explorer.asset.summary.max_market_fee"/> </td>
-                <td> <FormattedAsset amount={+options.max_market_fee} asset={asset.id} /> </td>
+                <td><Translate content="explorer.asset.summary.max_market_fee"/></td>
+                <td><FormattedAsset amount={+options.max_market_fee} asset={asset.id}/></td>
             </tr>
         ) : null;
 
         return (
             <div className="asset-card">
-              <div className="card-divider"><AssetName name={asset.symbol} /></div>
+                <div className="card-divider"><AssetName name={asset.symbol}/></div>
                 <table className="table key-value-table table-hover">
                     <tbody>
-                        <tr>
-                            <td> <Translate content="explorer.asset.summary.asset_type"/> </td>
-                            <td> {this._assetType(asset)} </td>
-                        </tr>
-                        <tr>
-                            <td> <Translate content="explorer.asset.summary.issuer"/> </td>
-                            <td> <LinkToAccountById account={asset.issuer}/> </td>
-                        </tr>
-                        <tr>
-                            <td> <Translate content="explorer.assets.precision"/> </td>
-                            <td> {asset.precision} </td>
-                        </tr>
-                        {currentSupply}
-                        {stealthSupply}
-                        {marketFee}
-                        {maxMarketFee}
+                    <tr>
+                        <td><Translate content="explorer.asset.summary.asset_type"/></td>
+                        <td> {this._assetType(asset)} </td>
+                    </tr>
+                    <tr>
+                        <td><Translate content="explorer.asset.summary.issuer"/></td>
+                        <td><LinkToAccountById account={asset.issuer}/></td>
+                    </tr>
+                    <tr>
+                        <td><Translate content="explorer.assets.precision"/></td>
+                        <td> {asset.precision} </td>
+                    </tr>
+                    {currentSupply}
+                    {stealthSupply}
+                    {marketFee}
+                    {maxMarketFee}
                     </tbody>
                 </table>
 
@@ -278,30 +274,30 @@ class Asset extends React.Component {
         var title = (<Translate content="explorer.asset.price_feed.title"/>);
         var bitAsset = asset.bitasset;
         if (!('current_feed' in bitAsset))
-            return ( <div header= {title} /> );
+            return (<div header={title}/>);
         var currentFeed = bitAsset.current_feed;
 
         return (
             <div className="asset-card">
-              <div className="card-divider">{title}</div>
+                <div className="card-divider">{title}</div>
 
-                <table className="table key-value-table table-hover"  style={{ padding:"1.2rem"}}>
+                <table className="table key-value-table table-hover" style={{padding: "1.2rem"}}>
                     <tbody>
 
-                        <tr>
-                            <td> <Translate content="explorer.asset.price_feed.settlement_price"/> </td>
-                            <td> {this.formattedPrice(currentFeed.settlement_price)} </td>
-                        </tr>
+                    <tr>
+                        <td><Translate content="explorer.asset.price_feed.settlement_price"/></td>
+                        <td> {this.formattedPrice(currentFeed.settlement_price)} </td>
+                    </tr>
 
-                        <tr>
-                            <td> <Translate content="explorer.asset.price_feed.maintenance_collateral_ratio"/> </td>
-                            <td> {currentFeed.maintenance_collateral_ratio/10}% </td>
-                        </tr>
+                    <tr>
+                        <td><Translate content="explorer.asset.price_feed.maintenance_collateral_ratio"/></td>
+                        <td> {currentFeed.maintenance_collateral_ratio / 10}%</td>
+                    </tr>
 
-                        <tr>
-                            <td> <Translate content="explorer.asset.price_feed.maximum_short_squeeze_ratio"/> </td>
-                            <td> {currentFeed.maximum_short_squeeze_ratio/10}% </td>
-                        </tr>
+                    <tr>
+                        <td><Translate content="explorer.asset.price_feed.maximum_short_squeeze_ratio"/></td>
+                        <td> {currentFeed.maximum_short_squeeze_ratio / 10}%</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -314,21 +310,23 @@ class Asset extends React.Component {
         var options = asset.options;
         return (
             <div className="asset-card">
-              <div className="card-divider">{(<Translate content="explorer.asset.fee_pool.title"/>)}</div>
-                <table className="table key-value-table" style={{ padding:"1.2rem"}}>
+                <div className="card-divider">{(<Translate content="explorer.asset.fee_pool.title"/>)}</div>
+                <table className="table key-value-table" style={{padding: "1.2rem"}}>
                     <tbody>
-                        <tr>
-                            <td> <Translate content="explorer.asset.fee_pool.core_exchange_rate"/> </td>
-                            <td> {this.formattedPrice(options.core_exchange_rate)} </td>
-                        </tr>
-                        <tr>
-                            <td> <Translate content="explorer.asset.fee_pool.pool_balance"/> </td>
-                            <td> {dynamic ? <FormattedAsset asset={dynamic.asset_id} amount={dynamic.fee_pool} /> : null} </td>
-                        </tr>
-                        <tr>
-                            <td> <Translate content="explorer.asset.fee_pool.unclaimed_issuer_income"/> </td>
-                            <td> {dynamic ? <FormattedAsset asset={asset.id} amount={dynamic.accumulated_fees} /> : null} </td>
-                        </tr>
+                    <tr>
+                        <td><Translate content="explorer.asset.fee_pool.core_exchange_rate"/></td>
+                        <td> {this.formattedPrice(options.core_exchange_rate)} </td>
+                    </tr>
+                    <tr>
+                        <td><Translate content="explorer.asset.fee_pool.pool_balance"/></td>
+                        <td> {dynamic && options ? <FormattedAsset asset={options.core_exchange_rate.base.asset_id}
+                                                                   amount={dynamic.fee_pool}/> : null} </td>
+                    </tr>
+                    <tr>
+                        <td><Translate content="explorer.asset.fee_pool.unclaimed_issuer_income"/></td>
+                        <td> {dynamic ?
+                            <FormattedAsset asset={asset.id} amount={dynamic.accumulated_fees}/> : null} </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -355,16 +353,16 @@ class Asset extends React.Component {
         // options.max_market_fee initially a string
         var maxMarketFee = permissionBooleans["charge_market_fee"] ? (
             <tr>
-                <td> <Translate content="explorer.asset.permissions.max_market_fee"/> </td>
-                <td> <FormattedAsset amount={+options.max_market_fee} asset={asset.id} /> </td>
+                <td><Translate content="explorer.asset.permissions.max_market_fee"/></td>
+                <td><FormattedAsset amount={+options.max_market_fee} asset={asset.id}/></td>
             </tr>
         ) : null;
 
         // options.max_supply initially a string
         var maxSupply = (
             <tr>
-                <td> <Translate content="explorer.asset.permissions.max_supply"/> </td>
-                <td> <FormattedAsset amount={+options.max_supply} asset={asset.id} /> </td>
+                <td><Translate content="explorer.asset.permissions.max_supply"/></td>
+                <td><FormattedAsset amount={+options.max_supply} asset={asset.id}/></td>
             </tr>
         );
 
@@ -372,26 +370,26 @@ class Asset extends React.Component {
             <span>
                 <br/>
                     <Translate content="explorer.asset.permissions.blacklist_authorities"/>:
-                    &nbsp;{this.renderAuthorityList(options.blacklist_authorities)}
+                &nbsp;{this.renderAuthorityList(options.blacklist_authorities)}
                 <br/>
                     <Translate content="explorer.asset.permissions.blacklist_markets"/>:
-                    &nbsp;{this.renderMarketList(asset, options.blacklist_markets)}
+                &nbsp;{this.renderMarketList(asset, options.blacklist_markets)}
                 <br/>
                     <Translate content="explorer.asset.permissions.whitelist_authorities"/>:
-                    &nbsp;{this.renderAuthorityList(options.whitelist_authorities)}
+                &nbsp;{this.renderAuthorityList(options.whitelist_authorities)}
                 <br/>
                     <Translate content="explorer.asset.permissions.whitelist_markets"/>:
-                    &nbsp;{this.renderMarketList(asset, options.whitelist_markets)}
+                &nbsp;{this.renderMarketList(asset, options.whitelist_markets)}
             </span>
         ) : null;
 
         return (
             <div className="asset-card">
-              <div className="card-divider">{(<Translate content="explorer.asset.permissions.title"/>)} </div>
-                <table className="table key-value-table table-hover" style={{ padding:"1.2rem"}}>
+                <div className="card-divider">{(<Translate content="explorer.asset.permissions.title"/>)} </div>
+                <table className="table key-value-table table-hover" style={{padding: "1.2rem"}}>
                     <tbody>
-                        {maxMarketFee}
-                        {maxSupply}
+                    {maxMarketFee}
+                    {maxSupply}
                     </tbody>
                 </table>
 
@@ -418,12 +416,12 @@ class Asset extends React.Component {
         // Filter by valid feed lifetime, Sort by published date
         var feeds = bitAsset.feeds;
         feeds = feeds
-        .filter(a => {
-            return new Date(a[1][0]) > oldestValidDate;
-        })
-        .sort(function(feed1, feed2){
-            return new Date(feed2[1][0]) - new Date(feed1[1][0])
-        });
+            .filter(a => {
+                return new Date(a[1][0]) > oldestValidDate;
+            })
+            .sort(function (feed1, feed2) {
+                return new Date(feed2[1][0]) - new Date(feed1[1][0]);
+            });
 
         if (!feeds.length) {
             return null;
@@ -433,59 +431,59 @@ class Asset extends React.Component {
         var settlement_price_header = feeds[0][1][1].settlement_price;
         var core_exchange_rate_header = feeds[0][1][1].core_exchange_rate;
         let header = (
-          <thead>
+            <thead>
             <tr>
-                <th> <Translate content="explorer.asset.price_feed_data.settlement_price"/> –
-                      {this.formattedPrice(settlement_price_header, false, true)}</th>
-                    <th> <Translate content="explorer.asset.price_feed_data.core_exchange_rate"/> –
-                     {this.formattedPrice(core_exchange_rate_header, false, true)} </th>
-                <th> <Translate content="explorer.asset.price_feed_data.maintenance_collateral_ratio"/> </th>
-                <th> <Translate content="explorer.asset.price_feed_data.maximum_short_squeeze_ratio"/> </th>
-                <th> <Translate content="explorer.asset.price_feed_data.publisher"/> </th>
-                <th> <Translate content="explorer.asset.price_feed_data.published"/> </th>
+                <th><Translate content="explorer.asset.price_feed_data.settlement_price"/> –
+                    {this.formattedPrice(settlement_price_header, false, true)}</th>
+                <th><Translate content="explorer.asset.price_feed_data.core_exchange_rate"/> –
+                    {this.formattedPrice(core_exchange_rate_header, false, true)} </th>
+                <th><Translate content="explorer.asset.price_feed_data.maintenance_collateral_ratio"/></th>
+                <th><Translate content="explorer.asset.price_feed_data.maximum_short_squeeze_ratio"/></th>
+                <th><Translate content="explorer.asset.price_feed_data.publisher"/></th>
+                <th><Translate content="explorer.asset.price_feed_data.published"/></th>
             </tr>
             </thead>
-        )
+        );
         for (var i = 0; i < feeds.length; i++) {
             var feed = feeds[i];
             var publisher = feed[0];
             var publishDate = new Date(feed[1][0]);
             var settlement_price = feed[1][1].settlement_price;
             var core_exchange_rate = feed[1][1].core_exchange_rate;
-            var maintenance_collateral_ratio = '' + feed[1][1].maintenance_collateral_ratio/10 + '%';
-            var maximum_short_squeeze_ratio = '' + feed[1][1].maximum_short_squeeze_ratio/10 + '%';
+            var maintenance_collateral_ratio = '' + feed[1][1].maintenance_collateral_ratio / 10 + '%';
+            var maximum_short_squeeze_ratio = '' + feed[1][1].maximum_short_squeeze_ratio / 10 + '%';
             rows.push(
                 <tr key={publisher}>
                     <td>{this.formattedPrice(settlement_price, true)}</td>
                     <td> {this.formattedPrice(core_exchange_rate, true)} </td>
-                    <td style={{textAlign:"center"}}> {maintenance_collateral_ratio}</td>
-                    <td style={{textAlign:"center"}}> {maximum_short_squeeze_ratio}</td>
-                    <td> <LinkToAccountById account={publisher}/> </td>
+                    <td style={{textAlign: "center"}}> {maintenance_collateral_ratio}</td>
+                    <td style={{textAlign: "center"}}> {maximum_short_squeeze_ratio}</td>
+                    <td><LinkToAccountById account={publisher}/></td>
                     <td><TimeAgo time={publishDate}/></td>
                 </tr>
             );
         }
 
         return (
-          <div className="small-12 " style={{ overflow:"visible", padding:"0.8rem"}}>
-            <div className="grid-content">
-              <div className="asset-card">
-              <div className="card-divider">{(<Translate content="explorer.asset.price_feed_data.title"/>)}</div>
-                <table className=" table order-table table-hover" style={{ padding:"1.2rem"}}>
-                    {header}
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </table>
+            <div className="small-12 " style={{overflow: "visible", padding: "0.8rem"}}>
+                <div className="grid-content">
+                    <div className="asset-card">
+                        <div className="card-divider">{(
+                            <Translate content="explorer.asset.price_feed_data.title"/>)}</div>
+                        <table className=" table order-table table-hover" style={{padding: "1.2rem"}}>
+                            {header}
+                            <tbody>
+                            {rows}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-          </div>
         );
     }
 
 
-    render()
-    {
+    render() {
         var asset = this.props.asset.toJS();
         var priceFeed = ('bitasset' in asset) ? this.renderPriceFeed(asset) : null;
         var priceFeedData = ('bitasset' in asset) ? this.renderPriceFeedData(asset) : null;
@@ -495,23 +493,25 @@ class Asset extends React.Component {
 
         return (
             <div className="grid-block page-layout">
-                <div className="grid-block vertical" style={{overflow:"visible"}}>
-                    <div className="grid-block small-12 shrink" style={{ overflow:"visible"}}>
+                <div className="grid-block vertical" style={{overflow: "visible"}}>
+                    <div className="grid-block small-12 shrink" style={{overflow: "visible"}}>
                         {this.renderAboutBox(asset)}
                     </div>
-                    <div className="grid-block small-12 shrink vertical medium-horizontal" style={{ overflow:"visible"}}>
-                        <div className="small-12 medium-6" style={{overflow:"visible"}}>
+                    <div className="grid-block small-12 shrink vertical medium-horizontal"
+                         style={{overflow: "visible"}}>
+                        <div className="small-12 medium-6" style={{overflow: "visible"}}>
                             {this.renderSummary(asset)}
                         </div>
-                        <div className="small-12 medium-6" style={{overflow:"visible"}}>
+                        <div className="small-12 medium-6" style={{overflow: "visible"}}>
                             {priceFeed ? priceFeed : this.renderPermissions(asset)}
                         </div>
                     </div>
-                    <div className="grid-block small-12 shrink vertical medium-horizontal" style={{ overflow:"visible"}}>
-                        <div className="small-12 medium-6" style={{overflow:"visible"}}>
+                    <div className="grid-block small-12 shrink vertical medium-horizontal"
+                         style={{overflow: "visible"}}>
+                        <div className="small-12 medium-6" style={{overflow: "visible"}}>
                             {this.renderFeePool(asset)}
                         </div>
-                        <div className="small-12 medium-6" style={{overflow:"visible"}}>
+                        <div className="small-12 medium-6" style={{overflow: "visible"}}>
                             {priceFeed ? this.renderPermissions(asset) : null}
                         </div>
                     </div>

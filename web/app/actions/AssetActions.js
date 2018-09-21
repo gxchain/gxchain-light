@@ -7,75 +7,75 @@ import WalletDb from "stores/WalletDb";
 import {ChainStore} from "gxbjs/es";
 import big from "bignumber.js";
 
-let wallet_api = new WalletApi ();
-let application_api = new ApplicationApi ();
+let wallet_api = new WalletApi();
+let application_api = new ApplicationApi();
 
 let inProgress = {};
 
 class AssetActions {
 
-    fundPool (account_id, core, asset, amount, fee_asset_id = '1.3.1') {
-        let tr = wallet_api.new_transaction ();
-        let precision = utils.get_asset_precision (core.get ("precision"));
-        tr.add_type_operation ("asset_fund_fee_pool", {
+    fundPool(account_id, core, asset, amount, fee_asset_id = '1.3.1') {
+        let tr = wallet_api.new_transaction();
+        let precision = utils.get_asset_precision(core.get("precision"));
+        tr.add_type_operation("asset_fund_fee_pool", {
             "fee": {
                 amount: 0,
                 asset_id: fee_asset_id
             },
             "from_account": account_id,
-            "asset_id": asset.get ("id"),
+            "asset_id": asset.get("id"),
             "amount": amount * precision
         });
 
         return (dispatch) => {
-            return WalletDb.process_transaction (tr, null, true).then (result => {
-                dispatch (true);
-            }).catch (error => {
-                console.log ("[AssetActions.js:150] ----- fundPool error ----->", error);
-                dispatch (false);
+            return WalletDb.process_transaction(tr, null, true).then(result => {
+                dispatch(true);
+            }).catch(error => {
+                console.log("[AssetActions.js:150] ----- fundPool error ----->", error);
+                dispatch(false);
             });
         };
 
     }
 
-    claimPoolFees (account_id, asset, amount, fee_asset_id = '1.3.1') {
-        let tr = wallet_api.new_transaction ();
-        let precision = utils.get_asset_precision (asset.get ("precision"));
+    claimPoolFees(account_id, asset, amount, fee_asset_id = '1.3.1') {
+        let tr = wallet_api.new_transaction();
+        let precision = utils.get_asset_precision(asset.get("precision"));
 
-        tr.add_type_operation ("asset_claim_fees", {
+        tr.add_type_operation("asset_claim_fees", {
             "fee": {
                 amount: 0,
                 asset_id: fee_asset_id
             },
             "issuer": account_id,
             "amount_to_claim": {
-                "asset_id": asset.get ("id"),
+                "asset_id": asset.get("id"),
                 "amount": amount * precision
             }
         });
         return (dispatch) => {
-            return WalletDb.process_transaction (tr, null, true).then (result => {
-                dispatch (true);
-            }).catch (error => {
-                console.log ("[AssetActions.js:150] ----- claimFees error ----->", error);
-                dispatch (false);
+            return WalletDb.process_transaction(tr, null, true).then(result => {
+                dispatch(true);
+            }).catch(error => {
+                console.log("[AssetActions.js:150] ----- claimFees error ----->", error);
+                dispatch(false);
             });
         };
     }
 
-    createAsset (account_id, createObject, flags, permissions, cer, isBitAsset, is_prediction_market, bitasset_opts, description, fee_asset_id = '1.3.1') {
+    createAsset(account_id, createObject, flags, permissions, cer, isBitAsset, is_prediction_market, bitasset_opts, description, fee_asset_id = '1.3.1') {
         // Create asset action here...
-        console.log ("create asset:", createObject, "flags:", flags, "isBitAsset:", isBitAsset, "bitasset_opts:", bitasset_opts);
-        let tr = wallet_api.new_transaction ();
-        let precision = utils.get_asset_precision (createObject.precision);
+        console.log("create asset:", createObject, "flags:", flags, "isBitAsset:", isBitAsset, "bitasset_opts:", bitasset_opts);
+        let tr = wallet_api.new_transaction();
+        let precision = utils.get_asset_precision(createObject.precision);
 
-        big.config ({DECIMAL_PLACES: createObject.precision});
-        let max_supply = (new big (createObject.max_supply)).times (precision).toString ();
-        let max_market_fee = (new big (createObject.max_market_fee || 0)).times (precision).toString ();
+        big.config({DECIMAL_PLACES: createObject.precision});
+        let max_supply = (new big(createObject.max_supply)).times(precision).toString();
+        let max_market_fee = (new big(createObject.max_market_fee || 0)).times(precision).toString();
         // console.log("max_supply:", max_supply);
         // console.log("max_market_fee:", max_market_fee);
 
-        let corePrecision = utils.get_asset_precision (ChainStore.getAsset (cer.base.asset_id).get ("precision"));
+        let corePrecision = utils.get_asset_precision(ChainStore.getAsset(cer.base.asset_id).get("precision"));
 
         let operationJSON = {
             "fee": {
@@ -84,7 +84,7 @@ class AssetActions {
             },
             "issuer": account_id,
             "symbol": createObject.symbol,
-            "precision": parseInt (createObject.precision, 10),
+            "precision": parseInt(createObject.precision, 10),
             "common_options": {
                 "max_supply": max_supply,
                 "market_fee_percent": createObject.market_fee_percent * 100 || 0,
@@ -98,7 +98,7 @@ class AssetActions {
                     },
                     "quote": {
                         "amount": cer.quote.amount * precision,
-                        "asset_id": "1.3.1"
+                        "asset_id": cer.base.asset_id === "1.3.1" ? "1.3.2" : "1.3.1"
                     }
                 },
                 "whitelist_authorities": [],
@@ -116,45 +116,45 @@ class AssetActions {
             operationJSON.bitasset_opts = bitasset_opts;
         }
 
-        tr.add_type_operation ("asset_create", operationJSON);
+        tr.add_type_operation("asset_create", operationJSON);
         return (dispatch) => {
-            return WalletDb.process_transaction (tr, null, true).then (result => {
+            return WalletDb.process_transaction(tr, null, true).then(result => {
                 // console.log("asset create result:", result);
                 // this.dispatch(account_id);
-                dispatch (true);
-            }).catch (error => {
-                console.log ("[AssetActions.js:150] ----- createAsset error ----->", error);
-                dispatch (false);
+                dispatch(true);
+            }).catch(error => {
+                console.log("[AssetActions.js:150] ----- createAsset error ----->", error);
+                dispatch(false);
             });
         };
     }
 
-    updateAsset (issuer, new_issuer, update, core_exchange_rate, asset, flags, permissions,
-                 isBitAsset, bitasset_opts, original_bitasset_opts, description, fee_asset_id = '1.3.1') {
+    updateAsset(issuer, new_issuer, update, core_exchange_rate, asset, flags, permissions,
+                isBitAsset, bitasset_opts, original_bitasset_opts, description, fee_asset_id = '1.3.1') {
 
         // Create asset action here...
-        let tr = wallet_api.new_transaction ();
-        let quotePrecision = utils.get_asset_precision (asset.get ("precision"));
+        let tr = wallet_api.new_transaction();
+        let quotePrecision = utils.get_asset_precision(asset.get("precision"));
 
-        big.config ({DECIMAL_PLACES: asset.get ("precision")});
-        let max_supply = (new big (update.max_supply)).times (quotePrecision).toString ();
-        let max_market_fee = (new big (update.max_market_fee || 0)).times (quotePrecision).toString ();
+        big.config({DECIMAL_PLACES: asset.get("precision")});
+        let max_supply = (new big(update.max_supply)).times(quotePrecision).toString();
+        let max_market_fee = (new big(update.max_market_fee || 0)).times(quotePrecision).toString();
 
-        let cr_quote_asset = ChainStore.getAsset (core_exchange_rate.quote.asset_id);
-        let cr_quote_precision = utils.get_asset_precision (cr_quote_asset.get ("precision"));
-        let cr_base_asset = ChainStore.getAsset (core_exchange_rate.base.asset_id);
-        let cr_base_precision = utils.get_asset_precision (cr_base_asset.get ("precision"));
+        let cr_quote_asset = ChainStore.getAsset(core_exchange_rate.quote.asset_id);
+        let cr_quote_precision = utils.get_asset_precision(cr_quote_asset.get("precision"));
+        let cr_base_asset = ChainStore.getAsset(core_exchange_rate.base.asset_id);
+        let cr_base_precision = utils.get_asset_precision(cr_base_asset.get("precision"));
 
-        let cr_quote_amount = (new big (core_exchange_rate.quote.amount)).times (cr_quote_precision).toString ();
-        let cr_base_amount = (new big (core_exchange_rate.base.amount)).times (cr_base_precision).toString ();
+        let cr_quote_amount = (new big(core_exchange_rate.quote.amount)).times(cr_quote_precision).toString();
+        let cr_base_amount = (new big(core_exchange_rate.base.amount)).times(cr_base_precision).toString();
 
         let updateObject = {
             fee: {
                 amount: 0,
                 asset_id: fee_asset_id
             },
-            asset_to_update: asset.get ("id"),
-            extensions: asset.get ("extensions"),
+            asset_to_update: asset.get("id"),
+            extensions: asset.get("extensions"),
             issuer: issuer,
             new_issuer: new_issuer,
             new_options: {
@@ -164,11 +164,11 @@ class AssetActions {
                 description: description,
                 issuer_permissions: permissions,
                 flags: flags,
-                whitelist_authorities: asset.getIn (["options", "whitelist_authorities"]),
-                blacklist_authorities: asset.getIn (["options", "blacklist_authorities"]),
-                whitelist_markets: asset.getIn (["options", "whitelist_markets"]),
-                blacklist_markets: asset.getIn (["options", "blacklist_markets"]),
-                extensions: asset.getIn (["options", "extensions"]),
+                whitelist_authorities: asset.getIn(["options", "whitelist_authorities"]),
+                blacklist_authorities: asset.getIn(["options", "blacklist_authorities"]),
+                whitelist_markets: asset.getIn(["options", "whitelist_markets"]),
+                blacklist_markets: asset.getIn(["options", "blacklist_markets"]),
+                extensions: asset.getIn(["options", "extensions"]),
                 core_exchange_rate: {
                     quote: {
                         amount: cr_quote_amount,
@@ -185,9 +185,9 @@ class AssetActions {
         if (issuer === new_issuer || !new_issuer) {
             delete updateObject.new_issuer;
         }
-        tr.add_type_operation ("asset_update", updateObject);
+        tr.add_type_operation("asset_update", updateObject);
 
-        console.log ("bitasset_opts:", bitasset_opts, "original_bitasset_opts:", original_bitasset_opts);
+        console.log("bitasset_opts:", bitasset_opts, "original_bitasset_opts:", original_bitasset_opts);
         if (isBitAsset &&
             (bitasset_opts.feed_lifetime_sec !== original_bitasset_opts.feed_lifetime_sec ||
                 bitasset_opts.minimum_feeds !== original_bitasset_opts.minimum_feeds ||
@@ -201,27 +201,27 @@ class AssetActions {
                     amount: 0,
                     asset_id: 0
                 },
-                asset_to_update: asset.get ("id"),
+                asset_to_update: asset.get("id"),
                 issuer: issuer,
                 new_options: bitasset_opts
             };
 
-            tr.add_type_operation ("asset_update_bitasset", bitAssetUpdateObject);
+            tr.add_type_operation("asset_update_bitasset", bitAssetUpdateObject);
 
         }
 
-        return WalletDb.process_transaction (tr, null, true).then (result => {
+        return WalletDb.process_transaction(tr, null, true).then(result => {
             // console.log("asset create result:", result);
             // this.dispatch(account_id);
             return true;
-        }).catch (error => {
-            console.log ("[AssetActions.js:150] ----- createAsset error ----->", error);
+        }).catch(error => {
+            console.log("[AssetActions.js:150] ----- createAsset error ----->", error);
             return false;
         });
     }
 
-    issueAsset (to_account, from_account, asset_id, amount, memo, fee_asset_id = '1.3.1') {
-        application_api.issue_asset (to_account, from_account, asset_id, amount, memo, true, null, fee_asset_id);
+    issueAsset(to_account, from_account, asset_id, amount, memo, fee_asset_id = '1.3.1') {
+        application_api.issue_asset(to_account, from_account, asset_id, amount, memo, true, null, fee_asset_id);
     }
 
     // issueAsset(account_id, issueObject) {
@@ -254,42 +254,42 @@ class AssetActions {
     //     });
     // }
 
-    getAssetList (start, count) {
+    getAssetList(start, count) {
 
         let id = start + "_" + count;
         return (dispatch) => {
             if (!inProgress[id]) {
                 inProgress[id] = true;
-                Apis.instance ().db_api ().exec ("list_assets", [
+                Apis.instance().db_api().exec("list_assets", [
                     start, count
-                ]).then (assets => {
+                ]).then(assets => {
                     let bitAssetIDS = [];
                     let dynamicIDS = [];
 
-                    assets.forEach (asset => {
-                        ChainStore._updateObject (asset, false);
-                        dynamicIDS.push (asset.dynamic_asset_data_id);
+                    assets.forEach(asset => {
+                        ChainStore._updateObject(asset, false);
+                        dynamicIDS.push(asset.dynamic_asset_data_id);
 
                         if (asset.bitasset_data_id) {
-                            bitAssetIDS.push (asset.bitasset_data_id);
+                            bitAssetIDS.push(asset.bitasset_data_id);
                         }
                     });
 
-                    let dynamicPromise = Apis.instance ().db_api ().exec ("get_objects", [
+                    let dynamicPromise = Apis.instance().db_api().exec("get_objects", [
                         dynamicIDS
                     ]);
 
-                    let bitAssetPromise = bitAssetIDS.length > 0 ? Apis.instance ().db_api ().exec ("get_objects", [
+                    let bitAssetPromise = bitAssetIDS.length > 0 ? Apis.instance().db_api().exec("get_objects", [
                         bitAssetIDS
                     ]) : null;
 
-                    Promise.all ([
+                    Promise.all([
                         dynamicPromise,
                         bitAssetPromise
                     ])
-                        .then (results => {
+                        .then(results => {
                             delete inProgress[id];
-                            dispatch ({
+                            dispatch({
                                 assets: assets,
                                 dynamic_data: results[0],
                                 bitasset_data: results[1]
@@ -297,67 +297,67 @@ class AssetActions {
 
                         });
                 })
-                    .catch (error => {
-                        console.log ("Error in AssetStore.getAssetList: ", error);
+                    .catch(error => {
+                        console.log("Error in AssetStore.getAssetList: ", error);
                         delete inProgress[id];
                     });
             }
         };
     }
 
-    getAsset (id) {
+    getAsset(id) {
         let assetPromise;
         return (dispatch) => {
             if (!inProgress[id]) {
                 inProgress[id] = true;
-                if (utils.is_object_id (id)) {
-                    assetPromise = Apis.instance ().db_api ().exec ("get_objects", [
+                if (utils.is_object_id(id)) {
+                    assetPromise = Apis.instance().db_api().exec("get_objects", [
                         [id]
                     ]);
                 } else {
-                    assetPromise = Apis.instance ().db_api ().exec ("list_assets", [
+                    assetPromise = Apis.instance().db_api().exec("list_assets", [
                         id, 1
                     ]);
                 }
 
-                return assetPromise.then ((asset) => {
+                return assetPromise.then((asset) => {
 
                     if (asset.length === 0 || !asset) {
 
-                        dispatch ({
+                        dispatch({
                             asset: null,
                             id: id
                         });
                     }
-                    let bitAssetPromise = asset[0].bitasset_data_id ? Apis.instance ().db_api ().exec ("get_objects", [
+                    let bitAssetPromise = asset[0].bitasset_data_id ? Apis.instance().db_api().exec("get_objects", [
                         [asset[0].bitasset_data_id]
                     ]) : null;
 
-                    Promise.all ([
-                        Apis.instance ().db_api ().exec ("get_objects", [
+                    Promise.all([
+                        Apis.instance().db_api().exec("get_objects", [
                             [asset[0].dynamic_asset_data_id]
                         ]),
                         bitAssetPromise
                     ])
-                        .then (results => {
+                        .then(results => {
                             delete inProgress[id];
-                            dispatch ({
+                            dispatch({
                                 asset: asset[0],
                                 dynamic_data: results[0][0],
                                 bitasset_data: results[1] ? results[1][0] : null
                             });
                         });
 
-                }).catch ((error) => {
-                    console.log ("Error in AssetStore.updateAsset: ", error);
+                }).catch((error) => {
+                    console.log("Error in AssetStore.updateAsset: ", error);
                     delete inProgress[id];
                 });
             }
         };
     }
 
-    lookupAsset (symbol, searchID) {
-        let asset = ChainStore.getAsset (symbol);
+    lookupAsset(symbol, searchID) {
+        let asset = ChainStore.getAsset(symbol);
 
         if (asset) {
             return {
@@ -368,10 +368,10 @@ class AssetActions {
         } else {
             return (dispatch) => {
                 // Hack to retry once until we replace this method with a new api call to lookup multiple assets
-                setTimeout (() => {
-                    let asset = ChainStore.getAsset (symbol);
+                setTimeout(() => {
+                    let asset = ChainStore.getAsset(symbol);
                     if (asset) {
-                        dispatch ({
+                        dispatch({
                             assets: [asset],
                             searchID: searchID,
                             symbol: symbol
@@ -382,9 +382,9 @@ class AssetActions {
         }
     }
 
-    reserveAsset (amount, assetId, payer) {
-        var tr = wallet_api.new_transaction ();
-        tr.add_type_operation ("asset_reserve", {
+    reserveAsset(amount, assetId, payer) {
+        var tr = wallet_api.new_transaction();
+        tr.add_type_operation("asset_reserve", {
             fee: {
                 amount: 0,
                 asset_id: 0
@@ -396,13 +396,13 @@ class AssetActions {
             payer,
             "extensions": []
         });
-        return WalletDb.process_transaction (tr, null, true).then (result => {
+        return WalletDb.process_transaction(tr, null, true).then(result => {
             return true;
-        }).catch (error => {
-            console.log ("[AssetActions.js:150] ----- reserveAsset error ----->", error);
+        }).catch(error => {
+            console.log("[AssetActions.js:150] ----- reserveAsset error ----->", error);
             return false;
         });
     }
 }
 
-export default alt.createActions (AssetActions);
+export default alt.createActions(AssetActions);

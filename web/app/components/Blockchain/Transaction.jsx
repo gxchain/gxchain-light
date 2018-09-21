@@ -1,5 +1,4 @@
-import React from "react";
-import {PropTypes} from "react";
+import React, {PropTypes} from "react";
 import FormattedAsset from "../Utility/FormattedAsset";
 import {Link as RealLink} from "react-router/es";
 import Translate from "react-translate-component";
@@ -17,10 +16,10 @@ import Icon from "../Icon/Icon";
 import PrivateKeyStore from "stores/PrivateKeyStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import ProposedOperation from "./ProposedOperation";
-import {ChainTypes, ops, hash} from "gxbjs/es";
+import {ChainTypes, hash, ops} from "gxbjs/es";
+import ReactTooltip from "react-tooltip";
 
 let {operations} = ChainTypes;
-import ReactTooltip from "react-tooltip";
 
 require("./operations.scss");
 require("./json-inspector.scss");
@@ -67,7 +66,7 @@ class OperationTable extends React.Component {
             <tr>
                 <td><Translate component="span" content="transfer.fee"/></td>
                 <td><FormattedAsset color="fee" amount={this.props.fee.amount} asset={this.props.fee.asset_id}/></td>
-            </tr> ) : null;
+            </tr>) : null;
 
         return (
             <div>
@@ -112,7 +111,7 @@ class Transaction extends React.Component {
         let Link = this.props.no_links ? NoLinkDecorator : RealLink;
         return utils.is_object_id(product_id) ?
             <LinkToProductById product={product_id}/> :
-            {/*<Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;*/}
+            {/*<Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;*/};
     }
 
 
@@ -120,7 +119,7 @@ class Transaction extends React.Component {
         e.preventDefault();
         WalletUnlockActions.unlock().then(() => {
             this.forceUpdate();
-        })
+        });
     }
 
     render() {
@@ -129,7 +128,7 @@ class Transaction extends React.Component {
         info = [];
 
         let opCount = trx.operations.length;
-        let memo = null
+        let memo = null;
 
         trx.operations.forEach((op, opIndex) => {
             let rows = [];
@@ -183,7 +182,7 @@ class Transaction extends React.Component {
                                 <td><Translate content="transfer.memo"/></td>
                                 {memo}
                             </tr>
-                        ) : null
+                        ) : null;
                 }
 
                     break;
@@ -367,8 +366,8 @@ class Transaction extends React.Component {
                             );
                         }
                         else {
-                            console.log("num witnesses: ", op[1].new_options.num_witness)
-                            console.log("===============> NEW: ", op[1].new_options)
+                            console.log("num witnesses: ", op[1].new_options.num_witness);
+                            console.log("===============> NEW: ", op[1].new_options);
                             rows.push(
                                 <tr key={key++}>
                                     <td><Translate component="span" content="account.votes.proxy"/></td>
@@ -647,7 +646,7 @@ class Transaction extends React.Component {
                                 <td><Translate content="transfer.memo"/></td>
                                 {memo}
                             </tr>
-                        ) : null
+                        ) : null;
                 }
 
                     break;
@@ -691,7 +690,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transfer.amount"/></td>
-                            <td><FormattedAsset amount={op[1].amount} asset={op[1].asset_id}/></td>
+                            <td><FormattedAsset amount={op[1].amount} asset={"1.3.1"}/></td>
                         </tr>
                     );
 
@@ -952,10 +951,10 @@ class Transaction extends React.Component {
                     break;
 
                 case "proposal_create":
-                    var expiration_date = new Date(op[1].expiration_time + 'Z')
-                    var has_review_period = op[1].review_period_seconds !== undefined
+                    var expiration_date = new Date(op[1].expiration_time + 'Z');
+                    var has_review_period = op[1].review_period_seconds !== undefined;
                     var review_begin_time = !has_review_period ? null :
-                        expiration_date.getTime() - op[1].review_period_seconds * 1000
+                        expiration_date.getTime() - op[1].review_period_seconds * 1000;
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="proposal_create.review_period"/></td>
@@ -968,7 +967,7 @@ class Transaction extends React.Component {
                                     : <span>&mdash;</span>}
                             </td>
                         </tr>
-                    )
+                    );
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="proposal_create.expiration_time"/></td>
@@ -978,9 +977,9 @@ class Transaction extends React.Component {
                             />
                             </td>
                         </tr>
-                    )
+                    );
                     var operations = [];
-                    for (let pop of op[1].proposed_ops) operations.push(pop.op)
+                    for (let pop of op[1].proposed_ops) operations.push(pop.op);
 
                     let proposalsText = op[1].proposed_ops.map((o, index) => {
                         return (
@@ -1002,14 +1001,14 @@ class Transaction extends React.Component {
                             <td><Translate component="span" content="proposal_create.proposed_operations"/></td>
                             <td>{proposalsText}</td>
                         </tr>
-                    )
+                    );
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="proposal_create.fee_paying_account"/></td>
                             <td>{this.linkToAccount(op[1].fee_paying_account)}</td>
                         </tr>
-                    )
-                    break
+                    );
+                    break;
 
                 case "proposal_update":
                     let fields = [
@@ -1023,7 +1022,7 @@ class Transaction extends React.Component {
                             <td><Translate component="span" content="proposal_create.fee_paying_account"/></td>
                             <td>{this.linkToAccount(op[1].fee_paying_account)}</td>
                         </tr>
-                    )
+                    );
 
                     fields.forEach((field) => {
                         if (op[1][field].length) {
@@ -1031,14 +1030,14 @@ class Transaction extends React.Component {
                                 <tr key={key++}>
                                     <td><Translate content={`proposal.update.${field}`}/></td>
                                     <td>{op[1][field].map(value => {
-                                            return <div key={value}>{this.linkToAccount(value)}</div>
+                                            return <div key={value}>{this.linkToAccount(value)}</div>;
                                         }
                                     )}
                                     </td>
                                 </tr>
-                            )
+                            );
                         }
-                    })
+                    });
 
                     break;
 
@@ -1193,7 +1192,7 @@ class Transaction extends React.Component {
 
                     break;
                 case 'balance_lock':
-                    let term = Number(op[1].program_id) > 1 ? counterpart.translate('loyalty_program.months', {month: op[1].program_id}) : counterpart.translate('loyalty_program.month', {month: op[1].program_id})
+                    let term = Number(op[1].program_id) > 1 ? counterpart.translate('loyalty_program.months', {month: op[1].program_id}) : counterpart.translate('loyalty_program.month', {month: op[1].program_id});
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="loyalty_program.lock_amount"/></td>
@@ -1254,7 +1253,8 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="proxy_transfer.amount"/></td>
-                            <td><FormattedAsset amount={op[1].request_params.amount.amount} asset={op[1].request_params.amount.asset_id}/></td>
+                            <td><FormattedAsset amount={op[1].request_params.amount.amount}
+                                                asset={op[1].request_params.amount.asset_id}/></td>
                         </tr>
                     );
                     rows.push(
