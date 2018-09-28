@@ -281,7 +281,7 @@ class Header extends React.Component {
             <a style={{padding: "1rem", border: "none"}} className="button"
                onClick={this._onNavigate.bind(this, "/settings")}>
                 <Icon className="icon-14px" name="cog"/>
-            </a>
+            </a>;
         {/*<ActionSheet>
          <ActionSheet.Button title="">
          <a style={{padding: "1rem", border: "none"}} className="button">
@@ -355,13 +355,22 @@ class Header extends React.Component {
                     <ul className="menu-bar">
                         {__ELECTRON__ ? <li className="logo-li">{dashboard}</li> :
                             <li className="logo-li no-left-border">{dashboard}</li>}
-                        {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`}
-                                                            className={cnames({active: active.indexOf("account/") !== -1})}><Translate
-                            content="header.account"/></Link></li>}
-                        {<li><a className={cnames({active: active.indexOf("explorer") !== -1})}
+                        {!currentAccount ? null :
+                            <li>
+                                <Link to={`/account/${currentAccount}/overview`} className={cnames({active: active.indexOf("/overview") !== -1})}>
+                                    <Translate content="header.account"/>
+                                </Link>
+                            </li>}
+                        <li><a className={cnames({active: active.indexOf("explorer") !== -1})}
                                 onClick={this._onNavigate.bind(this, "/explorer")}><Translate component="span"
                                                                                               content="header.explorer"/></a>
-                        </li>}
+                        </li>
+                        {!currentAccount ? null :
+                            <li>
+                                <Link to={`/account/${currentAccount}/voting`} className={cnames({active: active.indexOf("/voting") !== -1})}>
+                                    <Translate content="header.voting"/>
+                                </Link>
+                            </li>}
                     </ul>
                 </div>
                 <div className="grid-block show-for-medium shrink">

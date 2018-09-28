@@ -545,7 +545,6 @@ class WalletDb extends BaseStore {
     /** This method may be called again should the main database change */
     loadDbData() {
         return idb_helper.cursor("wallet", cursor => {
-            console.log('wallet loaded: ', cursor);
             if (!cursor) return false;
             let wallet = cursor.value;
             // Convert anything other than a string or number back into its proper type
