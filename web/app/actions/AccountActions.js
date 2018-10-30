@@ -7,7 +7,7 @@ import ApplicationApi from "api/ApplicationApi";
 import WalletDb from "stores/WalletDb";
 import WalletActions from "actions/WalletActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
-import { Apis } from 'gxbjs-ws';
+import {Apis} from 'gxbjs-ws';
 
 let accountSearch = {};
 let wallet_api = new WalletApi();
@@ -114,13 +114,44 @@ class AccountActions {
         return WalletDb.process_transaction(tr, null, true);
     }
 
-    joinLoyaltyProgram(program_id, account_id, amount, rate,lock_days, memo = '') {
+    upgradeTrustNode(account_id, block_signing_key, url, needCreateCommittee = true, needCreateWitness = true) {
+
+        let committee_member_create_fee = accountUtils.getFinalFeeAsset(account_id, "committee_member_create");
+        let witness_create_fee = accountUtils.getFinalFeeAsset(account_id, "witness_create");
+
+        var tr = wallet_api.new_transaction();
+        if(needCreateCommittee){
+            tr.add_type_operation("committee_member_create", {
+                "fee": {
+                    amount: 0,
+                    asset_id: committee_member_create_fee
+                },
+                committee_member_account: account_id,
+                url: url
+            });
+        }
+        if(needCreateWitness){
+            tr.add_type_operation("witness_create", {
+                "fee": {
+                    amount: 0,
+                    asset_id: witness_create_fee
+                },
+                witness_account: account_id,
+                url: url,
+                block_signing_key: block_signing_key
+            });
+        }
+
+        return WalletDb.process_transaction(tr, null, true);
+    }
+
+    joinLoyaltyProgram(program_id, account_id, amount, rate, lock_days, memo = '') {
         return new Promise((resolve, reject) => {
             WalletUnlockActions.unlock().then(function () {
                 Apis.instance().db_api().exec("get_objects", [["2.1.0"]]).then(function (resp) {
                     let time = resp[0].time;
-                    if(!/Z$/.test(time)){
-                        time+='Z'
+                    if (!/Z$/.test(time)) {
+                        time += 'Z';
                     }
                     var tr = wallet_api.new_transaction();
                     tr.add_type_operation("balance_lock", {
@@ -129,7 +160,7 @@ class AccountActions {
                             asset_id: '1.3.1'
                         },
                         account: account_id,
-                        lock_days:lock_days,
+                        lock_days: lock_days,
                         create_date_time: new Date(time),
                         program_id: program_id,
                         amount: {
@@ -145,15 +176,15 @@ class AccountActions {
                         resolve(resp);
                     }).catch(ex => {
                         reject(ex);
-                    })
-                }).catch(ex=>{
+                    });
+                }).catch(ex => {
                     reject(ex);
-                })
-            })
-        })
+                });
+            });
+        });
     }
 
-    unlockLoyaltyProgram(account_id,lock_id){
+    unlockLoyaltyProgram(account_id, lock_id) {
         return new Promise((resolve, reject) => {
             WalletUnlockActions.unlock().then(function () {
                 var tr = wallet_api.new_transaction();
@@ -163,16 +194,16 @@ class AccountActions {
                         asset_id: '1.3.1'
                     },
                     account: account_id,
-                    lock_id:lock_id
+                    lock_id: lock_id
                 });
                 // process transaction with no confirm, since it's already confirmed by user
                 WalletDb.process_transaction(tr, null, true).then(function (resp) {
                     resolve(resp);
                 }).catch(ex => {
                     reject(ex);
-                })
-            })
-        })
+                });
+            });
+        });
     }
 
     linkAccount(name) {
