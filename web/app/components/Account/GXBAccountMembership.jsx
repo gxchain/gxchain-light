@@ -23,7 +23,8 @@ class GXBAccountMembership extends React.Component {
         super(props);
         this.state = {
             isCommittee: -1,
-            isWitness: -1
+            isWitness: -1,
+            witness_id: ''
         };
     }
 
@@ -49,6 +50,7 @@ class GXBAccountMembership extends React.Component {
             let account = props.account.toJS();
             Promise.all([ChainStore.fetchWitnessByAccount(account.id), ChainStore.fetchCommitteeMemberByAccount(account.id)]).then(results => {
                 this.setState({
+                    witness_id: results[0] && results[0].get('id'),
                     isWitness: !!results[0],
                     isCommittee: !!results[1]
                 });
@@ -103,6 +105,7 @@ class GXBAccountMembership extends React.Component {
                     {this.state.isWitness == 1 && this.state.isCommittee == 1 ?
                         <div>
                             <Translate content="account.member.trust_node_candidate"/>
+                            &nbsp;{this.state.witness_id}
                         </div> :
                         !(isMyAccount && member_status === "lifetime" && this.state.isWitness > -1 && this.state.isWitness > -1) ? null :
                             <div>
