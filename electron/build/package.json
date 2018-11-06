@@ -2,8 +2,8 @@
   "name": "gxb-light",
   "productName": "gxb-light",
   "identifier": "gxb.io",
-  "description": "GXB - decentralized data exchange",
-  "version": "2.0.180606",
+  "description": "GXChain - A Trusted Data Internet of Value",
+  "version": "2.0.181106",
   "author": "bd@gxb.io",
   "main": "electron.js",
   "config": {
