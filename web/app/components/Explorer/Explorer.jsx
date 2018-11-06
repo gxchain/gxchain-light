@@ -85,16 +85,16 @@ class Explorer extends React.Component {
                             </div>
                         </Link>
                     </ExplorerCard>
-                    <ExplorerCard>
-                        <Link to="data-market">
-                            <div>
-                                <Icon name="markets" size="5x" fillClass="fill-black"/>
-                            </div>
-                            <div className="card-divider text-center">
-                                <Translate component="span" content="data_market.title"/>
-                            </div>
-                        </Link>
-                    </ExplorerCard>
+                    {/*<ExplorerCard>*/}
+                        {/*<Link to="data-market">*/}
+                            {/*<div>*/}
+                                {/*<Icon name="markets" size="5x" fillClass="fill-black"/>*/}
+                            {/*</div>*/}
+                            {/*<div className="card-divider text-center">*/}
+                                {/*<Translate component="span" content="data_market.title"/>*/}
+                            {/*</div>*/}
+                        {/*</Link>*/}
+                    {/*</ExplorerCard>*/}
                     <ExplorerCard>
                         <Link to="explorer/statistics">
                             <div>

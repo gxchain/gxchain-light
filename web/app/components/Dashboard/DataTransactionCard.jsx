@@ -33,7 +33,7 @@ class DataProductCard extends React.Component {
                                     value={this.state.transaction_data.transaction_total_costs}
                                     minimumFractionDigits={0}
                                     maximumFractionDigits={5}
-                                /> GXC
+                                /> GCNY
                             </h3>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ class DataProductCard extends React.Component {
                                     value={this.state.transaction_data.transaction_week_costs}
                                     minimumFractionDigits={0}
                                     maximumFractionDigits={5}
-                                /> GXC
+                                /> GCNY
                             </h3>
                         </div>
                     </div>
@@ -59,7 +59,7 @@ class DataProductCard extends React.Component {
                                     value={this.state.transaction_data.transaction_today_costs}
                                     minimumFractionDigits={0}
                                     maximumFractionDigits={5}
-                                /> GXC
+                                /> GCNY
                             </h3>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ class DataProductCard extends React.Component {
                                     value={this.state.transaction_data.transaction_pay_fees}
                                     minimumFractionDigits={0}
                                     maximumFractionDigits={5}
-                                /> GXC
+                                /> GCNY
                             </h3>
                         </div>
                     </div>
