@@ -131,7 +131,7 @@ class Footer extends React.Component {
     }
 
     onUpgrade() {
-        window.open('https://gxb.io');
+        window.open('https://www.gxchain.org/resource/');
     }
 
     onBackup() {
