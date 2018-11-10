@@ -139,9 +139,9 @@ class AccountVoting extends React.Component {
         // updated_account.new_options = updated_account.options;
         let new_proxy_id = this.state.proxy_account_id;
         new_options.voting_account = new_proxy_id ? new_proxy_id : "1.2.5";
-        new_options.num_witness = this.state.witnesses.size;
+        new_options.num_witness = Math.min(this.state.witnesses.size,this.props.globalObject.getIn(['parameters','maximum_witness_count']));
         // new_options.num_committee = this.state.committee.size;
-        new_options.num_committee = this.state.witnesses.size;
+        new_options.num_committee = Math.min(this.state.witnesses.size,this.props.globalObject.getIn(['parameters','maximum_committee_count']));
 
         updateObject.new_options = new_options;
         // Set fee asset
