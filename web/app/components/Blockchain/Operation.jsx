@@ -1121,6 +1121,23 @@ class Operation extends React.Component {
 
                 break;
 
+            case "update_contract":
+
+                color = "warning";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.update_contract"
+                            keys={[
+                                {type: "account", value: op[1].owner, arg: "account"},
+                                {type: "account", value: op[1].contract, arg: "contract_name"},
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+
             default:
                 console.log("unimplemented op:", op);
                 column = (

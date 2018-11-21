@@ -1322,6 +1322,28 @@ class Transaction extends React.Component {
 
                     break;
 
+                case "update_contract":
+                    color = "warning";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="update_contract.owner"/></td>
+                            <td>{this.linkToAccount(op[1].owner)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="update_contract.new_owner"/></td>
+                            <td>{this.linkToAccount(op[1].new_owner)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="update_contract.contract_name"/></td>
+                            <td>{this.linkToAccount(op[1].contract)}</td>
+                        </tr>
+                    );
+                    break;
+
                 default:
                     console.log("unimplemented op:", op);
 

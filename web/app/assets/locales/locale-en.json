@@ -451,6 +451,12 @@
     "data": "Method Data",
     "fee": "Fee"
   },
+  "update_contract": {
+    "owner": "Owner Account",
+    "new_owner": "New Owner Account",
+    "contract_name": "Contract Name",
+    "fee": "Fee"
+  },
   "operation": {
     "pending": "pending %(blocks)s blocks",
     "no_recent": "No recent transactions",
@@ -510,7 +516,8 @@
     "balance_unlock":"{account} complete a loyalty program",
     "proxy_transfer": "{from} sent {amount} to {to} delegated by {account}",
     "create_contract": "{account} created the contract {contract_name}",
-    "call_contract": "{account} call the contract {contract_name} 's {method_name} method"
+    "call_contract": "{account} call the contract {contract_name} 's {method_name} method",
+    "update_contract": "{account} updated the contract {contract_name}"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -680,7 +687,8 @@
       "balance_unlock":"Balance Unlock",
       "proxy_transfer": "Proxy Transfer",
       "create_contract": "Create Contract",
-      "call_contract": "Call Contract"
+      "call_contract": "Call Contract",
+      "update_contract": "Update Contract"
     },
     "trxOps": {
       "data_transaction_create": {

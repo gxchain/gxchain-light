@@ -40,7 +40,7 @@
     "exchange": "交易",
     "payments": "转账",
     "logout": "注销",
-    "voting":"投票",
+    "voting": "投票",
     "settings": "设置",
     "current": "当前账户",
     "create_account": "创建账户",
@@ -444,6 +444,12 @@
     "data": "方法参数",
     "fee": "手续费"
   },
+  "update_contract": {
+    "owner": "权限账户",
+    "new_owner": "新权限账户",
+    "contract_name": "合约名称",
+    "fee": "手续费"
+  },
   "operation": {
     "pending": " %(blocks)s 个区块待定",
     "no_recent": "近期无交易",
@@ -499,11 +505,12 @@
     "account_upgrade_data_transaction_member": "{account} 升级为交易确认节点",
     "data_transaction_datasource_upload": "{account} 验证了数据源 {datasource} 的数据上传",
     "data_transaction_datasource_validate_error": "{account} 数据返回验证失败",
-    "balance_lock":"{account} 参与忠诚计划，冻结了 {amount}",
-    "balance_unlock":"{account} 完成一笔忠诚计划余额解冻操作",
+    "balance_lock": "{account} 参与忠诚计划，冻结了 {amount}",
+    "balance_unlock": "{account} 完成一笔忠诚计划余额解冻操作",
     "proxy_transfer": "{account} 发起了一笔代理转账交易: {from} 发送 {amount} 到 {to}",
     "create_contract": "{account} 创建了智能合约 {contract_name}",
-    "call_contract": "{account} 调用了智能合约 {contract_name} 的 {method_name} 方法"
+    "call_contract": "{account} 调用了智能合约 {contract_name} 的 {method_name} 方法",
+    "update_contract": "{account} 更新了智能合约 {contract_name}"
   },
   "transaction": {
     "sent": "发送",
@@ -635,11 +642,12 @@
       "account_upgrade_data_transaction_member": "交易节点认证",
       "data_transaction_datasource_upload": "数据存证",
       "data_transaction_datasource_validate_error": "数据交易失败",
-      "balance_lock":"冻结余额",
-      "balance_unlock":"解冻余额",
+      "balance_lock": "冻结余额",
+      "balance_unlock": "解冻余额",
       "proxy_transfer": "代理转账",
       "create_contract": "创建合约",
-      "call_contract": "调用合约"
+      "call_contract": "调用合约",
+      "update_contract": "更新合约"
     },
     "trxOps": {
       "data_transaction_create": {
@@ -1219,7 +1227,7 @@
       "submit": "提现"
     },
     "ok": "确定",
-    "cancel":"取消",
+    "cancel": "取消",
     "settle": {
       "title": "请求清算资产%(asset)s",
       "amount": "数量",
@@ -1372,7 +1380,7 @@
     "fee_paying_account": "付费账户"
   },
   "loyalty_program": {
-    "desc":"已锁定金额为通过忠诚计划锁定的金额，处于冻结状态，但冻结金额部分享受对应的奖励。公信宝希望投资者通过忠诚计划享受未来公信宝发展所带来的长期效益！",
+    "desc": "已锁定金额为通过忠诚计划锁定的金额，处于冻结状态，但冻结金额部分享受对应的奖励。公信宝希望投资者通过忠诚计划享受未来公信宝发展所带来的长期效益！",
     "join": "加入忠诚计划",
     "grow": "与公信宝一起成长",
     "tip1": "价值投资者的福利，长线持有还送奖励",
@@ -1383,20 +1391,20 @@
     "days": "%(day)s天",
     "term": "锁定期限",
     "yearly_bonus": "奖励年化",
-    "start_date":"开始时间",
-    "due_date":"到期时间",
-    "lock_amount":"锁定金额",
-    "bonus":"到期收益",
-    "button_title":"加入忠诚计划 赚 %(percent)s",
-    "notice":"加入忠诚计划的金额将被锁定，期间不可卖出，此操作不可撤销，确定加入吗？",
-    "no_program":"当前没有已发布的忠诚计划",
-    "time_error":"参与失败，请重试",
-    "success":"恭喜！参与成功",
-    "id":"锁定ID",
-    "unlock":"立即解锁",
-    "unlock_account":"解锁账户",
-    "no_balances":"暂无待解冻余额",
-    "locking":"锁仓中",
-    "status":"状态"
+    "start_date": "开始时间",
+    "due_date": "到期时间",
+    "lock_amount": "锁定金额",
+    "bonus": "到期收益",
+    "button_title": "加入忠诚计划 赚 %(percent)s",
+    "notice": "加入忠诚计划的金额将被锁定，期间不可卖出，此操作不可撤销，确定加入吗？",
+    "no_program": "当前没有已发布的忠诚计划",
+    "time_error": "参与失败，请重试",
+    "success": "恭喜！参与成功",
+    "id": "锁定ID",
+    "unlock": "立即解锁",
+    "unlock_account": "解锁账户",
+    "no_balances": "暂无待解冻余额",
+    "locking": "锁仓中",
+    "status": "状态"
   }
 }
