@@ -124,15 +124,45 @@ class AccountsList extends React.Component {
 
     render() {
         if (!this.props.items) return null;
-
+        
         let item_rows = this.props.items.filter(i => {
             if (!i) return false;
-            //if (this.state.item_name_input) return i.get("name").indexOf(this.state.item_name_input) !== -1;
-            return true;
+            let nodes = [
+                "aaron",
+                "caitlin",
+                "kairos",
+                "sakura",
+                "taffy",
+                "miner1",
+                "miner2",
+                "miner3",
+                "miner4",
+                "miner5",
+                "miner6",
+                "miner7",
+                "miner8",
+                "miner9",
+                "miner10",
+                "miner11",
+                "hrrs",
+                "dennis1",
+                "david12",
+                "marks-lee",
+                "robin-green"
+            ];
+            let tmp = false;
+            for (let k = 0; k < nodes.length; k++) {
+                if (i.get("name") === nodes[k]) {
+                    tmp = true;
+                    break;
+                }
+            }
+            return !tmp;
         })
             .sort((a, b) => {
                 let {votes: a_votes} = getWitnessOrCommittee(this.props.type, a);
                 let {votes: b_votes} = getWitnessOrCommittee(this.props.type, b);
+
                 if (a_votes !== b_votes) {
                     return b_votes - a_votes;
                 }
