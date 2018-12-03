@@ -297,6 +297,7 @@
       "sign_owner": "Sign as owner"
     },
     "votes": {
+      "min_support": "Please select at least 2 accounts",
       "proxy_current": "Your current proxy is",
       "proxy_short": "Proxy",
       "workers_short": "Workers",

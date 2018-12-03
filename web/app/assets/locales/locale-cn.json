@@ -254,6 +254,7 @@
       "sign_owner": "以所有者身份签名"
     },
     "votes": {
+      "min_support": "请至少选择2个账户",
       "proxy_current": "你的投票代理",
       "proxy_short": "代理投票",
       "workers_short": "预算项目",

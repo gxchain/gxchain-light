@@ -39,7 +39,8 @@ class AccountVoting extends React.Component {
             trust_nodes: null,
             vote_ids: Immutable.Set(),
             lastBudgetObject: null,
-            showExpired: false
+            showExpired: false,
+            canUpdated: true
         };
         this.onProxyAccountChange = this.onProxyAccountChange.bind(this);
         this.fetchAllTrustedNodes = this.fetchAllTrustedNodes.bind(this);
@@ -136,6 +137,7 @@ class AccountVoting extends React.Component {
         let updated_account = this.props.account.toJS();
         let updateObject = {account: updated_account.id};
         let new_options = {memo_key: updated_account.options.memo_key};
+    
         // updated_account.new_options = updated_account.options;
         let new_proxy_id = this.state.proxy_account_id;
         new_options.voting_account = new_proxy_id ? new_proxy_id : "1.2.5";
@@ -179,6 +181,16 @@ class AccountVoting extends React.Component {
             let witnesses_vote_ids = res.map(o => o.get("vote_id"));
             return Promise.all([Promise.resolve(witnesses_vote_ids), FetchChainObjects(ChainStore.getCommitteeMemberById, this.state.witnesses.toArray(), 4000)]);
         }).then(res => {
+            if (res[0] && res[0].length === 1) {
+                this.setState({
+                    canUpdated: false
+                });
+                return;
+            } else {
+                this.setState({
+                    canUpdated: true
+                });
+            }
             updateObject.new_options.votes = res[0]
                 .concat(res[1].filter(o => o).map(o => o.get("vote_id")))
                 // .concat(vote_ids.filter(id => {
@@ -479,6 +491,12 @@ class AccountVoting extends React.Component {
                                 tabIndex={8}>
                             <Translate content="account.perm.reset"/>
                         </button>
+                    </div>
+
+                    <div className="content-block" style={{display: !this.state.canUpdated ? "block" : "none"}}>
+                        <p className="facolor-error">
+                            <Translate content="account.votes.min_support"/>
+                        </p>
                     </div>
                 </div>
             </div>
