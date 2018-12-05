@@ -126,6 +126,10 @@ class AccountOverview extends React.Component {
                                     <img className="align-center" style={{width: '3rem', height: '3rem'}}
                                          src={`${logos[asset.get('id')]}`}></img> :
                                     <AccountImage size={{width: 35, height: 35}} account={asset.get('symbol')}/>}
+                                {asset_type == '1.3.1' && this.props.isMyAccount ?
+                                    <a target="_blank" className="btn-testnet-apply-gxc" href={`https://testnet.gxchain.org/gxc/get_token?${account.get('name')}`}>
+                                        <Translate content="testnet.apply_coin"/>
+                                    </a> : null}
                             </div>
                             {programs && asset_type == '1.3.1' && this.props.isMyAccount ?
                                 <a onClick={this.showLoyaltyPlanModal.bind(this, balanceObject)}

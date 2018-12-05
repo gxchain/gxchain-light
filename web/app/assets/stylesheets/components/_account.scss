@@ -116,6 +116,12 @@ a.action-button > span {
   cursor: default;
   min-width: 20rem;
   position: relative;
+  .btn-testnet-apply-gxc{
+    position: absolute;
+    right:1.5rem;
+    top:.8rem;
+    font-size: .5rem;
+  }
   .btn-loyalty-program{
     position: absolute;
     right:1rem;

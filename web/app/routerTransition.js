@@ -63,20 +63,17 @@ const willTransitionTo = (nextState, replaceState, callback) => {
 
     if (!connectionManager) connectionManager = new Manager({url: connectionString, urls});
     if (nextState.location.pathname === "/init-error") {
-        return Apis.reset(connectionString, true).init_promise
-        .then(() => {
-            var db = iDB.init_instance(window.openDatabase ? (shimIndexedDB || indexedDB) : indexedDB).init_promise;
-            return Promise.all([db, SettingsStore.init()]).then(() => {
-                return callback();
-            }).catch((err) => {
-                console.log("err:", err);
-                return callback();
-            });
+        Apis.reset(connectionString, true).then(instance => {
+            return instance.init_promise.then(() => {
+                var db = iDB.init_instance(window.openDatabase ? (shimIndexedDB || indexedDB) : indexedDB).init_promise;
+                return Promise.all([db, SettingsStore.init()]).then(() => {
+                    return callback();
+                })
+            })
         }).catch((err) => {
             console.log("err:", err);
             return callback();
         });
-
     }
     let connectionCheckPromise = !apiLatenciesCount ? connectionManager.checkConnections() : null;
     Promise.all([connectionCheckPromise]).then((res => {

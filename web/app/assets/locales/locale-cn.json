@@ -373,7 +373,7 @@
       "witness_income": "矿工收益",
       "balance_number": "余额 #%(id)s",
       "no_balances": "该账户无待解冻矿工收益",
-      "explain": "待解冻金额包含通过忠诚计划锁定的金额，以及见证人的收益等",
+      "explain": "待解冻金额包含通过忠诚计划锁定的金额，以及公信节点的收益等",
       "loyalty_program": "忠诚计划",
       "no_loyalty_balance": "该账户无待解冻忠诚计划"
     },
@@ -483,9 +483,9 @@
     "asset_fund_fee_pool": "{account} 向 {asset} 手续费池注入 {amount}",
     "asset_settle": "{account} 请求清算 {amount}",
     "asset_global_settle": "{account} 请求以 {price} 的价格进行全局清算 {asset}",
-    "witness_create": "{account} 升级到见证人",
-    "witness_update": "{account} 更新了见证人信息",
-    "witness_pay": "提取见证人收入到账户",
+    "witness_create": "{account} 升级到公信节点候选人",
+    "witness_update": "{account} 更新了候选人信息",
+    "witness_pay": "提取公信节点收入到账户",
     "witness_receive": "Received witness from witness",
     "worker_create": "{account} 创建了预算提案，请求每日支付 {pay}",
     "committee_member_update_global_parameters": "{account} 更新了全局理事会参数",
@@ -866,8 +866,8 @@
       }
     },
     "witnesses": {
-      "title": "见证人",
-      "current": "当前见证人",
+      "title": "公信节点",
+      "current": "当前公信节点",
       "participation": "参与率",
       "pay": "每块奖励",
       "budget": "剩余预算",
@@ -1407,5 +1407,8 @@
     "no_balances": "暂无待解冻余额",
     "locking": "锁仓中",
     "status": "状态"
+  },
+  "testnet":{
+    "apply_coin":"申请测试GXC"
   }
 }

@@ -137,10 +137,10 @@
     },
     "vesting": {
       "title": "Vesting balances",
-      "witness_income": "Witness income",
+      "witness_income": "TrustNode income",
       "balance_number": "Balance #%(id)s",
-      "no_balances": "This account has no vesting balances for witness income",
-      "explain": "Vesting balances contains vesting balances for loyalty program, and witness income etc.",
+      "no_balances": "This account has no vesting balances for trustnode income",
+      "explain": "Vesting balances contains vesting balances for loyalty program, and trustnode income etc.",
       "loyalty_program": "Program plan",
       "no_loyalty_balance": "This account has no vesting balances for program plan"
     },
@@ -874,8 +874,8 @@
       }
     },
     "witnesses": {
-      "title": "Witnesses",
-      "current": "Current witness",
+      "title": "TrustNode",
+      "current": "Current trustnode",
       "participation": "Participation rate",
       "pay": "Pay-per-block",
       "budget": "Remaining budget",
@@ -1381,5 +1381,8 @@
     "no_balances":"No Locked Balances",
     "locking":"Locking",
     "status":"Status"
+  },
+  "testnet":{
+    "apply_coin":"Apply GXC"
   }
 }

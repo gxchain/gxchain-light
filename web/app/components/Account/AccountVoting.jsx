@@ -9,9 +9,11 @@ import {Apis} from 'gxbjs-ws';
 import AccountsList from "./AccountsList";
 import HelpContent from "../Utility/HelpContent";
 import cnames from "classnames";
-import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import WalletDb from "stores/WalletDb";
+import {Tab, Tabs} from '../Utility/Tabs';
+import BindToChainState from "components/Utility/BindToChainState";
+import AccountVotingProxy from './AccountVotingProxy';
 
 let wallet_api = new WalletApi();
 
@@ -137,13 +139,13 @@ class AccountVoting extends React.Component {
         let updated_account = this.props.account.toJS();
         let updateObject = {account: updated_account.id};
         let new_options = {memo_key: updated_account.options.memo_key};
-    
+
         // updated_account.new_options = updated_account.options;
         let new_proxy_id = this.state.proxy_account_id;
         new_options.voting_account = new_proxy_id ? new_proxy_id : "1.2.5";
-        new_options.num_witness = Math.min(this.state.witnesses.size,this.props.globalObject.getIn(['parameters','maximum_witness_count']));
+        new_options.num_witness = Math.min(this.state.witnesses.size, this.props.globalObject.getIn(['parameters', 'maximum_witness_count']));
         // new_options.num_committee = this.state.committee.size;
-        new_options.num_committee = Math.min(this.state.witnesses.size,this.props.globalObject.getIn(['parameters','maximum_committee_count']));
+        new_options.num_committee = Math.min(this.state.witnesses.size, this.props.globalObject.getIn(['parameters', 'maximum_committee_count']));
 
         updateObject.new_options = new_options;
         // Set fee asset
@@ -403,53 +405,51 @@ class AccountVoting extends React.Component {
             <div className="grid-container">
                 <div className="grid-content">
                     <HelpContent style={{maxWidth: "800px"}} path="components/AccountVoting"/>
+                    <Tabs setting="votingTab" tabsClass="no-padding bordered-header"
+                          contentClass="grid-content no-padding">
+                        <Tab title="explorer.witnesses.title">
+                            <div className={cnames("content-block", {disabled: proxy_is_set})}>
+                                <HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingWitnesses"/>
+                                <AccountsList
+                                    type="witness"
+                                    label="account.votes.add_witness_label"
+                                    items={this.state.witnesses}
+                                    validateAccount={this.validateAccount.bind(this, "witnesses")}
+                                    onAddItem={this.onAddItem.bind(this, "witnesses")}
+                                    onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
+                                    withSelector={false}
+                                    tabIndex={proxy_is_set ? -1 : 2}
+                                    title={counterpart.translate("account.votes.w_approved_by", {account: this.props.account.get("name")})}
+                                />
 
-                    {/*<Tabs setting="votingTab" tabsClass="no-padding bordered-header"*/}
-                    {/*contentClass="grid-content no-padding">*/}
-
-                    {/*<Tab title="account.votes.proxy_short">*/}
-                    {/*<div className="content-block">*/}
-                    {/*<HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingProxy"/>*/}
-                    {/*<AccountVotingProxy*/}
-                    {/*ref="voting_proxy"*/}
-                    {/*existingProxy={this.props.account.getIn(["options", "voting_account"])}*/}
-                    {/*account={this.props.account}*/}
-                    {/*onProxyAccountChanged={this.onProxyAccountChange}*/}
-                    {/*onClearProxy={this.onClearProxy.bind(this)}*/}
-                    {/*/>*/}
-                    {/*</div>*/}
-                    {/*</Tab>*/}
-
-                    {/*<Tab title="explorer.witnesses.title">*/}
-                    <div className={cnames("content-block", {disabled: proxy_is_set})}>
-                        <HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingWitnesses"/>
-                        <AccountsList
-                            type="witness"
-                            label="account.votes.add_witness_label"
-                            items={this.state.witnesses}
-                            validateAccount={this.validateAccount.bind(this, "witnesses")}
-                            onAddItem={this.onAddItem.bind(this, "witnesses")}
-                            onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
-                            withSelector={false}
-                            tabIndex={proxy_is_set ? -1 : 2}
-                            title={counterpart.translate("account.votes.w_approved_by", {account: this.props.account.get("name")})}
-                        />
-
-                        {unVotedActiveWitnesses.size ? (
-                            <AccountsList
-                                type="witness"
-                                label="account.votes.add_witness_label"
-                                items={Immutable.List(unVotedActiveWitnesses)}
-                                validateAccount={this.validateAccount.bind(this, "witnesses")}
-                                onAddItem={this.onAddItem.bind(this, "witnesses")}
-                                onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
-                                tabIndex={proxy_is_set ? -1 : 2}
-                                withSelector={false}
-                                action="add"
-                                title={counterpart.translate("account.votes.w_not_approved_by", {account: this.props.account.get("name")})}
-                            />) : null}
-                    </div>
-                    {/*</Tab>*/}
+                                {unVotedActiveWitnesses.size ? (
+                                    <AccountsList
+                                        type="witness"
+                                        label="account.votes.add_witness_label"
+                                        items={Immutable.List(unVotedActiveWitnesses)}
+                                        validateAccount={this.validateAccount.bind(this, "witnesses")}
+                                        onAddItem={this.onAddItem.bind(this, "witnesses")}
+                                        onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
+                                        tabIndex={proxy_is_set ? -1 : 2}
+                                        withSelector={false}
+                                        action="add"
+                                        title={counterpart.translate("account.votes.w_not_approved_by", {account: this.props.account.get("name")})}
+                                    />) : null}
+                            </div>
+                        </Tab>
+                        <Tab title="account.votes.proxy_short">
+                            <div className="content-block">
+                                <HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingProxy"/>
+                                <AccountVotingProxy
+                                    ref="voting_proxy"
+                                    existingProxy={this.props.account.getIn(["options", "voting_account"])}
+                                    account={this.props.account}
+                                    onProxyAccountChanged={this.onProxyAccountChange}
+                                    onClearProxy={this.onClearProxy.bind(this)}
+                                />
+                            </div>
+                        </Tab>
+                    </Tabs>
 
                     {/*<Tab title="explorer.committee_members.title">*/}
                     {/*<div className={cnames("content-block", {disabled: proxy_is_set})}>*/}
