@@ -124,7 +124,7 @@ class AccountsList extends React.Component {
 
     render() {
         if (!this.props.items) return null;
-        
+
         let item_rows = this.props.items.filter(i => {
             if (!i) return false;
             let nodes = [

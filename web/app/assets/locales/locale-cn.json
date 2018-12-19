@@ -1361,6 +1361,8 @@
     "approve": "批准",
     "asset_issue": "使用 {account} 发行 {amount} 到 {to}",
     "reject": "否决",
+    "asset_reserve": "{account} 保留了 {amount}",
+    "asset_issue": "{account} 发行了 {amount} 到 {to}",
     "asset_create": "使用账户 {account} 创建资产 {asset}",
     "asset_update": "使用 {account} 更新 {asset} ",
     "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权",
@@ -1408,7 +1410,7 @@
     "locking": "锁仓中",
     "status": "状态"
   },
-  "testnet":{
-    "apply_coin":"申请测试GXC"
+  "testnet": {
+    "apply_coin": "申请测试GXC"
   }
 }
