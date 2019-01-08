@@ -530,8 +530,7 @@
     "expires": "Expires",
     "update_account": "Update account data for {account}",
     "status": "Status",
-    "asset_create": "Create the asset {asset} using the account {account}",
-    "asset_update": "Update the asset {asset} using the account {account}",
+
     "asset_settle": "Request a settlement of",
     "update": {
       "active_approvals_to_add": "Active approvals to add",
@@ -545,9 +544,11 @@
     "reject": "Reject",
     "override_transfer": "Transfer {amount} from {from} to {to} by authority of {issuer}",
     "asset_reserve": "Reserve (burn) {amount} using {account}",
+    "witness_pay": "提取公信节点收入到账户",
     "asset_issue": "Issue {amount} to {to} using {account}",
-    "asset_create": "{account} created the asset {asset}",
-    "asset_update": "{account} updated the asset {asset}",
+    "asset_create": "Create the asset {asset} using the account {account}",
+    "asset_update": "Update the asset {asset} using the account {account}",
+    "witness_update": "{account} update its witness info",
     "vesting_balance_withdraw": "Withdraw {amount} from vesting balance of {account}",
     "account_upgrade_merchant": "{account} certified as a merchant by authority of {issuer}",
     "account_upgrade_datasource": "{account} certified as a datasource by authority of {issuer}",
