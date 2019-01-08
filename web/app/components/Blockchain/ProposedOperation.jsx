@@ -483,8 +483,11 @@ class ProposedOperation extends React.Component {
             case "witness_update":
                 column = (
                     <span>
-                        <Translate component="span" content="proposal.witness_update"/>
-                        &nbsp;{this.linkToAccount(op[1].witness_account)}
+                        <TranslateWithLinks string="proposal.witness_update"
+                                            keys={[
+                                                {type: "account", value: op[1].witness_account, arg: "account"},
+                                            ]}
+                        />
                     </span>
                 );
 
