@@ -5,7 +5,14 @@ GXB data exchange wallet client-side, functions including transfer, transaction 
 
 >  This project was forked form official light wallet of BitShares2.0 [bitshares-ui](https://github.com/bitshares/bitshares-ui), trade modules were removed, modification based on the need of GXB data exchange, some extra modules were not removed due to dependent coupling issues, will be solved in the following version。
 
-<img width="400px" src='https://raw.githubusercontent.com/gxchain/gxips/master/assets/images/task-wallet.png'/>
+<p>
+    <a href="javascript:;">
+        <img width="300px" src='https://raw.githubusercontent.com/gxchain/gxips/master/assets/images/task-wallet.png'/>
+    </a>
+    <a href="javascript:;">
+        <img width="300px" src='https://raw.githubusercontent.com/gxchain/gxips/master/assets/images/task-wallet-en.png'/>
+    </a>
+</p>
 
 ## Install
 
