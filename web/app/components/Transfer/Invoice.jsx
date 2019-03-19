@@ -5,12 +5,14 @@ import AccountActions from "actions/AccountActions";
 import AccountSelector from "../Account/AccountSelector";
 import AccountInfo from "../Account/AccountInfo";
 import BalanceComponent from "../Utility/BalanceComponent";
-import {ChainStore, FetchChainObjects} from "gxbjs/es";
+import {ChainStore} from "gxbjs/es";
 import NotificationActions from "actions/NotificationActions";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import {decompress} from "lzma";
 import bs58 from "common/base58";
 import utils from "common/utils";
+
+let FetchChainObjects = ChainStore.FetchChainObjects;
 
 // invoice example:
 //{

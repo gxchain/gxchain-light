@@ -4,7 +4,7 @@ import alt from "alt-instance";
 import AccountActions from "actions/AccountActions";
 import iDB from "idb-instance";
 import PrivateKeyStore from "./PrivateKeyStore";
-import {ChainStore, ChainValidation, FetchChain} from "gxbjs/es";
+import {ChainStore, ChainValidation} from "gxbjs/es";
 import {Apis} from "gxbjs-ws";
 import AccountRefsStore from "stores/AccountRefsStore";
 import AddressIndex from "stores/AddressIndex";
@@ -12,6 +12,8 @@ import SettingsStore from "stores/SettingsStore";
 import ls from "common/localStorage";
 
 let accountStorage = new ls("__gxb__");
+
+let FetchChain = ChainStore.FetchChain;
 
 /**
  *  This Store holds information about accounts in this wallet

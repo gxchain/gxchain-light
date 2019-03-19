@@ -14,10 +14,12 @@ import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import LoadingIndicator from "../LoadingIndicator";
 import WalletActions from "actions/WalletActions";
 import Translate from "react-translate-component";
-import {ChainStore, FetchChain} from "gxbjs/es";
+import {ChainStore} from "gxbjs/es";
 import {BackupCreate} from "../Wallet/Backup";
 import ReactTooltip from "react-tooltip";
 import utils from "common/utils";
+
+let FetchChain = ChainStore.FetchChain;
 
 class CreateAccount extends React.Component {
     constructor() {

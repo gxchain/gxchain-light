@@ -4,7 +4,7 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import accountUtils from "common/account_utils";
 import WalletApi from "api/WalletApi";
-import {ChainStore, FetchChainObjects} from "gxbjs/es";
+import {ChainStore} from "gxbjs/es";
 import {Apis} from 'gxbjs-ws';
 import AccountsList from "./AccountsList";
 import HelpContent from "../Utility/HelpContent";
@@ -14,6 +14,8 @@ import WalletDb from "stores/WalletDb";
 import {Tab, Tabs} from '../Utility/Tabs';
 import BindToChainState from "components/Utility/BindToChainState";
 import AccountVotingProxy from './AccountVotingProxy';
+
+let FetchChainObjects = ChainStore.FetchChainObjects;
 
 let wallet_api = new WalletApi();
 

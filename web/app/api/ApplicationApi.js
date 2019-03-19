@@ -1,6 +1,8 @@
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import WalletDb from "stores/WalletDb";
-import {Aes, ChainValidation, TransactionBuilder, TransactionHelper, FetchChain} from "gxbjs/es";
+import {Aes, ChainValidation, TransactionBuilder, TransactionHelper, ChainStore} from "gxbjs/es";
+
+let FetchChain = ChainStore.FetchChain;
 
 class ApplicationApi {
 

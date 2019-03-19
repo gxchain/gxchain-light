@@ -2,10 +2,12 @@ import WalletDb from "stores/WalletDb";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import CachedPropertyActions from "actions/CachedPropertyActions";
 import ApplicationApi from "api/ApplicationApi";
-import {TransactionBuilder, FetchChain} from "gxbjs/es";
+import {TransactionBuilder, ChainStore} from "gxbjs/es";
 import {Apis} from "gxbjs-ws";
 import alt from "alt-instance";
 import SettingsStore from "stores/SettingsStore";
+
+let FetchChain = ChainStore.FetchChain;
 
 let application_api = new ApplicationApi();
 
