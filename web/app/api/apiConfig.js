@@ -1,12 +1,12 @@
 export const settingsAPIs = (() => {
     if (__DEV__ || __TEST__) {
         return {
-            DEFAULT_WS_NODE: "ws://192.168.1.118:28090",
+            DEFAULT_WS_NODE: "wss://testnet.gxchain.org",
             WS_NODE_LIST: [
-                {url: "ws://192.168.1.118:28090", location: "开发环境"}
+                {url: "wss://testnet.gxchain.org", location: "testnet"}
             ],
-            DEFAULT_FAUCET: "http://192.168.1.118:1337/gateway",
-            DEFAULT_STATISTICS: "http://192.168.1.124:8218/getStatisticsInfo"
+            DEFAULT_FAUCET: "https://testnet.faucet.gxchain.org",
+            DEFAULT_STATISTICS: "https://testnet.wallet.gxchain.org/statistics/getStatisticsInfo"
         };
     }
     if (__TESTNET__) {
@@ -16,7 +16,7 @@ export const settingsAPIs = (() => {
                 {url: "wss://testnet.gxchain.org", location: "testnet"}
             ],
             DEFAULT_FAUCET: "https://testnet.faucet.gxchain.org",
-            DEFAULT_STATISTICS: "https://wallet.gxb.io/statistics/getStatisticsInfo"
+            DEFAULT_STATISTICS: "https://testnet.wallet.gxchain.org/statistics/getStatisticsInfo"
         };
     }
     return {
