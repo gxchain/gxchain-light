@@ -396,7 +396,7 @@
     "from": "来自",
     "amount": "金额",
     "to": "发往",
-    "memo": "备注(memo)",
+    "memo": "备注(memo/Tag)",
     "fee": "手续费",
     "send": "发送",
     "final": "转账后余额",
@@ -449,6 +449,23 @@
     "owner": "权限账户",
     "new_owner": "新权限账户",
     "contract_name": "合约名称",
+    "fee": "手续费"
+  },
+  "trust_node_pledge_withdraw": {
+    "witness_account": "账户",
+    "fee": "手续费"
+  },
+  "inline_transfer": {
+    "from": "来自",
+    "amount": "金额",
+    "to": "发往",
+    "memo": "备注(Memo/Tag)",
+    "fee": "手续费"
+  },
+  "inter_contract_call": {
+    "account": "发起合约",
+    "contract_name": "接受合约",
+    "method_name": "方法名",
     "fee": "手续费"
   },
   "operation": {
@@ -511,7 +528,10 @@
     "proxy_transfer": "{account} 发起了一笔代理转账交易: {from} 发送 {amount} 到 {to}",
     "create_contract": "{account} 创建了智能合约 {contract_name}",
     "call_contract": "{account} 调用了智能合约 {contract_name} 的 {method_name} 方法",
-    "update_contract": "{account} 更新了智能合约 {contract_name}"
+    "update_contract": "{account} 更新了智能合约 {contract_name}",
+    "trust_node_pledge_withdraw": "{account} 取回公信节点保证金",
+    "inline_transfer": "合约账户 {from} 发送 {amount} 到 {to}, 备注: {memo}",
+    "inter_contract_call": "合约账户 {sender_contract} 跨合约调用了合约账户 {contract_name} 的 {method_name} 方法"
   },
   "transaction": {
     "sent": "发送",
@@ -648,7 +668,10 @@
       "proxy_transfer": "代理转账",
       "create_contract": "创建合约",
       "call_contract": "调用合约",
-      "update_contract": "更新合约"
+      "update_contract": "更新合约",
+      "trust_node_pledge_withdraw": "公信节点保证金赎回",
+      "inline_transfer": "合约内转账",
+      "inter_contract_call": "跨合约调用"
     },
     "trxOps": {
       "data_transaction_create": {

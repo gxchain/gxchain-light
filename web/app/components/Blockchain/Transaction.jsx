@@ -1343,6 +1343,15 @@ class Transaction extends React.Component {
                         </tr>
                     );
                     break;
+                case "trust_node_pledge_withdraw":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="trust_node_pledge_withdraw.witness_account"/></td>
+                            <td>{this.linkToAccount(op[1].witness_account)}</td>
+                        </tr>
+                    );
+                    break;
 
                 default:
                     console.log("unimplemented op:", op);

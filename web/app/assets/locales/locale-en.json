@@ -40,7 +40,7 @@
     "exchange": "Exchange",
     "payments": "Send",
     "logout": "Logout",
-    "voting":"Voting",
+    "voting": "Voting",
     "settings": "Settings",
     "current": "Current Account",
     "create_account": "Create Account",
@@ -168,7 +168,7 @@
       "datasource": "Datasource",
       "annual": "Annual subscriber",
       "upgrade_lifetime": "Buy Lifetime Subscription",
-      "upgrade_trust_node":"Become TrustNode Candidate",
+      "upgrade_trust_node": "Become TrustNode Candidate",
       "subscribe": "Buy Annual Subscription",
       "expires": "expires",
       "membership_expiration": "Membership Expiration",
@@ -405,7 +405,7 @@
     "pay_from": "Pay From",
     "amount": "Amount",
     "to": "To",
-    "memo": "Memo",
+    "memo": "Memo(Tag)",
     "warn_name_unable_read_memo": "Warning: %(name)s will be unable to read this memo",
     "fee": "Fee",
     "send": "Send",
@@ -456,6 +456,23 @@
     "owner": "Owner Account",
     "new_owner": "New Owner Account",
     "contract_name": "Contract Name",
+    "fee": "Fee"
+  },
+  "trust_node_pledge_withdraw": {
+    "witness_account": "Account",
+    "fee": "Fee"
+  },
+  "inline_transfer": {
+    "from": "From",
+    "amount": "Amount",
+    "to": "To",
+    "memo": "Memo(Tag)",
+    "fee": "Fee"
+  },
+  "inter_contract_call": {
+    "sender_contract": "Account",
+    "contract_name": "Contract Name",
+    "method_name": "Method Name",
     "fee": "Fee"
   },
   "operation": {
@@ -513,12 +530,15 @@
     "account_upgrade_data_transaction_member": "{account} was upgraded to data transaction confirm node",
     "data_transaction_datasource_upload": "{account} confirmed an data upload from {datasource}",
     "data_transaction_datasource_validate_error": "{account} returned an error when processing the data upload",
-    "balance_lock":"{account} locked {amount} for loyalty program",
-    "balance_unlock":"{account} complete a loyalty program",
+    "balance_lock": "{account} locked {amount} for loyalty program",
+    "balance_unlock": "{account} complete a loyalty program",
     "proxy_transfer": "{from} sent {amount} to {to} delegated by {account}",
     "create_contract": "{account} created the contract {contract_name}",
     "call_contract": "{account} call the contract {contract_name} 's {method_name} method",
-    "update_contract": "{account} updated the contract {contract_name}"
+    "update_contract": "{account} updated the contract {contract_name}",
+    "trust_node_pledge_withdraw": "{account} withdrew trustnode margin",
+    "inline_transfer": "contract account {from} sent {amount} to {to} with memo {memo}",
+    "inter_contract_call": "contract {account} call the contract {contract_name} {method_name} method"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -530,7 +550,6 @@
     "expires": "Expires",
     "update_account": "Update account data for {account}",
     "status": "Status",
-
     "asset_settle": "Request a settlement of",
     "update": {
       "active_approvals_to_add": "Active approvals to add",
@@ -687,12 +706,15 @@
       "account_upgrade_data_transaction_member": "Upgrade to DE witness",
       "data_transaction_datasource_upload": "Copyright stored",
       "data_transaction_datasource_validate_error": "Data transaction fail",
-      "balance_lock":"Balance Lock",
-      "balance_unlock":"Balance Unlock",
+      "balance_lock": "Balance Lock",
+      "balance_unlock": "Balance Unlock",
       "proxy_transfer": "Proxy Transfer",
       "create_contract": "Create Contract",
       "call_contract": "Call Contract",
-      "update_contract": "Update Contract"
+      "update_contract": "Update Contract",
+      "trust_node_pledge_withdraw": "TrustNode margin Withdraw",
+      "inline_transfer": "Inline Transfer",
+      "inter_contract_call": "Inter Contract Call"
     },
     "trxOps": {
       "data_transaction_create": {
@@ -1271,7 +1293,7 @@
       "cancel": "No"
     },
     "ok": "OK",
-    "cancel":"Cancel"
+    "cancel": "Cancel"
   },
   "init_error": {
     "title": "Application initialization issues",
@@ -1369,23 +1391,23 @@
     "days": "%(day)s Days",
     "term": "Lockup Term",
     "yearly_bonus": "Annualized Bonus",
-    "start_date":"Start Date",
+    "start_date": "Start Date",
     "due_date": "Due Date",
     "lock_amount": "Lockup Amount",
     "bonus": "Bonus earned on due date",
     "button_title": "Earn %(percent)s by joining our Loyalty Program",
     "notice": "The amount subscribed to the Loyalty Program will be locked up and unable to sell. This operation is irrevocable. Are you sure to join the program?",
-    "no_program":"No available loyalty program at this time",
-    "time_error":"Failed to join Loyalty Program, please retry:",
-    "success":"Congratulations! Join successfully",
-    "id":"Lock ID",
-    "unlock":"Unlock",
-    "unlock_account":"Unlock Account",
-    "no_balances":"No Locked Balances",
-    "locking":"Locking",
-    "status":"Status"
+    "no_program": "No available loyalty program at this time",
+    "time_error": "Failed to join Loyalty Program, please retry:",
+    "success": "Congratulations! Join successfully",
+    "id": "Lock ID",
+    "unlock": "Unlock",
+    "unlock_account": "Unlock Account",
+    "no_balances": "No Locked Balances",
+    "locking": "Locking",
+    "status": "Status"
   },
-  "testnet":{
-    "apply_coin":"Apply GXC"
+  "testnet": {
+    "apply_coin": "Apply GXC"
   }
 }

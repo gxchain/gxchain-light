@@ -1138,6 +1138,60 @@ class Operation extends React.Component {
 
                 break;
 
+            case "trust_node_pledge_withdraw":
+
+                color = "success";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.trust_node_pledge_withdraw"
+                            keys={[
+                                {type: "account", value: op[1].witness_account, arg: "account"},
+                                {type: "amount", value: op[1].fee, arg: "fee"},
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+
+            case "inline_transfer":
+
+                color = "cancel";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.inline_transfer"
+                            keys={[
+                                {type: "account", value: op[1].from, arg: "from"},
+                                {type: "amount", value: op[1].amount, arg: "amount"},
+                                {type: "account", value: op[1].to, arg: "to"},
+                                {type: "", value: op[1].memo, arg: "memo"},
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+
+            case "inter_contract_call":
+
+                color = "cancel";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.inter_contract_call"
+                            keys={[
+                                {type: "account", value: op[1].sender_contract, arg: "sender_contract"},
+                                {type: "account", value: op[1].contract_id, arg: "contract_name"},
+                                {type: "", value: op[1].method_name, arg: "method_name"},
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+
             default:
                 console.log("unimplemented op:", op);
                 column = (
