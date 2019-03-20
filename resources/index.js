@@ -9,7 +9,7 @@
     var devHelper = require('./dev_helper');
     var windowStateKeeper = require('./window_state');
     var fs = require('fs');
-    var autoUpdater =  require('electron-updater').autoUpdater;
+    var autoUpdater = require('electron-updater').autoUpdater;
 
     var mainWindow;
 
@@ -114,50 +114,49 @@
         app.quit();
     });
 
-    autoUpdater.on('update-downloaded', function(info) {
-        createUpdateWindow(info)
-    })
+    autoUpdater.on('update-downloaded', function (info) {
+        createUpdateWindow(info);
+    });
 
-    app.on("ready",function () {
+    app.on("ready", function () {
         autoUpdater.checkForUpdates();
-        setTimeout(function () {
-            createUpdateWindow({
-                message:`<div class="markdown-body">
-    <p>zh-CN:<br>
-1.更新logo<br>
-2.发布正式版本v1.0.0</p>
-<p>en-US:<br>
-1.Update logo<br>
-2.Release official version v1.0.0</p>
-  </div>`,
-                version:"1.3.1"
-            })
-        },3000)
+//         setTimeout(function () {
+//             createUpdateWindow({
+//                 message:`<div class="markdown-body">
+//     <p>zh-CN:<br>
+// 1.更新logo<br>
+// 2.发布正式版本v1.0.0</p>
+// <p>en-US:<br>
+// 1.Update logo<br>
+// 2.Release official version v1.0.0</p>
+//   </div>`,
+//                 version:"1.3.1"
+//             })
+//         },3000)
 
-
-    })
+    });
 
     function createUpdateWindow(info = {}) {
-         var updateWindow = new BrowserWindow({
+        var updateWindow = new BrowserWindow({
             height: 500,
             width: 700,
             resizable: false,
             show: false
-        })
+        });
 
-        updateWindow.once('ready-to-show', function(){
-            updateWindow.show()
-            updateWindow.webContents.send('releaseNoteGet', info)
-        })
+        updateWindow.once('ready-to-show', function () {
+            updateWindow.show();
+            updateWindow.webContents.send('releaseNoteGet', info);
+        });
 
         // for windows & linux
-        updateWindow.setMenu(null)
+        updateWindow.setMenu(null);
 
-        updateWindow.loadURL('file://' + __dirname + '/update.html')
+        updateWindow.loadURL('file://' + __dirname + '/update.html');
 
         ipcMain.on('quitAndInstall', () => {
-            autoUpdater.quitAndInstall()
-        })
+            autoUpdater.quitAndInstall();
+        });
     }
 
 })();

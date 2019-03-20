@@ -17,8 +17,5 @@ deploy
 .sass-cache
 
 *.tar.gz
-deploy/*
-releases/*
-electron/*
-!releases/*.gitkeep
-!electron/*.gitkeep
+releases
+electron

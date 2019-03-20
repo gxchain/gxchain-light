@@ -265,7 +265,6 @@ module.exports = function (env) {
         },
         plugins: plugins
     };
-
     // if(isProd) config.entry.vendors = [
     //     "classnames", "react-router", "highcharts/highstock", "counterpart", "react-translate-component",
     //     "perfect-scrollbar", "jdenticon", "react-notification-system", "react-tooltip",

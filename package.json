@@ -1,10 +1,10 @@
 {
   "name": "GXChain-light",
   "version": "1.3.0",
-  "description": "Advanced wallet interface for the GXB financial blockchain.",
-  "homepage": "https://github.com/gxchain/gxb-ui",
+  "description": "Advanced wallet interface for the GXChain.",
+  "homepage": "https://github.com/gxchain/gxchain-light",
   "author": [
-    "GXB, Inc",
+    "GXChain Team",
     "Cryptonomex, Inc.",
     "Sigve Kvalsvik, Kvalsvik Crypto",
     "David Lan"
@@ -28,12 +28,11 @@
     "build-test": "NODE_ENV=production webpack  --env.hash --env.test --progress --display-error-details --colors",
     "build-hash": "NODE_ENV=production webpack --env.prod --env.hash --env.baseUrl='' --progress --display-error-details --colors",
     "build-github": "NODE_ENV=production webpack --env.prod --env.hash --env.baseUrl='/wallet/' --progress --display-error-details --colors",
-    "preelectron": "del 'electron/*' 'releases/*' '!.gitkeep'",
     "electron": "NODE_ENV=production webpack --env.prod --env.electron --env.hash --progress --display-error-details --colors ",
     "electron-nougly": "NODE_ENV=production webpack --env.prod --env.electron --env.noUgly --env.hash --progress --display-error-details --colors",
-    "prepack": "copyfiles -a -f resources/* electron/",
-    "pack": "electron-builder -mwl",
-    "testelectron": "electron electron/"
+    "postelectron": "del releases/*; copyfiles -a -f resources/* electron/; electron-builder --mac",
+    "packe": "webpack --config webpack.electron.config.js",
+    "test": "electron electron/"
   },
   "dependencies": {
     "alt": "^0.18.6",
@@ -105,6 +104,7 @@
     "copyfiles": "^2.1.0",
     "css-loader": "^0.22.0",
     "del-cli": "^1.1.0",
+    "electron": "^4.1.0",
     "electron-builder": "^20.39.0",
     "electron-updater": "^4.0.6",
     "es6-promise": "^3.0.2",
@@ -138,12 +138,12 @@
     "webpack-hot-middleware": "^2.14.0",
     "worker-loader": "^0.7.1"
   },
-  "main": "./electron/index.js",
+  "main": "./electron/electron.js",
   "build": {
     "productName": "gxchain-light",
     "appId": "gxb.io",
     "directories": {
-      "output": "../electron/releases"
+      "output": "./releases"
     },
     "files": [
       "./electron/**/*"
@@ -157,21 +157,21 @@
       "contents": [
         {
           "x": 410,
-          "y": 150,
+          "y": 190,
           "type": "link",
+          "name": "gxb-light",
           "path": "/Applications"
         },
         {
           "x": 130,
-          "y": 150,
+          "y": 190,
           "type": "file"
         }
       ]
     },
     "mac": {
       "icon": "resources/icons/icon.icns",
-      "category": "public.app-category.utilities",
-      "identity": null
+      "category": "public.app-category.utilities"
     },
     "win": {
       "icon": "resources/icons/icon.ico",
