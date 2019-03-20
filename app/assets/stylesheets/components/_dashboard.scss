@@ -1,0 +1,130 @@
+.Dashboard__intro-text {
+    padding: 20px;
+
+    > p:nth-of-type(2) {
+        padding-bottom: 1.25rem;
+    }
+}
+
+.SimpleTrade__modal {
+    overflow: auto;
+    .Modal__header {
+        padding: 20px 2rem;
+    }
+    .Modal__divider {
+        margin: 0px;
+    }
+    .SimpleTrade__hide-zero {
+        position: relative;
+        top: -3px;
+        cursor: pointer;
+    }
+    .SimpleTrade__withdraw-row {
+        padding: 10px 0;
+    }
+}
+
+.balance-row.active {
+    background-color: #3C3C3C;
+}
+
+.balance-row:hover {
+    background-color: #3C3C3C;
+}
+
+.balance-row {
+    margin-left: -10px;
+    margin-right: -10px;
+    padding: 10px 20px;
+}
+
+.balance-row:hover {
+    cursor: pointer;
+}
+
+.SimpleTrade__help-text {
+    font-style: italic;
+    padding-top: 5px;
+    font-size: 95%;
+}
+
+#simple_transfer_modal {
+    max-width: 650px;
+}
+
+#simple_transfer_modal,
+#simple_deposit_modal,
+#simple_deposit_modal_ask,
+#simple_withdraw_modal {
+    padding: 0;
+}
+
+#simple_deposit_modal,
+#simple_deposit_modal_ask,
+#simple_withdraw_modal {
+    overflow: auto !important;
+    max-width: 500px;
+}
+
+#simple_deposit_modal label,
+#simple_deposit_modal_ask label,
+#simple_withdraw_modal label {
+    text-transform: none !important;
+}
+
+#simple_buy_modal,
+#simple_sell_modal {
+    overflow: auto !important;
+    padding: 0;
+}
+
+#dashboard{
+    svg{
+        width:100%;
+        *{
+            stroke-width: .3px;
+        }
+
+    }
+    .left{
+        .grid-block{
+            position: relative;
+        }
+        .mask{
+            position: absolute;
+            background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0));
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            z-index:2;
+        }
+    }
+    .right{
+        transition: all .5s ease .1s;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width:0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        .right-wrapper{
+            margin-top:-3rem;
+            height:auto;
+            text-align: center;
+            .slogan{
+                width:50%;
+            }
+            .buttons{
+                width:300px;
+                margin:6rem auto 0 auto;
+                .button{
+                    width:100%;
+                    margin:0;
+                }
+            }
+        }
+    }
+
+}

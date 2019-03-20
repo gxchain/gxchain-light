@@ -1,0 +1,35 @@
+@import "account";
+@import "cards";
+@import "console";
+@import "existing_accounts";
+@import "footer";
+@import "forms";
+@import "header";
+@import "loading-indicator";
+@import "pagination";
+@import "tables";
+@import "wallet";
+@import "chatbox";
+@import "dashboard";
+@import "settings";
+@import "account-create";
+@import "member_stats";
+@import "data_market";
+@import "merchant_verify";
+@import "data_source_verify";
+@import "deposite-withdraw";
+@import "loyalty_program";
+@import "witnesses";
+@import "pager";
+@import "code";
+@import "prod_card";
+
+.lifetime {
+    background: url("../fresh-bolt2.png") no-repeat 100% 50%;
+    background-size: auto 80%;
+    padding-right: 0.75rem;
+}
+
+.bottom-border {
+    border-bottom: 1px solid #444;
+}
