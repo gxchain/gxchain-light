@@ -781,7 +781,7 @@
     "restore_default_success":"Настройки были успешно изменены"
   },
   "footer":{
-    "title":"BitShares",
+    "title":"GXChain Light",
     "block":"Начальный блок",
     "loading":"Загрузка...",
     "backup":"Необходима резервная копия",

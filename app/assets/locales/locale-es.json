@@ -520,7 +520,7 @@
     "restore_default_success": "Settings have been reset successfully"
   },
   "footer": {
-    "title": "BitShares",
+    "title": "GXChain Light",
     "block": "Bloque de cabecera",
     "loading": "Cargando..."
   },

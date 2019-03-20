@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <title>Software Update</title>
+    <script>
+        var electron = require('electron');
+
+        var onLaterClick = function () {
+            var win = electron.remote.getCurrentWindow();
+            win.close();
+        };
+        var onInstallClick = function () {
+            electron.ipcRenderer.send('quitAndInstall');
+        };
+    </script>
+    <style>
+        html, body {
+            overflow: hidden;
+            margin: 0;
+            height: 100%;
+        }
+
+        *, *::after, *::before {
+            -webkit-user-select: none;
+        }
+
+        p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        #app {
+            height: 100%;
+            padding: 20px 20px 20px 100px;
+            background: rgb(236, 236, 236);
+            font-size: 14px;
+        }
+
+        .logo {
+            position: absolute;
+            left: 22px;
+            top: 22px;
+            width: 60px;
+            height: 60px;
+            background: url(./logo.png);
+            background-size: cover;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .detail-label {
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .detail-cnt {
+            height: 320px;
+            padding: 10px 8px;
+            overflow: auto;
+            overflow-x: hidden;
+            word-break: break-word;
+            background: white;
+            border: 1px solid #bfbbbb;
+        }
+
+        .btn-wrap {
+            float: right;
+            margin-top: 12px;
+        }
+
+        button {
+            padding: 4px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+            box-shadow: none;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .installBtn {
+            background: #2d8cf0;
+            color: white;
+        }
+
+        .laterBtn {
+            margin-right: 10px;
+            background: rgb(192, 192, 192);
+        }
+
+        p {
+            margin: 0;
+            margin-top: 7px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="logo"></div>
+    <h1 class="title" id="title"></h1>
+    <p class="desc"><span id="version"></span> <span id="desc"></span></p>
+    <p class="detail-label" id="detailLabel"></p>
+    <div class="detail-cnt" id="releaseNotes"></div>
+    <div class="btn-wrap">
+        <button class="laterBtn" id="btnLater" onclick="onLaterClick()"></button>
+        <button class="installBtn" id="btnInstall" onclick="onInstallClick()"></button>
+    </div>
+</div>
+<script type=text/javascript src=update.js></script>
+</body>
+</html>

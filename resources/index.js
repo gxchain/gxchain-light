@@ -2,13 +2,14 @@
     'use strict';
 
     var app = require('electron').app;
+    var ipcMain = require('electron').ipcMain;
     var BrowserWindow = require('electron').BrowserWindow;
     var Menu = require("electron").Menu;
     var env = require('./env_config');
     var devHelper = require('./dev_helper');
     var windowStateKeeper = require('./window_state');
     var fs = require('fs');
-    // var git = require("git-rev-sync");
+    var autoUpdater =  require('electron-updater').autoUpdater;
 
     var mainWindow;
 
@@ -44,7 +45,7 @@
             mainWindowState.saveState(mainWindow);
         });
 
-        mainWindow.webContents.on('new-window', function(e, url) {
+        mainWindow.webContents.on('new-window', function (e, url) {
             e.preventDefault();
             require('electron').shell.openExternal(url);
         });
@@ -52,21 +53,29 @@
         // Create the Application's main menu
 
         var app_menu = process.platform === 'darwin' ?
-        {
-            label: "Application",
-            submenu: [
-                {label: "About Application", selector: "orderFrontStandardAboutPanel:"},
-                {type: "separator"},
-                {label: "Quit", accelerator: "Command+Q", click: function () { app.quit(); }}
-            ]
-        }
+            {
+                label: "Application",
+                submenu: [
+                    {label: "About Application", selector: "orderFrontStandardAboutPanel:"},
+                    {type: "separator"},
+                    {
+                        label: "Quit", accelerator: "Command+Q", click: function () {
+                            app.quit();
+                        }
+                    }
+                ]
+            }
             :
-        {
-            label: "File",
-            submenu: [
-                {label: "Quit", accelerator: "Command+Q", click: function () { app.quit(); }}
-            ]
-        }
+            {
+                label: "File",
+                submenu: [
+                    {
+                        label: "Quit", accelerator: "Command+Q", click: function () {
+                            app.quit();
+                        }
+                    }
+                ]
+            };
 
         var template = [app_menu, {
             label: "Edit",
@@ -104,6 +113,52 @@
     app.on('window-all-closed', function () {
         app.quit();
     });
+
+    autoUpdater.on('update-downloaded', function(info) {
+        createUpdateWindow(info)
+    })
+
+    app.on("ready",function () {
+        autoUpdater.checkForUpdates();
+        setTimeout(function () {
+            createUpdateWindow({
+                message:`<div class="markdown-body">
+    <p>zh-CN:<br>
+1.更新logo<br>
+2.发布正式版本v1.0.0</p>
+<p>en-US:<br>
+1.Update logo<br>
+2.Release official version v1.0.0</p>
+  </div>`,
+                version:"1.3.1"
+            })
+        },3000)
+
+
+    })
+
+    function createUpdateWindow(info = {}) {
+         var updateWindow = new BrowserWindow({
+            height: 500,
+            width: 700,
+            resizable: false,
+            show: false
+        })
+
+        updateWindow.once('ready-to-show', function(){
+            updateWindow.show()
+            updateWindow.webContents.send('releaseNoteGet', info)
+        })
+
+        // for windows & linux
+        updateWindow.setMenu(null)
+
+        updateWindow.loadURL('file://' + __dirname + '/update.html')
+
+        ipcMain.on('quitAndInstall', () => {
+            autoUpdater.quitAndInstall()
+        })
+    }
 
 })();
 //# sourceMappingURL=background.js.map

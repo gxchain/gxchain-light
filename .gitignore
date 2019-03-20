@@ -3,21 +3,22 @@
 
 node_modules
 npm-debug.log
-cli/bundle
+
 *.map
 *.log
 
 dist
 app/components/Exchange/exchange.css
-cli/bundle.js
+
 dist-prod
 
 hash-history
 deploy
 .sass-cache
 
-test/MarketClasses.js
 *.tar.gz
 deploy/*
 releases/*
 electron/*
+!releases/*.gitkeep
+!electron/*.gitkeep

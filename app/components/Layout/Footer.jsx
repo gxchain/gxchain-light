@@ -46,8 +46,7 @@ class Footer extends React.Component {
         // console.log("block_time", block_time)
         let bt = (new Date(block_time).getTime() + ChainStore.getEstimatedChainTimeOffset()) / 1000;
         let now = new Date().getTime() / 1000;
-        let versions = APP_VERSION.split('.');
-        let version = versions[versions.length - 1];
+        let version = APP_VERSION;
 
         let tip = '';
         if (__TEST__) {
@@ -62,7 +61,7 @@ class Footer extends React.Component {
                 <div className="align-justify grid-block">
                     <div className="grid-block">
                         <div className="logo">
-                            <Translate content="footer.title"/><span className="version">{version}</span>
+                            <Translate content="footer.title"/>-<span className="version">{version}</span>
                             {tip}
                         </div>
                     </div>

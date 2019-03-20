@@ -2,7 +2,8 @@ var path = require("path");
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var Clean = require("clean-webpack-plugin");
-var git = require("git-rev-sync");
+// var git = require("git-rev-sync");
+var version = process.env.npm_package_version;
 require("es6-promise").polyfill();
 
 // BASE APP DIR
@@ -53,7 +54,7 @@ module.exports = function (env) {
     var plugins = [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
-            APP_VERSION: JSON.stringify(git.tag()),
+            APP_VERSION: JSON.stringify(version),
             __ELECTRON__: !!env.electron,
             __HASH_HISTORY__: !!env.hash,
             __BASE_URL__: JSON.stringify("baseUrl" in env ? env.baseUrl : "/"),
@@ -64,9 +65,9 @@ module.exports = function (env) {
     // test environment
     plugins.push(new webpack.DefinePlugin({
         __TEST__: !!env.test
-    }))
+    }));
 
-    var isProd = env.prod || env.test || env.testnet
+    var isProd = env.prod || env.test || env.testnet;
 
     if (isProd) {
         // PROD OUTPUT PATH
@@ -196,7 +197,7 @@ module.exports = function (env) {
                 },
                 {
                     test: /\.png$/,
-                    exclude: [path.resolve(root_dir, "app/assets/asset-symbols"),path.resolve(root_dir, "app/assets/language-dropdown/img")],
+                    exclude: [path.resolve(root_dir, "app/assets/asset-symbols"), path.resolve(root_dir, "app/assets/language-dropdown/img")],
                     use: [
                         {
                             loader: "url-loader",

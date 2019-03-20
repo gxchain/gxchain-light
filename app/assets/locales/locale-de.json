@@ -640,7 +640,7 @@
     "restore_default_success": "Settings have been reset successfully"
   },
   "footer": {
-    "title": "BitShares",
+    "title": "GXChain Light",
     "block": "Spitzenblock",
     "loading": "Lade..."
   },

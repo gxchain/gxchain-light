@@ -7,7 +7,7 @@ import AccountRefsStore from "stores/AccountRefsStore";
 import WalletManagerStore from "stores/WalletManagerStore";
 import WalletDb from "stores/WalletDb";
 import SettingsStore from "stores/SettingsStore";
-
+import json from '../package.json';
 import ls from "common/localStorage";
 const STORAGE_KEY = "__gxb__";
 const ss = new ls(STORAGE_KEY);
@@ -21,6 +21,9 @@ ChainStore.setDispatchFrequency(20);
 
 let connect = true;
 let connectionManager;
+
+localStorage.getItem('lang') || localStorage.setItem('lang', 'zh-CN');
+localStorage.setItem('version', json.version);
 
 const filterAndSortURLs = (count, latencies) => {
     let urls = SettingsStore.getState().defaults.apiServer

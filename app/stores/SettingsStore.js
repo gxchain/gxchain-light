@@ -85,6 +85,7 @@ class SettingsStore {
         });
 
         this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v4")));
+        this.onSwitchLocale({locale:this.getSetting('locale')});
 
         let savedDefaults = ss.get("defaults_v2", {});
         this.defaults = merge({}, defaults, savedDefaults);
@@ -248,6 +249,11 @@ class SettingsStore {
 
     onSwitchLocale({locale}) {
         this.onChangeSetting({setting: "locale", value: locale});
+        var localeMap = {
+            cn:'zh-CN',
+            en: 'en-US'
+        }
+        localStorage.setItem('locale',localeMap[locale]);
     }
 
     _getChainKey(key) {

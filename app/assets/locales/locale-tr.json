@@ -734,7 +734,7 @@
     "restore_default_success": "Settings have been reset successfully"
   },
   "footer": {
-    "title": "Bitshares",
+    "title": "GXChain Light",
     "block": "İşlenen son blok",
     "loading": "Yükleniyor...",
     "backup": "Cüzdanınızı yedekleyin",

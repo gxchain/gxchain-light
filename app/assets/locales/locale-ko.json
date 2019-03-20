@@ -521,7 +521,7 @@
     "restore_default_success": "Settings have been reset successfully"
   },
   "footer": {
-    "title": "비트쉐어 2.0",
+    "title": "GXChain Light",
     "block": "최근 블록",
     "loading": "가져오는 중..."
   },
