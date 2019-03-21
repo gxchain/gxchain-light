@@ -9,6 +9,7 @@
     var devHelper = require('./dev_helper');
     var windowStateKeeper = require('./window_state');
     var fs = require('fs');
+    var path = require('path');
     var autoUpdater = require('electron-updater').autoUpdater;
 
     var mainWindow;
@@ -19,6 +20,7 @@
         height: 800
     });
     global.guid = mainWindowState.guid;
+    global.version = JSON.parse(fs.readFileSync(path.resolve(__dirname,"../package.json"))).version;
     // global.version = JSON.stringify(git.tag());
 
     app.on('ready', function () {
@@ -120,20 +122,6 @@
 
     app.on("ready", function () {
         autoUpdater.checkForUpdates();
-//         setTimeout(function () {
-//             createUpdateWindow({
-//                 message:`<div class="markdown-body">
-//     <p>zh-CN:<br>
-// 1.更新logo<br>
-// 2.发布正式版本v1.0.0</p>
-// <p>en-US:<br>
-// 1.Update logo<br>
-// 2.Release official version v1.0.0</p>
-//   </div>`,
-//                 version:"1.3.1"
-//             })
-//         },3000)
-
     });
 
     function createUpdateWindow(info = {}) {

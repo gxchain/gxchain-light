@@ -7,9 +7,13 @@ module.exports = {
         electron: path.resolve(root_dir, "resources/index.js")
     },
     output: {
-        filename: '[name].js',
+        filename: 'index.js',
         libraryTarget: 'commonjs2',
         path: path.join(__dirname, './electron')
+    },
+    node:{
+        __dirname: false,
+        __filename: false
     },
     resolve: {
         modules: ["node_modules", path.resolve(__dirname, './resources')],
