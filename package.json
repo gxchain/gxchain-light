@@ -30,7 +30,7 @@
     "build-github": "NODE_ENV=production webpack --env.prod --env.hash --env.baseUrl='/wallet/' --progress --display-error-details --colors",
     "electron": "NODE_ENV=production webpack --env.prod --env.electron --env.hash --progress --display-error-details --colors ",
     "electron-nougly": "NODE_ENV=production webpack --env.prod --env.electron --env.noUgly --env.hash --progress --display-error-details --colors",
-    "postelectron": "del releases/*; copyfiles -a -f resources/* electron/; npm run packe; electron-builder --mac --dir",
+    "postelectron": "del releases/*; copyfiles -a -f resources/* electron/; npm run packe; electron-builder -mwl",
     "packe": "webpack --config webpack.electron.config.js",
     "test": "electron electron/"
   },
