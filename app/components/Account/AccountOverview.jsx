@@ -12,6 +12,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import utils from "common/utils";
 import GXBLoyaltyPlanModal from '../Modal/GXBLoyaltyPlanModal';
 import AccountImage from "./AccountImage";
+import {Apis} from "gxbjs-ws";
 
 let logos = {
     "1.3.0": require('assets/logo-gxc.png'),
@@ -94,6 +95,8 @@ class AccountOverview extends React.Component {
                     id: balance.balance_id, owner: account.get('id'), asset_type: balance.asset_type, balance: "0"
                 });
             }
+            let chainID = Apis.instance().chain_id;
+            let isTestNet = chainID === 'c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4';
             let asset_type = balanceObject.get("asset_type");
             let asset = ChainStore.getObject(asset_type);
 
@@ -126,10 +129,11 @@ class AccountOverview extends React.Component {
                                     <img className="align-center" style={{width: '3rem', height: '3rem'}}
                                          src={`${logos[asset.get('id')]}`}></img> :
                                     <AccountImage size={{width: 35, height: 35}} account={asset.get('symbol')}/>}
-                                {/*{asset_type == '1.3.1' && this.props.isMyAccount ?*/}
-                                    {/*<a target="_blank" className="btn-testnet-apply-gxc" href={`https://testnet.gxchain.org/gxc/get_token?${account.get('name')}`}>*/}
-                                        {/*<Translate content="testnet.apply_coin"/>*/}
-                                    {/*</a> : null}*/}
+                                {isTestNet && asset_type == '1.3.1' && this.props.isMyAccount ?
+                                    <a target="_blank" className="btn-testnet-apply-gxc"
+                                       href={`https://testnet.gxchain.org/gxc/get_token?${account.get('name')}`}>
+                                        <Translate content="testnet.apply_coin"/>
+                                    </a> : null}
                             </div>
                             {programs && asset_type == '1.3.1' && this.props.isMyAccount ?
                                 <a onClick={this.showLoyaltyPlanModal.bind(this, balanceObject)}
