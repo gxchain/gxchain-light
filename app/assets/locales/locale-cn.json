@@ -32,7 +32,7 @@
     "total_invokes": "累计"
   },
   "header": {
-    "title": "GXB (公信宝)钱包",
+    "title": "GXChain (公信宝)钱包",
     "account": "账户",
     "data_market": "数据市场",
     "dashboard": "概览",
@@ -92,7 +92,7 @@
     "in_open_value": "这是您交易委托中资产的等价值:%(asset)s.",
     "total_estimate": "这是根据您所有资产(包括隐藏资产,交易委托,负债,抵押物)估值,此估值根据在线BlockChain数据计算,并不完全准确.",
     "trade": "交易",
-    "welcome": "欢迎使用 GXB (公信宝)数据交易系统",
+    "welcome": "欢迎使用 GXChain 网页钱包",
     "market_value": "市值",
     "transfer_actions": "转账操作",
     "market_actions": "市场操作",
