@@ -139,11 +139,10 @@ class Transfer extends React.Component {
         let asset = this.state.asset;
         let precision = utils.get_asset_precision(asset.get("precision"));
         let amount = this.state.amount.replace(/,/g, "");
-
         AccountActions.transfer(
             this.state.from_account.get("id"),
             this.state.to_account.get("id"),
-            parseInt(amount * precision, 10),
+            utils.accMult(amount, Math.pow(10, asset.get("precision"))),
             asset.get("id"),
             this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
             this.state.propose ? this.state.propose_account : null,
