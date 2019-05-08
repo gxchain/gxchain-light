@@ -1,8 +1,8 @@
 # Fees
 
-In the GXB ecosystem every operation is assigned an *individual* fee.
+In the GXChain ecosystem every operation is assigned an *individual* fee.
 These fees are subject to change. However, they are defined solely by
-shareholder approval, thus each and every shareholder of the GXB core
+shareholder approval, thus each and every shareholder of the GXChain core
 asset has a say as to what the fees should be. If shareholders can be
 convinced to reduce a certain fee and consensus is reached, the fee will be
 reduced automatically by the blockchain. Changes of blockchain parameters are
