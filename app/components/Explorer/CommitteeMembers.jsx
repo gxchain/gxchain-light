@@ -68,7 +68,7 @@ class CommitteeMemberRow extends React.Component {
 
     render() {
         let {committee_member, rank} = this.props;
-        let committee_member_data = ChainStore.getCommitteeMemberById( committee_member.get("id") )
+        let committee_member_data = ChainStore.getWitnessById( committee_member.get("id") )
         if ( !committee_member_data ) return null;
         let total_votes = committee_member_data.get( "total_votes" );
 
@@ -80,7 +80,7 @@ class CommitteeMemberRow extends React.Component {
             <tr>
                 <td onClick={this._onRowClick.bind(this)}>{rank}</td>
                 <td onClick={this._onRowClick.bind(this)}>{committee_member.get("name")}</td>
-                <td onClick={this._onRowClick.bind(this)}>{committee_member_data.get('total_votes')}</td>
+                <td onClick={this._onRowClick.bind(this)}><FormattedAsset decimalOffset={5} amount={committee_member_data.get("total_votes")} asset={"1.3.1"}/></td>
                 <td><a href={url} target="_blank">{committee_member_data.get("url")}</a></td>
             </tr>
         )
