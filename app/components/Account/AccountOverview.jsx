@@ -15,15 +15,6 @@ import AccountImage from "./AccountImage";
 import {Apis} from "gxbjs-ws";
 
 let logos = {
-    "GXC": "https://static.gxb.io/gxs/symbols/gxs.png",
-    "BDB": "https://static.gxb.io/gxs/symbols/bdb.png",
-    "BLOCK": "https://static.gxb.io/gxs/symbols/block.png",
-    "DAMO": "https://static.gxb.io/gxs/symbols/damo.png",
-    "DIN": "https://static.gxb.io/gxs/symbols/din.png",
-    "LUCIA": "https://static.gxb.io/gxs/symbols/lucia.png",
-    "DIN": "https://static.gxb.io/gxs/symbols/din.png",
-    "LVCOIN": "https://static.gxb.io/gxs/symbols/lvcoin.png",
-    "PPS": "https://static.gxb.io/gxs/symbols/pps.png"
 };
 
 class AccountOverview extends React.Component {
@@ -314,7 +305,23 @@ class BalanceWrapper extends React.Component {
     };
 
     componentWillMount() {
-
+        fetch("//static.gxb.io/gxs/symbols/maps.json", {
+            method: "get",
+            mode: "cors",
+            headers: {
+                "Accept": "application/json"
+            }
+        }).then(response =>
+            response.json().then(json => ({ json, response }))
+        ).then(({ json, response }) => {
+            if (!response.ok) {
+                console.error(json);
+            } else {
+                logos = json;
+            }
+        }).catch((ex) => {
+            console.error(ex);
+        });
     }
 
     render() {
