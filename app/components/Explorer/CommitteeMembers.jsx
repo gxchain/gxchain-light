@@ -80,8 +80,7 @@ class CommitteeMemberRow extends React.Component {
             <tr>
                 <td onClick={this._onRowClick.bind(this)}>{rank}</td>
                 <td onClick={this._onRowClick.bind(this)}>{committee_member.get("name")}</td>
-                <td onClick={this._onRowClick.bind(this)}>{committee_member_data.get('total_votes')}</td>
-                <td><a href={url} target="_blank">{committee_member_data.get("url")}</a></td>
+                <td onClick={this._onRowClick.bind(this)}><FormattedAsset decimalOffset={5} amount={committee_member_data.get("total_votes")} asset={"1.3.1"}/></td>
             </tr>
         )
     }
@@ -192,7 +191,6 @@ class CommitteeMemberList extends React.Component {
                             <th className="clickable" onClick={this._setSort.bind(this, 'rank')}><Translate content="explorer.witnesses.rank" /></th>
                             <th className="clickable" onClick={this._setSort.bind(this, 'name')}><Translate content="account.votes.name" /></th>
                             <th className="clickable" onClick={this._setSort.bind(this, 'total_votes')}><Translate content="account.votes.votes" /></th>
-                            <th ><Translate content="account.votes.url" /></th>
                         </tr>
                     </thead>
                 <tbody>

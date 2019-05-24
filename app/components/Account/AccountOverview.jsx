@@ -10,13 +10,11 @@ import {Link} from "react-router";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import utils from "common/utils";
-import GXBLoyaltyPlanModal from '../Modal/GXBLoyaltyPlanModal';
+import GXBLoyaltyPlanModal from "../Modal/GXBLoyaltyPlanModal";
 import AccountImage from "./AccountImage";
 import {Apis} from "gxbjs-ws";
 
 let logos = {
-    "1.3.0": require('assets/logo-gxc.png'),
-    "1.3.1": require('assets/logo-gxs.png')
 };
 
 class AccountOverview extends React.Component {
@@ -53,7 +51,7 @@ class AccountOverview extends React.Component {
     }
 
     showLoyaltyPlanModal(balanceObject) {
-        this.refs['gxb-loyalty-program-modal'].refs['bound_component'].show(balanceObject);
+        this.refs["gxb-loyalty-program-modal"].refs["bound_component"].show(balanceObject);
     }
 
     // _showDepositWithdraw(action, asset, fiatModal, e) {
@@ -76,10 +74,9 @@ class AccountOverview extends React.Component {
     }
 
     _renderBalances(balanceList) {
-        let {settings, account} = this.props;
-        let showAssetPercent = settings.get("showAssetPercent", false);
+        let {account} = this.props;
         let balances = [];
-        let programs = this.props.globalObject.getIn(['parameters', 'extensions']).find(function (arr) {
+        let programs = this.props.globalObject.getIn(["parameters", "extensions"]).find(function (arr) {
             return arr.toJS()[0] == 6;
         });
 
@@ -87,16 +84,16 @@ class AccountOverview extends React.Component {
 
             let balanceObject = null;
 
-            if (balance.balance_id != '2.5.-1') {
+            if (balance.balance_id != "2.5.-1") {
                 balanceObject = ChainStore.getObject(balance.balance_id);
             }
             else {
                 balanceObject = Immutable.fromJS({
-                    id: balance.balance_id, owner: account.get('id'), asset_type: balance.asset_type, balance: "0"
+                    id: balance.balance_id, owner: account.get("id"), asset_type: balance.asset_type, balance: "0"
                 });
             }
             let chainID = Apis.instance().chain_id;
-            let isTestNet = chainID === 'c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4';
+            let isTestNet = chainID === "c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4";
             let asset_type = balanceObject.get("asset_type");
             let asset = ChainStore.getObject(asset_type);
 
@@ -117,25 +114,25 @@ class AccountOverview extends React.Component {
                         content="account.asset_details"/></a></li>
                 </ul>);
 
-            const hasBalance = !!balanceObject.get("balance") && balance.balance_id != '2.5.-1';
+            const hasBalance = !!balanceObject.get("balance") && balance.balance_id != "2.5.-1";
 
             balances.push(
-                <div key={asset.get('symbol')} className="grid-content assets-card">
+                <div key={asset.get("symbol")} className="grid-content assets-card">
                     <div className="card">
-                        <h4 className="title text-center">{asset && asset.get('symbol') && utils.replaceName(asset.get('symbol')).name}</h4>
+                        <h4 className="title text-center">{asset && asset.get("symbol") && utils.replaceName(asset.get("symbol")).name}</h4>
                         <div className="card-content">
                             <div className="text-center">
-                                {logos[asset.get('id')] ?
-                                    <img className="align-center" style={{width: '3rem', height: '3rem'}}
-                                         src={`${logos[asset.get('id')]}`}></img> :
-                                    <AccountImage size={{width: 35, height: 35}} account={asset.get('symbol')}/>}
-                                {isTestNet && asset_type == '1.3.1' && this.props.isMyAccount ?
+                                {logos[asset.get("symbol")] ?
+                                    <img className="align-center" style={{width: "35px", height: "35px"}}
+                                         src={`${logos[asset.get("symbol")]}`}></img> :
+                                    <AccountImage size={{width: 35, height: 35}} account={asset.get("symbol")}/>}
+                                {isTestNet && asset_type == "1.3.1" && this.props.isMyAccount ?
                                     <a target="_blank" className="btn-testnet-apply-gxc"
-                                       href={`https://testnet.gxchain.org/gxc/get_token?${account.get('name')}`}>
+                                       href={`https://testnet.gxchain.org/gxc/get_token?${account.get("name")}`}>
                                         <Translate content="testnet.apply_coin"/>
                                     </a> : null}
                             </div>
-                            {programs && asset_type == '1.3.1' && this.props.isMyAccount ?
+                            {programs && asset_type == "1.3.1" && this.props.isMyAccount ?
                                 <a onClick={this.showLoyaltyPlanModal.bind(this, balanceObject)}
                                    className="btn-loyalty-program"><Translate
                                     content="loyalty_program.join"/></a> : null}
@@ -143,9 +140,9 @@ class AccountOverview extends React.Component {
                                 <tbody>
                                 <tr>
                                     <td><Translate content="account.asset"/></td>
-                                    <td>{hasBalance ? <BalanceComponent balance={balanceObject.get('id')}
+                                    <td>{hasBalance ? <BalanceComponent balance={balanceObject.get("id")}
                                                                         assetInfo={assetInfoLinks}/> :
-                                        <BalanceComponent amount={0} asset_type={asset.get('symbol')}
+                                        <BalanceComponent amount={0} asset_type={asset.get("symbol")}
                                                           assetInfo={assetInfoLinks}/>}</td>
                                 </tr>
                                 <tr>
@@ -220,11 +217,11 @@ class AccountOverview extends React.Component {
             return null;
         }
 
-        let includedBalances, hiddenBalances;
+        let includedBalances;
         let account_balances = account.get("balances") || new Immutable.Map();
-        if (!account_balances.has('1.3.1')) {
+        if (!account_balances.has("1.3.1")) {
             account_balances = account_balances.merge({
-                '1.3.1': '2.5.-1'
+                "1.3.1": "2.5.-1"
             });
         }
 
@@ -308,7 +305,23 @@ class BalanceWrapper extends React.Component {
     };
 
     componentWillMount() {
-
+        fetch("//static.gxb.io/gxs/symbols/maps.json?v=" + new Date().getTime(), {
+            method: "get",
+            mode: "cors",
+            headers: {
+                "Accept": "application/json"
+            }
+        }).then(response =>
+            response.json().then(json => ({ json, response }))
+        ).then(({ json, response }) => {
+            if (!response.ok) {
+                console.error(json);
+            } else {
+                logos = json;
+            }
+        }).catch((ex) => {
+            console.error(ex);
+        });
     }
 
     render() {
@@ -316,8 +329,8 @@ class BalanceWrapper extends React.Component {
             return b && b.get("asset_type");
         }).filter(b => !!b);
 
-        if (balanceAssets.indexOf('1.3.1') == -1) {
-            balanceAssets.push('1.3.1');
+        if (balanceAssets.indexOf("1.3.1") == -1) {
+            balanceAssets.push("1.3.1");
         }
 
         let ordersByAsset = this.props.orders.reduce((orders, o) => {
