@@ -305,7 +305,7 @@ class BalanceWrapper extends React.Component {
     };
 
     componentWillMount() {
-        fetch("//static.gxb.io/gxs/symbols/maps.json", {
+        fetch("//static.gxb.io/gxs/symbols/maps.json?v=" + new Date().getTime(), {
             method: "get",
             mode: "cors",
             headers: {
