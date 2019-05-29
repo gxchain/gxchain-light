@@ -145,6 +145,26 @@ class AccountActions {
         return WalletDb.process_transaction(tr, null, true);
     }
 
+    upgradeTrustNode2(witness_id, account_id, block_signing_key, url) {
+
+        let witness_update_fee = accountUtils.getFinalFeeAsset(account_id, "witness_update");
+
+        var tr = wallet_api.new_transaction();
+           
+        tr.add_type_operation("witness_update", {
+            "fee": {
+                amount: 0,
+                asset_id: witness_update_fee
+            },
+            witness: witness_id,
+            witness_account: account_id,
+            new_url: url,
+            new_signing_key: block_signing_key
+        });
+        
+        return WalletDb.process_transaction(tr, null, true);
+    }
+
     joinLoyaltyProgram(program_id, account_id, amount, rate, lock_days, memo = '') {
         return new Promise((resolve, reject) => {
             WalletUnlockActions.unlock().then(function () {

@@ -24,8 +24,21 @@ class GXBAccountMembership extends React.Component {
         this.state = {
             isCommittee: -1,
             isWitness: -1,
-            witness_id: ''
+            witness_id: '',
+            url: '',
+            signing_key: '',
         };
+    }
+
+    handelChange(e){
+        this.setState({
+            url: e.target.value
+        })
+    }
+    handelChangeSigningkey(e){
+        this.setState({
+            signing_key: e.target.value
+        })
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -52,7 +65,9 @@ class GXBAccountMembership extends React.Component {
                 this.setState({
                     witness_id: results[0] && results[0].get('id'),
                     isWitness: !!results[0],
-                    isCommittee: !!results[1]
+                    isCommittee: !!results[1],
+                    url: results[0] && results[0].get('url'),
+                    signing_key: results[0] && results[0].get('signing_key'),
                 });
             });
         }
@@ -80,7 +95,6 @@ class GXBAccountMembership extends React.Component {
         let membership = "account.member." + member_status;
         let network_fee = account.network_fee_percentage / 100;
         let lifetime_cost = gprops.getIn(["parameters", "current_fees", "parameters", 8, 1, "membership_lifetime_fee"]) * gprops.getIn(["parameters", "current_fees", "scale"]) / 10000;
-
         return (
             <div className="grid-content" style={{overflowX: "hidden"}}>
                 <div className="content-block">
@@ -102,11 +116,30 @@ class GXBAccountMembership extends React.Component {
                         </div>
                     )}
                     <br/>
+                    
                     {this.state.isWitness == 1 && this.state.isCommittee == 1 ?
                         <div>
                             <Translate content="account.member.trust_node_candidate"/>
                             &nbsp;{this.state.witness_id}
-                        </div> :
+                            
+                            <hr/>
+                            <div>
+                                <label>url</label> 
+                                
+                                <input type="text" onChange={this.handelChange.bind(this)} defaultValue={this.state.url}  />
+
+                                <label>signing_key</label> 
+
+                                <input type="text" onChange={this.handelChangeSigningkey.bind(this)} defaultValue={this.state.signing_key}/>
+
+                                <button className="button" onClick={this.upgradeTrustNode2.bind(this, this.state.witness_id, account, this.state.url, this.state.signing_key)}>
+                                    <Translate content="wallet.submit" /> 
+                                </button>
+                            </div>
+                                
+                        </div> 
+
+                        :
                         !(isMyAccount && member_status === "lifetime" && this.state.isWitness > -1 && this.state.isWitness > -1) ? null :
                             <div>
                                 <div className="large-6 medium-8">
@@ -131,6 +164,13 @@ class GXBAccountMembership extends React.Component {
         e.preventDefault();
         AccountActions.upgradeTrustNode(account.id, account.active.key_auths[0][0], url, !this.state.isCommittee, !this.state.isWitness);
     }
+
+    upgradeTrustNode2(witness_id, account, url, signing_key, e) {
+        e.preventDefault();
+        AccountActions.upgradeTrustNode2(witness_id, account.id, signing_key, url);
+    }
+
+
 }
 
 GXBAccountMembership = BindToChainState(GXBAccountMembership);
