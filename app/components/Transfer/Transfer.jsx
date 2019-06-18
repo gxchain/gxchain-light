@@ -188,7 +188,7 @@ class Transfer extends React.Component {
             if (asset) {
                 let base_asset_id = asset.getIn(["options", "core_exchange_rate", 'base', 'asset_id']);
                 let quote_asset_id = asset.getIn(["options", "core_exchange_rate", 'quote', 'asset_id']);
-                if (base_asset_id !== '1.3.1' || quote_asset_id !== '1.3.1') {
+                if (base_asset_id !== '1.3.1' && quote_asset_id !== '1.3.1') {
                     fee_asset_types.splice(fee_asset_types.indexOf(key), 1);
                     continue;
                 }
@@ -289,6 +289,8 @@ class Transfer extends React.Component {
         accountsList = accountsList.add(from_account);
         let tabIndex = 1;
 
+        let current_fee_asset = fee_asset_types.length && feeAsset ? feeAsset.get("id") : (fee_asset_types.length === 1 ? fee_asset_types[0] : fee_asset_id ? fee_asset_id : fee_asset_types[0]);
+
         return (
             <div className="grid-block vertical">
                 <div className="grid-block shrink vertical medium-horizontal" style={{paddingTop: "2rem"}}>
@@ -361,7 +363,7 @@ class Transfer extends React.Component {
                                 disabled={true}
                                 amount={fee}
                                 onChange={this.onFeeChanged.bind(this)}
-                                asset={fee_asset_types.length && feeAsset ? feeAsset.get("id") : (fee_asset_types.length === 1 ? fee_asset_types[0] : fee_asset_id ? fee_asset_id : fee_asset_types[0])}
+                                asset={current_fee_asset}
                                 assets={fee_asset_types}
                                 tabIndex={tabIndex++}
                             />
