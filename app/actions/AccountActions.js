@@ -145,7 +145,7 @@ class AccountActions {
         return WalletDb.process_transaction(tr, null, true);
     }
 
-    upgradeTrustNode2(witness_id, account_id, block_signing_key, url) {
+    updateWitness(witness_id, account_id, block_signing_key, url) {
 
         let witness_update_fee = accountUtils.getFinalFeeAsset(account_id, "witness_update");
 

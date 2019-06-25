@@ -132,7 +132,7 @@ class GXBAccountMembership extends React.Component {
 
                                 <input type="text" onChange={this.handelChangeSigningkey.bind(this)} defaultValue={this.state.signing_key}/>
 
-                                <button className="button" onClick={this.upgradeTrustNode2.bind(this, this.state.witness_id, account, this.state.url, this.state.signing_key)}>
+                                <button className="button" onClick={this.updateWitness.bind(this, this.state.witness_id, account, this.state.url, this.state.signing_key)}>
                                     <Translate content="wallet.submit" /> 
                                 </button>
                             </div>
@@ -165,9 +165,9 @@ class GXBAccountMembership extends React.Component {
         AccountActions.upgradeTrustNode(account.id, account.active.key_auths[0][0], url, !this.state.isCommittee, !this.state.isWitness);
     }
 
-    upgradeTrustNode2(witness_id, account, url, signing_key, e) {
+    updateWitness(witness_id, account, url, signing_key, e) {
         e.preventDefault();
-        AccountActions.upgradeTrustNode2(witness_id, account.id, signing_key, url);
+        AccountActions.updateWitness(witness_id, account.id, signing_key, url);
     }
 
 
