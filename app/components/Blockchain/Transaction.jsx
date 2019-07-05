@@ -811,7 +811,6 @@ class Transaction extends React.Component {
                     break;
 
                 case "witness_update":
-
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="explorer.block.witness"/></td>
@@ -824,6 +823,15 @@ class Transaction extends React.Component {
                             <tr key={key++}>
                                 <td><Translate component="span" content="transaction.new_url"/></td>
                                 <td><a href={op[1].new_url} target="_blank">{op[1].new_url}</a></td>
+                            </tr>
+                        );
+                    }
+
+                    if (op[1].new_signing_key) {
+                        rows.push(
+                            <tr key={key++}>
+                                <td>SIGNING_KEY</td>
+                                <td style={{fontSize: "80%"}}>{op[1].new_signing_key}</td>
                             </tr>
                         );
                     }
