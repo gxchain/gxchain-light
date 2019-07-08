@@ -95,12 +95,17 @@ class WalletActions {
                         "owner_key": owner_private.private_key.toPublicKey().toPublicKeyString(),
                         "active_key": active_private.private_key.toPublicKey().toPublicKeyString(),
                         "memo_key": active_private.private_key.toPublicKey().toPublicKeyString(),
-                        //"memo_key": memo_private.private_key.toPublicKey().toPublicKeyString(),
                         "refcode": refcode,
                         "referrer": referrer
                     }
                 })
-            }).then(r => r.json());
+            }).then(r => {
+                if(r.status===429){
+                    throw new Error('To many request');
+                } else{
+                    return r.json();
+                }
+            });
 
             return create_account_promise.then(result => {
                 if (result.error) {
