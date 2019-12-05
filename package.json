@@ -32,6 +32,7 @@
     "electron-nougly": "NODE_ENV=production webpack --env.prod --env.electron --env.noUgly --env.hash --progress --display-error-details --colors",
     "postelectron": "del releases/*; copyfiles -a -f resources/* electron/; npm run packe; electron-builder -mwl",
     "packe": "webpack --config webpack.electron.config.js",
+    "a": "electron-builder -mwl",
     "test": "electron electron/"
   },
   "dependencies": {
@@ -54,6 +55,7 @@
     "indexeddbshim": "^2.2.1",
     "intl": "^1.1.0",
     "jdenticon": "git+https://github.com/cryptonomex/jdenticon.git",
+    "jquery": "^3.4.1",
     "js-sha256": "^0.2.3",
     "lodash-es": "^4.17.10",
     "lzma": "2.1.6",
@@ -78,6 +80,7 @@
     "react-json-inspector": "^7.0.0",
     "react-notification-system": "^0.2.12",
     "react-popover": "^0.4.6",
+    "react-responsive-mixin": "^0.4.0",
     "react-router": "^3.0.2",
     "react-stockcharts": "^0.6.1",
     "react-tooltip": "^3.2.2",
@@ -105,7 +108,7 @@
     "css-loader": "^0.22.0",
     "del-cli": "^1.1.0",
     "electron": "^4.1.0",
-    "electron-builder": "^20.39.0",
+    "electron-builder": "^22.2.0",
     "electron-updater": "^4.0.6",
     "es6-promise": "^3.0.2",
     "eslint": "^2.11.1",
