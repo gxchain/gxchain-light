@@ -7,7 +7,7 @@ import ApplicationApi from "api/ApplicationApi";
 import WalletDb from "stores/WalletDb";
 import WalletActions from "actions/WalletActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
-import {Apis} from 'gxbjs-ws';
+import {Apis} from "gxbjs-ws";
 
 let accountSearch = {};
 let wallet_api = new WalletApi();
@@ -20,48 +20,66 @@ let application_api = new ApplicationApi();
  *  is that there is only ever one active "search result" at a time.
  */
 class AccountActions {
-
-    /**
-     *  Account search results are not managed by the ChainStore cache so are
-     *  tracked as part of the AccountStore.
-     */
+  /**
+   *  Account search results are not managed by the ChainStore cache so are
+   *  tracked as part of the AccountStore.
+   */
     accountSearch(start_symbol, limit = 50) {
         let uid = `${start_symbol}_${limit}}`;
         return (dispatch) => {
             if (!accountSearch[uid]) {
                 accountSearch[uid] = true;
-                return AccountApi.lookupAccounts(start_symbol, limit)
-                    .then(result => {
-                        accountSearch[uid] = false;
-                        dispatch({accounts: result, searchTerm: start_symbol});
-                    });
+                return AccountApi.lookupAccounts(start_symbol, limit).then((result) => {
+                    accountSearch[uid] = false;
+                    dispatch({ accounts: result, searchTerm: start_symbol });
+                });
             }
         };
     }
 
-    /**
-     *  TODO:  The concept of current accounts is deprecated and needs to be removed
-     */
+  /**
+   *  TODO:  The concept of current accounts is deprecated and needs to be removed
+   */
     setCurrentAccount(name) {
         return name;
     }
 
-    /**
-     *  TODO:  This is a function of teh wallet_api and has no business being part of AccountActions
-     */
-    transfer(from_account, to_account, amount, asset, memo, propose_account = null, fee_asset_id = "1.3.1") {
-        // Set the fee asset to use
-        fee_asset_id = accountUtils.getFinalFeeAsset(propose_account || from_account, "transfer", fee_asset_id);
+  /**
+   *  TODO:  This is a function of teh wallet_api and has no business being part of AccountActions
+   */
+    transfer(
+    from_account,
+    to_account,
+    amount,
+    asset,
+    memo,
+    propose_account = null,
+    fee_asset_id = "1.3.1"
+  ) {
+    // Set the fee asset to use
+        fee_asset_id = accountUtils.getFinalFeeAsset(
+      propose_account || from_account,
+      "transfer",
+      fee_asset_id
+    );
 
         try {
             return (dispatch) => {
-                return application_api.transfer({
-                    from_account, to_account, amount, asset, memo, propose_account, fee_asset_id
-                }).then(result => {
-                    // console.log( "transfer result: ", result )
+                return application_api
+          .transfer({
+              from_account,
+              to_account,
+              amount,
+              asset,
+              memo,
+              propose_account,
+              fee_asset_id
+          })
+          .then((result) => {
+            // console.log( "transfer result: ", result )
 
-                    dispatch(result);
-                });
+              dispatch(result);
+          });
             };
         } catch (error) {
             console.log("[AccountActions.js:90] ----- transfer error ----->", error);
@@ -71,58 +89,68 @@ class AccountActions {
         }
     }
 
-    /**
-     *  This method exists ont he AccountActions because after creating the account via the wallet, the account needs
-     *  to be linked and added to the local database.
-     */
-    createAccount(account_name,
-                  registrar,
-                  referrer,
-                  referrer_percent,
-                  refcode) {
+  /**
+   *  This method exists ont he AccountActions because after creating the account via the wallet, the account needs
+   *  to be linked and added to the local database.
+   */
+    createAccount(account_name, registrar, referrer, referrer_percent, refcode) {
         return (dispatch) => {
             return WalletActions.createAccount(
-                account_name,
-                registrar,
-                referrer,
-                referrer_percent,
-                refcode
-            ).then(() => {
-                dispatch(account_name);
-                return account_name;
-            });
+        account_name,
+        registrar,
+        referrer,
+        referrer_percent,
+        refcode
+      ).then(() => {
+          dispatch(account_name);
+          return account_name;
+      });
         };
     }
 
-    /**
-     *  TODO:  This is a function of the wallet_api and has no business being part of AccountActions, the account should already
-     *  be linked.
-     */
+  /**
+   *  TODO:  This is a function of the wallet_api and has no business being part of AccountActions, the account should already
+   *  be linked.
+   */
     upgradeAccount(account_id, lifetime) {
-        // Set the fee asset to use
-        let fee_asset_id = accountUtils.getFinalFeeAsset(account_id, "account_upgrade");
+    // Set the fee asset to use
+        let fee_asset_id = accountUtils.getFinalFeeAsset(
+      account_id,
+      "account_upgrade"
+    );
 
         var tr = wallet_api.new_transaction();
         tr.add_type_operation("account_upgrade", {
-            "fee": {
+            fee: {
                 amount: 0,
                 asset_id: fee_asset_id
             },
-            "account_to_upgrade": account_id,
-            "upgrade_to_lifetime_member": lifetime
+            account_to_upgrade: account_id,
+            upgrade_to_lifetime_member: lifetime
         });
         return WalletDb.process_transaction(tr, null, true);
     }
 
-    upgradeTrustNode(account_id, block_signing_key, url, needCreateCommittee = true, needCreateWitness = true) {
-
-        let committee_member_create_fee = accountUtils.getFinalFeeAsset(account_id, "committee_member_create");
-        let witness_create_fee = accountUtils.getFinalFeeAsset(account_id, "witness_create");
+    upgradeTrustNode(
+    account_id,
+    block_signing_key,
+    url,
+    needCreateCommittee = true,
+    needCreateWitness = true
+  ) {
+        let committee_member_create_fee = accountUtils.getFinalFeeAsset(
+      account_id,
+      "committee_member_create"
+    );
+        let witness_create_fee = accountUtils.getFinalFeeAsset(
+      account_id,
+      "witness_create"
+    );
 
         var tr = wallet_api.new_transaction();
-        if(needCreateCommittee){
+        if (needCreateCommittee) {
             tr.add_type_operation("committee_member_create", {
-                "fee": {
+                fee: {
                     amount: 0,
                     asset_id: committee_member_create_fee
                 },
@@ -130,9 +158,9 @@ class AccountActions {
                 url: url
             });
         }
-        if(needCreateWitness){
+        if (needCreateWitness) {
             tr.add_type_operation("witness_create", {
-                "fee": {
+                fee: {
                     amount: 0,
                     asset_id: witness_create_fee
                 },
@@ -146,13 +174,15 @@ class AccountActions {
     }
 
     updateWitness(witness_id, account_id, block_signing_key, url) {
-
-        let witness_update_fee = accountUtils.getFinalFeeAsset(account_id, "witness_update");
+        let witness_update_fee = accountUtils.getFinalFeeAsset(
+      account_id,
+      "witness_update"
+    );
 
         var tr = wallet_api.new_transaction();
-           
+
         tr.add_type_operation("witness_update", {
-            "fee": {
+            fee: {
                 amount: 0,
                 asset_id: witness_update_fee
             },
@@ -161,67 +191,82 @@ class AccountActions {
             new_url: url,
             new_signing_key: block_signing_key
         });
-        
+
         return WalletDb.process_transaction(tr, null, true);
     }
 
-    joinLoyaltyProgram(program_id, account_id, amount, rate, lock_days, memo = '') {
+    joinLoyaltyProgram(
+    program_id,
+    account_id,
+    amount,
+    rate,
+    lock_days,
+    memo = ""
+  ) {
         return new Promise((resolve, reject) => {
-            WalletUnlockActions.unlock().then(function () {
-                Apis.instance().db_api().exec("get_objects", [["2.1.0"]]).then(function (resp) {
-                    let time = resp[0].time;
-                    if (!/Z$/.test(time)) {
-                        time += 'Z';
-                    }
-                    var tr = wallet_api.new_transaction();
-                    tr.add_type_operation("balance_lock", {
-                        fee: {
-                            amount: 0,
-                            asset_id: '1.3.1'
-                        },
-                        account: account_id,
-                        lock_days: lock_days,
-                        create_date_time: new Date(time),
-                        program_id: program_id,
-                        amount: {
-                            amount: amount,
-                            asset_id: '1.3.1'
-                        },
-                        interest_rate: rate,
-                        memo: memo,
-                    });
+            WalletUnlockActions.unlock().then(function() {
+                Apis.instance()
+          .db_api()
+          .exec("get_objects", [["2.1.0"]])
+          .then(function(resp) {
+              let time = resp[0].time;
+              if (!/Z$/.test(time)) {
+                  time += "Z";
+              }
+              var tr = wallet_api.new_transaction();
+              tr.add_type_operation("balance_lock", {
+                  fee: {
+                      amount: 0,
+                      asset_id: "1.3.1"
+                  },
+                  account: account_id,
+                  lock_days: lock_days,
+                  create_date_time: new Date(time),
+                  program_id: program_id,
+                  amount: {
+                      amount: amount,
+                      asset_id: "1.3.1"
+                  },
+                  interest_rate: rate,
+                  memo: memo
+              });
 
-                    // process transaction with no confirm, since it's already confirmed by user
-                    WalletDb.process_transaction(tr, null, true, null, true).then(function (resp) {
-                        resolve(resp);
-                    }).catch(ex => {
-                        reject(ex);
-                    });
-                }).catch(ex => {
-                    reject(ex);
-                });
+            // process transaction with no confirm, since it's already confirmed by user
+              WalletDb.process_transaction(tr, null, true, null, true)
+              .then(function(resp) {
+                  resolve(resp);
+              })
+              .catch((ex) => {
+                  reject(ex);
+              });
+          })
+          .catch((ex) => {
+              reject(ex);
+          });
             });
         });
     }
 
     unlockLoyaltyProgram(account_id, lock_id) {
         return new Promise((resolve, reject) => {
-            WalletUnlockActions.unlock().then(function () {
+            WalletUnlockActions.unlock().then(function() {
                 var tr = wallet_api.new_transaction();
                 tr.add_type_operation("balance_unlock", {
                     fee: {
                         amount: 0,
-                        asset_id: '1.3.1'
+                        asset_id: "1.3.1"
                     },
                     account: account_id,
                     lock_id: lock_id
                 });
-                // process transaction with no confirm, since it's already confirmed by user
-                WalletDb.process_transaction(tr, null, true).then(function (resp) {
-                    resolve(resp);
-                }).catch(ex => {
-                    reject(ex);
-                });
+        // process transaction with no confirm, since it's already confirmed by user
+                WalletDb.process_transaction(tr, null, true)
+          .then(function(resp) {
+              resolve(resp);
+          })
+          .catch((ex) => {
+              reject(ex);
+          });
             });
         });
     }
@@ -232,6 +277,127 @@ class AccountActions {
 
     unlinkAccount(name) {
         return name;
+    }
+
+    createStaking(
+    program_id,
+    owner_id,
+    trust_node_id,
+    amount,
+    weight,
+    staking_days
+  ) {
+        return new Promise((resolve, reject) => {
+            WalletUnlockActions.unlock().then(function() {
+                var tr = wallet_api.new_transaction();
+                tr.add_type_operation("staking_create", {
+                    fee: {
+                        amount: 0,
+                        asset_id: "1.3.1"
+                    },
+                    owner: owner_id,
+                    staking_days: staking_days,
+                    program_id: program_id,
+                    weight: weight,
+                    amount: {
+                        amount: amount,
+                        asset_id: "1.3.1"
+                    },
+                    trust_node: trust_node_id
+                });
+
+                WalletDb.process_transaction(tr, null, true, null, true)
+          .then(function(resp) {
+              resolve(resp);
+          })
+          .catch((ex) => {
+              console.log(ex);
+              reject(ex);
+          });
+            });
+        });
+    }
+    updateStaking(owner_id, trust_node_id, staking_id) {
+        return new Promise((resolve, reject) => {
+            WalletUnlockActions.unlock().then(function() {
+                var tr = wallet_api.new_transaction();
+                tr.add_type_operation("staking_update", {
+                    fee: {
+                        amount: 0,
+                        asset_id: "1.3.1"
+                    },
+                    owner: owner_id,
+                    trust_node: trust_node_id,
+                    staking_id: staking_id
+                });
+
+                WalletDb.process_transaction(tr, null, true, null, true)
+          .then(function(resp) {
+              resolve(resp);
+          })
+          .catch((ex) => {
+              console.log(ex);
+              reject(ex);
+          });
+            });
+        });
+    }
+    claimStaking(owner_id, staking_id) {
+        return new Promise((resolve, reject) => {
+            WalletUnlockActions.unlock().then(function() {
+                var tr = wallet_api.new_transaction();
+                tr.add_type_operation("staking_claim", {
+                    fee: {
+                        amount: 0,
+                        asset_id: "1.3.1"
+                    },
+                    owner: owner_id,
+                    staking_id: staking_id
+                });
+
+                WalletDb.process_transaction(tr, null, true, null, true)
+          .then(function(resp) {
+              resolve(resp);
+          })
+          .catch((ex) => {
+              console.log(ex);
+              reject(ex);
+          });
+            });
+        });
+    }
+    updateCommissionRate(witness_id, account_id, rate) {
+        let fee = accountUtils.getFinalFeeAsset(account_id, "witness_update");
+
+        var tr = wallet_api.new_transaction();
+
+        tr.add_type_operation("witness_set_commission", {
+            fee: {
+                amount: 0,
+                asset_id: fee
+            },
+            witness: witness_id,
+            witness_account: account_id,
+            commission_rate: rate
+        });
+
+        return WalletDb.process_transaction(tr, null, true);
+    }
+    unbannedWitness(witness_id, account_id) {
+        let fee = accountUtils.getFinalFeeAsset(account_id, "witness_update");
+
+        var tr = wallet_api.new_transaction();
+
+        tr.add_type_operation("witness_unbanned", {
+            fee: {
+                amount: 0,
+                asset_id: fee
+            },
+            witness: witness_id,
+            witness_account: account_id
+        });
+
+        return WalletDb.process_transaction(tr, null, true);
     }
 }
 

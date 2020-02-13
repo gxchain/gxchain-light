@@ -70,8 +70,7 @@ class AccountsList extends React.Component {
 
     static propTypes = {
         items: ChainTypes.ChainObjectsList,
-        onAddItem: React.PropTypes.func.isRequired,
-        onRemoveItem: React.PropTypes.func.isRequired,
+        onStakingCreate: React.PropTypes.func.isRequired,
         validateAccount: React.PropTypes.func,
         label: React.PropTypes.string.isRequired, // a translation key for the label,
         placeholder: React.PropTypes.string, // the placeholder text to be displayed when there is no user_input
@@ -94,7 +93,6 @@ class AccountsList extends React.Component {
         };
         this.onItemChange = this.onItemChange.bind(this);
         this.onItemAccountChange = this.onItemAccountChange.bind(this);
-        this.onAddItem = this.onAddItem.bind(this);
     }
 
     onItemChange(item_name_input) {
@@ -109,17 +107,6 @@ class AccountsList extends React.Component {
             if (typeof(res) === "string") this.setState({error: res});
             else res.then(error => this.setState({error: error}));
         }
-    }
-
-    onAddItem(item) {
-        if (!item) return;
-        let next_state = {
-            selected_item: null,
-            item_name_input: "",
-            error: null
-        };
-        this.setState(next_state);
-        this.props.onAddItem(item.get("id"));
     }
 
     render() {
@@ -181,7 +168,7 @@ class AccountsList extends React.Component {
                         key={i.get("name")}
                         account={i}
                         type={this.props.type}
-                        onAction={this.props.action === "add" ? this.props.onAddItem : this.props.onRemoveItem}
+                        onAction={this.props.onStakingCreate}
                         isSelected={this.props.items.indexOf(i) !== -1}
                         action={this.props.action}
                     />
@@ -207,7 +194,7 @@ class AccountsList extends React.Component {
                         accountName={this.state.item_name_input}
                         onChange={this.onItemChange}
                         onAccountChanged={this.onItemAccountChange}
-                        onAction={this.onAddItem}
+                        onAction={this.onStakingCreate}
                         action_label="account.votes.add_witness"
                         tabIndex={this.props.tabIndex}
                     /> : null}

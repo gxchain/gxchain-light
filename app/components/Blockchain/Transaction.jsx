@@ -175,15 +175,15 @@ class Transaction extends React.Component {
                         </tr>
                     );
 
-                {
-                    memo ?
+                    {
+                        memo ?
                         rows.push(
                             <tr key={key++}>
                                 <td><Translate content="transfer.memo"/></td>
                                 {memo}
                             </tr>
                         ) : null;
-                }
+                    }
 
                     break;
 
@@ -639,15 +639,15 @@ class Transaction extends React.Component {
                         </tr>
                     );
 
-                {
-                    memo ?
+                    {
+                        memo ?
                         rows.push(
                             <tr key={key++}>
                                 <td><Translate content="transfer.memo"/></td>
                                 {memo}
                             </tr>
                         ) : null;
-                }
+                    }
 
                     break;
 
@@ -959,7 +959,7 @@ class Transaction extends React.Component {
                     break;
 
                 case "proposal_create":
-                    var expiration_date = new Date(op[1].expiration_time + 'Z');
+                    var expiration_date = new Date(op[1].expiration_time + "Z");
                     var has_review_period = op[1].review_period_seconds !== undefined;
                     var review_begin_time = !has_review_period ? null :
                         expiration_date.getTime() - op[1].review_period_seconds * 1000;
@@ -1038,8 +1038,8 @@ class Transaction extends React.Component {
                                 <tr key={key++}>
                                     <td><Translate content={`proposal.update.${field}`}/></td>
                                     <td>{op[1][field].map(value => {
-                                            return <div key={value}>{this.linkToAccount(value)}</div>;
-                                        }
+                                        return <div key={value}>{this.linkToAccount(value)}</div>;
+                                    }
                                     )}
                                     </td>
                                 </tr>
@@ -1105,7 +1105,7 @@ class Transaction extends React.Component {
                         <tr key={key++}>
                             <td><Translate component="span"
                                            content="transaction.trxOps.data_transaction_create.request_id"/></td>
-                            <td style={{wordBreak: 'break-all'}}>{op[1].request_id}</td>
+                            <td style={{wordBreak: "break-all"}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
@@ -1145,7 +1145,7 @@ class Transaction extends React.Component {
                         <tr key={key++}>
                             <td><Translate component="span"
                                            content="transaction.trxOps.data_transaction_pay.request_id"/></td>
-                            <td style={{wordBreak: 'break-all'}}>{op[1].request_id}</td>
+                            <td style={{wordBreak: "break-all"}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
@@ -1178,7 +1178,7 @@ class Transaction extends React.Component {
                             <td><Translate component="span"
                                            content="transaction.trxOps.data_transaction_datasource_upload.request_id"/>
                             </td>
-                            <td style={{wordBreak: 'break-all'}}>{op[1].request_id}</td>
+                            <td style={{wordBreak: "break-all"}}>{op[1].request_id}</td>
                         </tr>
                     );
                     rows.push(
@@ -1199,8 +1199,8 @@ class Transaction extends React.Component {
                     );
 
                     break;
-                case 'balance_lock':
-                    let term = Number(op[1].program_id) > 1 ? counterpart.translate('loyalty_program.months', {month: op[1].program_id}) : counterpart.translate('loyalty_program.month', {month: op[1].program_id});
+                case "balance_lock":
+                    let term = Number(op[1].program_id) > 1 ? counterpart.translate("loyalty_program.months", {month: op[1].program_id}) : counterpart.translate("loyalty_program.month", {month: op[1].program_id});
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="loyalty_program.lock_amount"/></td>
@@ -1229,7 +1229,7 @@ class Transaction extends React.Component {
                         </tr>
                     );
                     break;
-                case 'balance_unlock':
+                case "balance_unlock":
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="loyalty_program.id"/></td>
@@ -1356,6 +1356,31 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="trust_node_pledge_withdraw.witness_account"/></td>
+                            <td>{this.linkToAccount(op[1].witness_account)}</td>
+                        </tr>
+                    );
+                    break;
+
+                case "witness_set_commission":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="explorer.block.witness" /></td>
+                            <td>{this.linkToAccount(op[1].witness_account)}</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="transaction.commission_rate"/></td>
+                            <td>{op[1].commission_rate / 10}%</td>
+                        </tr>
+                    );
+                    break;
+                case "witness_unbanned":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="explorer.block.witness" /></td>
                             <td>{this.linkToAccount(op[1].witness_account)}</td>
                         </tr>
                     );

@@ -314,6 +314,10 @@
       "publish": "Publish Changes",
       "add_witness": "Add",
       "remove_witness": "Remove",
+      "staking_create_witness": "Create staking",
+      "staking_update_witness": "Update staking",
+      "staking_claim_witness": "Claim staking",
+      "staking_records": "Staking Records",
       "remove_committee": "Remove",
       "add_committee": "Add",
       "add_committee_label": "Committee Member",
@@ -635,6 +639,7 @@
     "delta_collateral": "Collateral change",
     "delta_debt": "Debt change",
     "new_url": "Website",
+    "commission_rate": "Commission rate",
     "publisher": "Publisher",
     "market_fee": "Market fee",
     "max_market_fee": "Maximum market fee",
@@ -714,7 +719,9 @@
       "update_contract": "Update Contract",
       "trust_node_pledge_withdraw": "TrustNode margin Withdraw",
       "inline_transfer": "Inline Transfer",
-      "inter_contract_call": "Inter Contract Call"
+      "inter_contract_call": "Inter Contract Call",
+      "witness_set_commission": "Set Commission Rate",
+      "witness_unbanned": "Trustnode unbanned"
     },
     "trxOps": {
       "data_transaction_create": {
@@ -1234,7 +1241,8 @@
     "brainkey_seq_reset": "Reset brainkey sequence",
     "brainkey_seq_reset_text": "Use this to reset the sequence counter used to derive private keys from the wallet brainkey.<br />It can be used to force a refresh of the private keys in the wallet.",
     "brainkey_seq_reset_button": "Reset now",
-    "brainkey_reset_success": "Sequence reset. In order to trigger a refresh of your private keys, refresh your browser then unlock the wallet."
+    "brainkey_reset_success": "Sequence reset. In order to trigger a refresh of your private keys, refresh your browser then unlock the wallet.",
+    "unbanned": "Trustnode unbanned"
   },
   "borrow": {
     "title": "%(asset_symbol)s Margin",
@@ -1409,5 +1417,24 @@
   },
   "testnet": {
     "apply_coin": "Apply GXC"
+  },
+  "staking_program": {
+    "title": "Create staking",
+    "update_title": "Update staking",
+    "claim_title": "Claim staking",
+    "day": "%(day)s Day",
+    "days": "%(day)s Days",
+    "account": "TrustNode",
+    "term": "Days",
+    "staking_amount": "Amount",
+    "fee": "Fee",
+    "action": "Action",
+    "button_title": "Confirm",
+    "time_error": "Failed, please retry:",
+    "success": "Congratulations! Join successfully",
+    "update_success": "Update successfully",
+    "claim_success": "Claim successfully",
+    "max_staking_count": "An account can create up to 10 votes. If you want to create a new vote, you must cancel the previous vote.",
+    "i_know": "Ok"
   }
 }

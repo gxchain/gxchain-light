@@ -5,15 +5,19 @@ import counterpart from "counterpart";
 import accountUtils from "common/account_utils";
 import WalletApi from "api/WalletApi";
 import {ChainStore} from "gxbjs/es";
-import {Apis} from 'gxbjs-ws';
+import {Apis} from "gxbjs-ws";
 import AccountsList from "./AccountsList";
 import HelpContent from "../Utility/HelpContent";
 import cnames from "classnames";
 import ChainTypes from "../Utility/ChainTypes";
 import WalletDb from "stores/WalletDb";
-import {Tab, Tabs} from '../Utility/Tabs';
+import {Tab, Tabs} from "../Utility/Tabs";
 import BindToChainState from "components/Utility/BindToChainState";
-import AccountVotingProxy from './AccountVotingProxy';
+import AccountVotingProxy from "./AccountVotingProxy";
+import AccountStore from "stores/AccountStore";
+import StakingCreateModal from "../Modal/StakingCreateModal";
+import StakingTipModal from "../Modal/StakingTipModal";
+import AccountStakingsList from "./AccountStakingsList";
 
 let FetchChainObjects = ChainStore.FetchChainObjects;
 
@@ -44,12 +48,12 @@ class AccountVoting extends React.Component {
             vote_ids: Immutable.Set(),
             lastBudgetObject: null,
             showExpired: false,
-            canUpdated: true
+            canUpdated: true,
+            fee: 0
         };
         this.onProxyAccountChange = this.onProxyAccountChange.bind(this);
         this.fetchAllTrustedNodes = this.fetchAllTrustedNodes.bind(this);
         this.onPublish = this.onPublish.bind(this);
-        this.onReset = this.onReset.bind(this);
         this._onUpdate = this._onUpdate.bind(this);
     }
 
@@ -72,7 +76,7 @@ class AccountVoting extends React.Component {
         let vote_ids = votes.toArray();
         // remove workers
         vote_ids = vote_ids.filter(id => {
-            return id.split(":")[0] != '2';
+            return id.split(":")[0] != "2";
         });
         let vids = Immutable.Set(vote_ids);
         ChainStore.getObjectsByVoteIds(vote_ids);
@@ -121,6 +125,7 @@ class AccountVoting extends React.Component {
     componentWillMount() {
         this.updateAccountData(this.props.account);
         this.fetchAllTrustedNodes();
+        this.fetchStakingFee();
         accountUtils.getFinalFeeAsset(this.props.account, "account_update");
         // this.getBudgetObject();
         ChainStore.subscribe(this._onUpdate);
@@ -145,9 +150,9 @@ class AccountVoting extends React.Component {
         // updated_account.new_options = updated_account.options;
         let new_proxy_id = this.state.proxy_account_id;
         new_options.voting_account = new_proxy_id ? new_proxy_id : "1.2.5";
-        new_options.num_witness = Math.min(this.state.witnesses.size, this.props.globalObject.getIn(['parameters', 'maximum_witness_count']));
+        new_options.num_witness = Math.min(this.state.witnesses.size, this.props.globalObject.getIn(["parameters", "maximum_witness_count"]));
         // new_options.num_committee = this.state.committee.size;
-        new_options.num_committee = Math.min(this.state.witnesses.size, this.props.globalObject.getIn(['parameters', 'maximum_committee_count']));
+        new_options.num_committee = Math.min(this.state.witnesses.size, this.props.globalObject.getIn(["parameters", "maximum_committee_count"]));
 
         updateObject.new_options = new_options;
         // Set fee asset
@@ -213,30 +218,56 @@ class AccountVoting extends React.Component {
         });
     }
 
-    onReset() {
-        let s = this.state;
-        if (this.refs.voting_proxy && this.refs.voting_proxy.refs.bound_component) this.refs.voting_proxy.refs.bound_component.onResetProxy();
-        this.setState({
-            proxy_account_id: s.prev_proxy_account_id,
-            witnesses: s.prev_witnesses,
-            committee: s.prev_committee,
-            workers: s.prev_workers,
-            vote_ids: s.prev_vote_ids
-        }, () => {
-            this.updateAccountData(this.props.account);
-        });
+    fetchStakingFee() {
+        Apis.instance()
+          .db_api()
+          .exec("get_required_fees", [[[80,{}]], "1.3.1"]).then(resp => {
+              this.setState({
+                  fee: resp[0].amount / 100000
+              });
+          });
     }
-
-    onAddItem(collection, item_id) {
-        let state = {};
-        state[collection] = this.state[collection].push(item_id);
-        this.setState(state);
-    }
-
-    onRemoveItem(collection, item_id) {
-        let state = {};
-        state[collection] = this.state[collection].filter(i => i !== item_id);
-        this.setState(state);
+    onStakingCreate(collection, item_id) {
+        Apis.instance()
+          .db_api()
+          .exec("get_staking_object", [this.props.account.get("id")])
+          .then((resp) => {
+              let max_staking_count = this.props.globalObject.getIn([
+                  "parameters",
+                  "extensions",
+                  2,
+                  1,
+                  "max_staking_count"
+              ]);
+              if (resp.length < Number(max_staking_count)) {
+                  let account_balances = this.props.account
+                      .get("balances")
+                      .toJS();
+                  let balanceId = account_balances["1.3.1"];
+                  let balanceObject = null;
+                  if (balanceId != "2.5.-1") {
+                      balanceObject = ChainStore.getObject(balanceId);
+                  } else {
+                      balanceObject = Immutable.fromJS({
+                          id: balanceId,
+                          owner: this.props.account.get("id"),
+                          asset_type: "1.3.1",
+                          balance: "0"
+                      });
+                  }
+                  this.refs["staking-modal"].refs["bound_component"].show(
+                    balanceObject,
+                    item_id,
+                    this.props.account.toJS().id,
+                    this.state.fee
+                );
+              } else {
+                  this.refs["staking-tip-modal"].show();
+              }
+          })
+          .catch((ex) => {
+              console.error("get_staking_objetcs failed", ex);
+          });
     }
 
     onChangeVotes(addVotes, removeVotes) {
@@ -318,18 +349,12 @@ class AccountVoting extends React.Component {
     }
 
     fetchAllTrustedNodes() {
-        Apis.instance().db_api().exec('get_trust_nodes', []).then(nodes => {
+        Apis.instance().db_api().exec("get_trust_nodes", []).then(nodes => {
             this.setState({
                 trust_nodes: Immutable.fromJS(nodes)
             });
         }).catch(ex => {
-            console.error('Error fetching trusted nodes: ', ex);
-        });
-    }
-
-    _toggleExpired() {
-        this.setState({
-            showExpired: !this.state.showExpired
+            console.error("Error fetching trusted nodes: ", ex);
         });
     }
 
@@ -349,17 +374,14 @@ class AccountVoting extends React.Component {
         return workerArray;
     }
 
+    onFinishAction() {
+        this.fetchStakingStatus();
+    }
+
     render() {
-        let preferredUnit = "1.3.1";
-        let proxy_is_set = this.props.account.getIn(["options", "voting_account"]) !== "1.2.5";
-        let publish_buttons_class = cnames("button", {disabled: !this.isChanged()});
-
-        let {globalObject, dynamicGlobal} = this.props;
-
         if (!this.state.trust_nodes) {
             return null;
         }
-
 
         let unVotedActiveWitnesses = this.state.trust_nodes.map(a => {
             let account = ChainStore.getWitnessById(a);
@@ -375,133 +397,84 @@ class AccountVoting extends React.Component {
             return a !== null;
         });
 
-        // let unVotedActiveWitnesses = globalObject.get("active_witnesses").map(a => {
-        //     let object = ChainStore.getObject(a);
-        //     if (!object || !this.state.witnesses) {
-        //         return null;
-        //     }
-        //     if (!this.state.witnesses.includes(object.get("witness_account"))) {
-        //         return object.get("witness_account");
-        //     } else {
-        //         return null;
-        //     }
-        // }).filter(a => {
-        //     return a !== null;
-        // });
-
-        let unVotedActiveCMs = globalObject.get("active_committee_members").map(a => {
-            let object = ChainStore.getObject(a);
-            if (!object || !this.state.committee) {
-                return null;
-            }
-            if (!this.state.committee.includes(object.get("committee_member_account"))) {
-                return object.get("committee_member_account");
-            } else {
-                return null;
-            }
-        }).filter(a => {
-            return a !== null;
-        });
-
         return (
-            <div className="grid-container">
-                <div className="grid-content">
-                    <HelpContent style={{maxWidth: "800px"}} path="components/AccountVoting"/>
-                    <Tabs setting="votingTab" tabsClass="no-padding bordered-header"
-                          contentClass="grid-content no-padding">
-                        <Tab title="explorer.witnesses.title">
-                            <div className={cnames("content-block", {disabled: proxy_is_set})}>
-                                <HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingWitnesses"/>
-                                <AccountsList
-                                    type="witness"
-                                    label="account.votes.add_witness_label"
-                                    items={this.state.witnesses}
-                                    validateAccount={this.validateAccount.bind(this, "witnesses")}
-                                    onAddItem={this.onAddItem.bind(this, "witnesses")}
-                                    onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
-                                    withSelector={false}
-                                    tabIndex={proxy_is_set ? -1 : 2}
-                                    title={counterpart.translate("account.votes.w_approved_by", {account: this.props.account.get("name")})}
-                                />
+          <div className="grid-container">
+            <div className="grid-content">
+              <HelpContent
+                style={{ maxWidth: "800px" }}
+                path="components/AccountVoting"
+              />
+              <Tabs
+                setting="votingTab"
+                tabsClass="no-padding bordered-header"
+                contentClass="grid-content no-padding">
+                <Tab title="explorer.witnesses.title">
+                  <div className={cnames("content-block")}>
+                    <HelpContent
+                      style={{ maxWidth: "800px" }}
+                      path="components/AccountVotingWitnesses"
+                    />
+                    <AccountsList
+                      type="witness"
+                      label="account.votes.add_witness_label"
+                      items={this.state.witnesses}
+                      validateAccount={this.validateAccount.bind(
+                        this,
+                        "witnesses"
+                      )}
+                      onStakingCreate={this.onStakingCreate.bind(
+                        this,
+                        "witnesses"
+                      )}
+                      withSelector={false}
+                      title={counterpart.translate(
+                        "account.votes.w_approved_by",
+                        { account: this.props.account.get("name") }
+                      )}
+                    />
 
-                                {unVotedActiveWitnesses.size ? (
-                                    <AccountsList
-                                        type="witness"
-                                        label="account.votes.add_witness_label"
-                                        items={Immutable.List(unVotedActiveWitnesses)}
-                                        validateAccount={this.validateAccount.bind(this, "witnesses")}
-                                        onAddItem={this.onAddItem.bind(this, "witnesses")}
-                                        onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
-                                        tabIndex={proxy_is_set ? -1 : 2}
-                                        withSelector={false}
-                                        action="add"
-                                        title={counterpart.translate("account.votes.w_not_approved_by", {account: this.props.account.get("name")})}
-                                    />) : null}
-                            </div>
-                        </Tab>
-                        <Tab title="account.votes.proxy_short">
-                            <div className="content-block">
-                                <HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingProxy"/>
-                                <AccountVotingProxy
-                                    ref="voting_proxy"
-                                    existingProxy={this.props.account.getIn(["options", "voting_account"])}
-                                    account={this.props.account}
-                                    onProxyAccountChanged={this.onProxyAccountChange}
-                                    onClearProxy={this.onClearProxy.bind(this)}
-                                />
-                            </div>
-                        </Tab>
-                    </Tabs>
-
-                    {/*<Tab title="explorer.committee_members.title">*/}
-                    {/*<div className={cnames("content-block", {disabled: proxy_is_set})}>*/}
-                    {/*<HelpContent style={{maxWidth: "800px"}} path="components/AccountVotingCommittee"/>*/}
-                    {/*<AccountsList*/}
-                    {/*type="committee"*/}
-                    {/*label="account.votes.add_committee_label"*/}
-                    {/*items={this.state.committee}*/}
-                    {/*validateAccount={this.validateAccount.bind(this, "committee")}*/}
-                    {/*onAddItem={this.onAddItem.bind(this, "committee")}*/}
-                    {/*onRemoveItem={this.onRemoveItem.bind(this, "committee")}*/}
-                    {/*tabIndex={proxy_is_set ? -1 : 3}*/}
-                    {/*title={counterpart.translate("account.votes.cm_approved_by", {account: this.props.account.get("name")})}*/}
-                    {/*/>*/}
-                    {/*{unVotedActiveCMs.size ? (*/}
-                    {/*<AccountsList*/}
-                    {/*type="committee"*/}
-                    {/*label="account.votes.add_witness_label"*/}
-                    {/*items={Immutable.List(unVotedActiveCMs)}*/}
-                    {/*validateAccount={this.validateAccount.bind(this, "committee")}*/}
-                    {/*onAddItem={this.onAddItem.bind(this, "committee")}*/}
-                    {/*onRemoveItem={this.onRemoveItem.bind(this, "committee")}*/}
-                    {/*tabIndex={proxy_is_set ? -1 : 2}*/}
-                    {/*withSelector={false}*/}
-                    {/*action="add"*/}
-                    {/*title={counterpart.translate("account.votes.cm_not_approved_by", {account: this.props.account.get("name")})}*/}
-                    {/*/>*/}
-                    {/*) : null}*/}
-                    {/*</div>*/}
-                    {/*</Tab>*/}
-                    {/*</Tabs>*/}
-
-                    <div className="content-block">
-                        <button className={cnames(publish_buttons_class, {success: this.isChanged()})}
-                                onClick={this.onPublish} tabIndex={4}>
-                            <Translate content="account.votes.publish"/>
-                        </button>
-                        <button className={"button outline " + publish_buttons_class} onClick={this.onReset}
-                                tabIndex={8}>
-                            <Translate content="account.perm.reset"/>
-                        </button>
-                    </div>
-
-                    <div className="content-block" style={{display: !this.state.canUpdated ? "block" : "none"}}>
-                        <p className="facolor-error">
-                            <Translate content="account.votes.min_support"/>
-                        </p>
-                    </div>
-                </div>
+                    {unVotedActiveWitnesses.size ? (
+                      <AccountsList
+                        type="witness"
+                        label="account.votes.add_witness_label"
+                        items={Immutable.List(unVotedActiveWitnesses)}
+                        validateAccount={this.validateAccount.bind(
+                          this,
+                          "witnesses"
+                        )}
+                        onStakingCreate={this.onStakingCreate.bind(
+                          this,
+                          "witnesses"
+                        )}
+                        withSelector={false}
+                        action="staking_create"
+                        title={counterpart.translate(
+                          "account.votes.w_not_approved_by",
+                          { account: this.props.account.get("name") }
+                        )}
+                      />
+                    ) : null}
+                  </div>
+                </Tab>
+                <Tab title="account.votes.staking_records">
+                  <div className="content-block">
+                    <AccountStakingsList
+                      label="account.votes.add_witness_label"
+                      trustNodes={Immutable.List(unVotedActiveWitnesses)}
+                      validateAccount={this.validateAccount.bind(
+                        this,
+                        "witnesses"
+                      )}
+                    />
+                  </div>
+                </Tab>
+              </Tabs>
             </div>
+            <StakingCreateModal
+              ref="staking-modal"
+            />
+            <StakingTipModal ref="staking-tip-modal" />
+          </div>
         );
     }
 }

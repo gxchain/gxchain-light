@@ -269,6 +269,10 @@
       "publish": "保存修改",
       "add_witness": "添加",
       "remove_witness": "移除",
+      "staking_create_witness": "投票",
+      "staking_update_witness": "更新投票",
+      "staking_claim_witness": "取回投票",
+      "staking_records": "投票记录",
       "remove_committee": "移除",
       "add_committee": "添加",
       "add_committee_label": "理事会成员",
@@ -671,7 +675,9 @@
       "update_contract": "更新合约",
       "trust_node_pledge_withdraw": "公信节点保证金赎回",
       "inline_transfer": "合约内转账",
-      "inter_contract_call": "跨合约调用"
+      "inter_contract_call": "跨合约调用",
+      "witness_set_commission": "设置分红比例",
+      "witness_unbanned": "离开小黑屋"
     },
     "trxOps": {
       "data_transaction_create": {
@@ -714,6 +720,7 @@
     "feed_price": "喂价",
     "witness_update": "更新见证人账户",
     "new_url": "网站",
+    "commission_rate": "分红比例",
     "publisher": "发布人",
     "lifetime_upgrade_account": "升级到终身会员",
     "annual_upgrade_account": "升级到年度会员",
@@ -1223,7 +1230,8 @@
     "tips_explore": "现在你已经成功创建了一个账户，并且下载了备份文件，让我们开始吧。点击左侧的链接开始探索。",
     "tips_header": "这些链接也可以在页面顶部，或者右上方账户名右侧的下拉菜单中找到。",
     "tips_login": "重要！这里没有登录/注销的概念和功能，当你需要发生交易时解锁钱包，闲置或者手动选择进行钱包锁定。",
-    "import_key_success": "已成功导入 %(count)s 个密钥。"
+    "import_key_success": "已成功导入 %(count)s 个密钥。",
+    "unbanned": "离开小黑屋"
   },
   "borrow": {
     "title": "%(asset_symbol)s 保证金头寸",
@@ -1437,5 +1445,24 @@
   },
   "testnet": {
     "apply_coin": "申请测试GXC"
+  },
+  "staking_program": {
+    "title": "创建投票",
+    "update_title": "更新投票",
+    "claim_title": "取回投票",
+    "day": "%(day)s天",
+    "days": "%(day)s天",
+    "term": "天数",
+    "account": "节点",
+    "staking_amount": "数量",
+    "fee": "手续费",
+    "button_title": "确定",
+    "action": "操作",
+    "time_error": "操作失败，请重试",
+    "success": "恭喜！投票成功",
+    "update_success": "恭喜！更新投票成功",
+    "claim_success": "恭喜！取回投票成功",
+    "max_staking_count": "一个账号最多可以创建10次质押投票，如果要创建新的质押投票，需将之前的投票取回。",
+    "i_know": "我知道了"
   }
 }
