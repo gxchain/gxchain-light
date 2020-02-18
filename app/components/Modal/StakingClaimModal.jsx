@@ -17,6 +17,7 @@ import AccountActions from "actions/AccountActions";
 import notify from "actions/NotificationActions";
 import AccountStore from "stores/AccountStore";
 import AccountSelect from "../Forms/AccountSelect";
+import LinkToWitnessById from "../Blockchain/LinkToWitnessById";
 
 class StakingClaimModal extends React.Component {
     static propTypes = {
@@ -147,7 +148,7 @@ class StakingClaimModal extends React.Component {
                       <Translate content="staking_program.account" />
                     </td>
                     <td>
-                      <span>{this.state.trustNode}</span>
+                      <LinkToWitnessById witness={this.state.trustNode} />
                     </td>
                   </tr>
                   <tr>

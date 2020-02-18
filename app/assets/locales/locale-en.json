@@ -542,7 +542,12 @@
     "update_contract": "{account} updated the contract {contract_name}",
     "trust_node_pledge_withdraw": "{account} withdrew trustnode margin",
     "inline_transfer": "contract account {from} sent {amount} to {to} with memo {memo}",
-    "inter_contract_call": "contract {account} call the contract {contract_name} {method_name} method"
+    "inter_contract_call": "contract {account} call the contract {contract_name} {method_name} method",
+    "witness_set_commission": "{account} set commission rates {rate}",
+    "witness_unbanned": "{account} restarted and unbanded",
+    "staking_create": "{account} staking {amount}",
+    "staking_update": "{account} updated a staking record",
+    "staking_claim": "{account} claimed a staking {amount}"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -640,6 +645,7 @@
     "delta_debt": "Debt change",
     "new_url": "Website",
     "commission_rate": "Commission rate",
+    "trust_node": "Trust node",
     "publisher": "Publisher",
     "market_fee": "Market fee",
     "max_market_fee": "Maximum market fee",
@@ -721,7 +727,10 @@
       "inline_transfer": "Inline Transfer",
       "inter_contract_call": "Inter Contract Call",
       "witness_set_commission": "Set Commission Rate",
-      "witness_unbanned": "Trustnode unbanned"
+      "witness_unbanned": "Trustnode unbanned",
+      "staking_create": "Create staking",
+      "staking_update": "Update staking",
+      "staking_claim": "Claim staking"
     },
     "trxOps": {
       "data_transaction_create": {

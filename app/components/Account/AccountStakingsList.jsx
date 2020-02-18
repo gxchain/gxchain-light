@@ -7,6 +7,7 @@ import ChainTypes from "../Utility/ChainTypes";
 import FormattedAsset from "../Utility/FormattedAsset";
 import BindToChainState from "../Utility/BindToChainState";
 import LinkToAccountById from "../Blockchain/LinkToAccountById";
+import LinkToWitnessById from "../Blockchain/LinkToWitnessById";
 import counterpart from "counterpart";
 import { Apis } from "gxbjs-ws";
 import AccountStore from "stores/AccountStore";
@@ -42,7 +43,8 @@ class StakingItemRow extends React.Component {
         return (
           <tr>
             <td>
-              <LinkToAccountById account={staking.account_id} />
+              {/* <LinkToAccountById account={staking.account_id} /> */}
+              <LinkToWitnessById witness={staking.trust_node} />
             </td>
             <td>{staking.amount.amount / 100000} GXC</td>
             <td>{staking.staking_days}</td>
@@ -103,19 +105,7 @@ class StakingsList extends React.Component {
       .db_api()
       .exec("get_staking_object", [currentAccountId])
       .then((resp) => {
-          let result = [];
-          let promises = resp.map((item) => {
-              return Apis.instance()
-            .db_api()
-            .exec("get_objects", [[item.trust_node]])
-            .then((res) => {
-                item.account_id = res[0].witness_account;
-                result.push(item);
-            });
-          });
-          Promise.all(promises).then(() => {
-              this.setState({ stakings: result });
-          });
+          this.setState({ stakings: resp });
       })
       .catch((ex) => {
           console.error("get_staking_objetcs failed", ex);
@@ -136,7 +126,6 @@ class StakingsList extends React.Component {
     }
 
     onStakingClaim(staking) {
-        let trustNodeName = ChainStore.getAccount(staking.account_id).get("name");
         let currentAccount = AccountStore.getState().currentAccount;
         let currentAccountId = ChainStore.getAccount(currentAccount).get("id");
         this.refs["claim-staking-modal"].refs["bound_component"].show(
@@ -144,7 +133,7 @@ class StakingsList extends React.Component {
           currentAccountId,
           staking.staking_days,
           staking.amount.amount / 100000,
-          trustNodeName,          
+          staking.trust_node,          
           this.state.claimFee
         );
     }

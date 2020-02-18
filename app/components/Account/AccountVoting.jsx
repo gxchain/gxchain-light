@@ -49,10 +49,12 @@ class AccountVoting extends React.Component {
             lastBudgetObject: null,
             showExpired: false,
             canUpdated: true,
-            fee: 0
+            fee: 0,
+            canStaking: false
         };
         this.onProxyAccountChange = this.onProxyAccountChange.bind(this);
         this.fetchAllTrustedNodes = this.fetchAllTrustedNodes.bind(this);
+        this.fetchStakingStatus = this.fetchStakingStatus.bind(this);
         this.onPublish = this.onPublish.bind(this);
         this._onUpdate = this._onUpdate.bind(this);
     }
@@ -62,6 +64,7 @@ class AccountVoting extends React.Component {
     }
 
     _onUpdate() {
+        this.fetchStakingStatus();
         this.forceUpdate();
     }
 
@@ -126,6 +129,7 @@ class AccountVoting extends React.Component {
         this.updateAccountData(this.props.account);
         this.fetchAllTrustedNodes();
         this.fetchStakingFee();
+        this.fetchStakingStatus();
         accountUtils.getFinalFeeAsset(this.props.account, "account_update");
         // this.getBudgetObject();
         ChainStore.subscribe(this._onUpdate);
@@ -228,46 +232,31 @@ class AccountVoting extends React.Component {
           });
     }
     onStakingCreate(collection, item_id) {
-        Apis.instance()
-          .db_api()
-          .exec("get_staking_object", [this.props.account.get("id")])
-          .then((resp) => {
-              let max_staking_count = this.props.globalObject.getIn([
-                  "parameters",
-                  "extensions",
-                  2,
-                  1,
-                  "max_staking_count"
-              ]);
-              if (resp.length < Number(max_staking_count)) {
-                  let account_balances = this.props.account
-                      .get("balances")
-                      .toJS();
-                  let balanceId = account_balances["1.3.1"];
-                  let balanceObject = null;
-                  if (balanceId != "2.5.-1") {
-                      balanceObject = ChainStore.getObject(balanceId);
-                  } else {
-                      balanceObject = Immutable.fromJS({
-                          id: balanceId,
-                          owner: this.props.account.get("id"),
-                          asset_type: "1.3.1",
-                          balance: "0"
-                      });
-                  }
-                  this.refs["staking-modal"].refs["bound_component"].show(
-                    balanceObject,
-                    item_id,
-                    this.props.account.toJS().id,
-                    this.state.fee
-                );
-              } else {
-                  this.refs["staking-tip-modal"].show();
-              }
-          })
-          .catch((ex) => {
-              console.error("get_staking_objetcs failed", ex);
-          });
+        if (this.state.canStaking) {
+            let account_balances = this.props.account
+                .get("balances")
+                .toJS();
+            let balanceId = account_balances["1.3.1"];
+            let balanceObject = null;
+            if (balanceId != "2.5.-1") {
+                balanceObject = ChainStore.getObject(balanceId);
+            } else {
+                balanceObject = Immutable.fromJS({
+                    id: balanceId,
+                    owner: this.props.account.get("id"),
+                    asset_type: "1.3.1",
+                    balance: "0"
+                });
+            }
+            this.refs["staking-modal"].refs["bound_component"].show(
+                balanceObject,
+                item_id,
+                this.props.account.toJS().id,
+                this.state.fee
+            );
+        } else {
+            this.refs["staking-tip-modal"].show();
+        }
     }
 
     onChangeVotes(addVotes, removeVotes) {
@@ -374,8 +363,25 @@ class AccountVoting extends React.Component {
         return workerArray;
     }
 
-    onFinishAction() {
-        this.fetchStakingStatus();
+    fetchStakingStatus() {
+        Apis.instance()
+            .db_api()
+            .exec("get_staking_object", [this.props.account.get("id")])
+            .then((resp) => {
+                let max_staking_count = this.props.globalObject.getIn([
+                    "parameters",
+                    "extensions",
+                    2,
+                    1,
+                    "max_staking_count"
+                ]);
+                this.setState({
+                    canStaking: resp.length < Number(max_staking_count)
+                });
+            })
+            .catch((ex) => {
+                console.error("get_staking_objetcs failed", ex);
+            });
     }
 
     render() {

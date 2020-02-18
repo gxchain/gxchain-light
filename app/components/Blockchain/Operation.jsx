@@ -16,6 +16,7 @@ import {ChainStore, ChainTypes as grapheneChainTypes} from "gxbjs/es";
 import account_constants from "chain/account_constants";
 import MemoText from "./MemoText";
 import ProposedOperation from "./ProposedOperation";
+import LinkToWitnessById from "../Blockchain/LinkToWitnessById";
 
 const {operations} = grapheneChainTypes;
 require("./operations.scss");
@@ -153,7 +154,7 @@ class Operation extends React.Component {
     }
 
     render() {
-        let {op, current, block} = this.props;
+        let {op, current, block, result} = this.props;
         let line = null, column = null, color = "info";
         let memoComponent = null;
 
@@ -1185,6 +1186,85 @@ class Operation extends React.Component {
                                 {type: "account", value: op[1].sender_contract, arg: "sender_contract"},
                                 {type: "account", value: op[1].contract_id, arg: "contract_name"},
                                 {type: "", value: op[1].method_name, arg: "method_name"},
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+            case "witness_set_commission":
+
+                color = "cancel";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.witness_set_commission"
+                            keys={[
+                                { type: "account", value: op[1].witness_account, arg: "account" },
+                                { type: "", value: op[1].commission_rate * 0.1, arg: "rate" },
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+            case "witness_unbanned":
+
+                color = "cancel";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.witness_unbanned"
+                            keys={[
+                                { type: "account", value: op[1].witness_account, arg: "account" }
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+            case "staking_create":
+
+                color = "success";
+
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.staking_create"
+                            keys={[
+                                { type: "account", value: op[1].owner, arg: "account" },
+                                { type: "amount", value: op[1].amount, arg: "amount" }
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+            case "staking_update":
+
+                color = "success";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.staking_update"
+                            keys={[
+                                { type: "account", value: op[1].owner, arg: "account" }
+                            ]}
+                        />
+                    </span>
+                );
+
+                break;
+            case "staking_claim":
+
+                color = "success";
+                column = (
+                    <span className="right-td">
+                        <TranslateWithLinks
+                            string="operation.staking_claim"
+                            keys={[
+                                { type: "account", value: op[1].owner, arg: "account" },
+                                { type: "amount", value: result[1], arg: "amount" }
                             ]}
                         />
                     </span>

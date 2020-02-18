@@ -8,6 +8,7 @@ import {FormattedDate} from "react-intl";
 import Inspector from "react-json-inspector";
 import utils from "common/utils";
 import LinkToAccountById from "../Blockchain/LinkToAccountById";
+import LinkToWitnessById from "../Blockchain/LinkToWitnessById";
 import LinkToAssetById from "../Blockchain/LinkToAssetById";
 import LinkToProductById from "../Blockchain/LinkToProductById";
 import FormattedPrice from "../Utility/FormattedPrice";
@@ -129,7 +130,7 @@ class Transaction extends React.Component {
 
         let opCount = trx.operations.length;
         let memo = null;
-
+        // console.log(trx);
         trx.operations.forEach((op, opIndex) => {
             let rows = [];
             let key = 0;
@@ -1365,7 +1366,7 @@ class Transaction extends React.Component {
                     color = "success";
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="explorer.block.witness" /></td>
+                            <td><Translate component="span" content="transaction.trust_node" /></td>
                             <td>{this.linkToAccount(op[1].witness_account)}</td>
                         </tr>
                     );
@@ -1380,8 +1381,47 @@ class Transaction extends React.Component {
                     color = "success";
                     rows.push(
                         <tr key={key++}>
-                            <td><Translate component="span" content="explorer.block.witness" /></td>
+                            <td><Translate component="span" content="transaction.trust_node" /></td>
                             <td>{this.linkToAccount(op[1].witness_account)}</td>
+                        </tr>
+                    );
+                    break;
+                case "staking_create":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="staking_program.account" /></td>
+                            <td><LinkToWitnessById witness={op[1].trust_node} /></td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="staking_program.staking_amount" /></td>
+                            <td>{op[1].amount.amount / 100000} GXC</td>
+                        </tr>
+                    );
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="staking_program.term" /></td>
+                            <td>{this.linkToAccount(op[1].staking_days)}</td>
+                        </tr>
+                    );
+                    break;
+                case "staking_update":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="staking_program.account" /></td>
+                            <td><span style={{ textDecoration: "line-through" }}><LinkToWitnessById witness={trx.operation_results[0][1]}/></span>&nbsp;<span><LinkToWitnessById witness={op[1].trust_node} /></span></td>
+                        </tr>
+                    );
+                    break;
+                case "staking_claim":
+                    color = "success";
+                    rows.push(
+                        <tr key={key++}>
+                            <td><Translate component="span" content="staking_program.staking_amount" /></td>
+                            <td>{trx.operation_results[0][1].amount / 100000} GXC</td>
                         </tr>
                     );
                     break;
