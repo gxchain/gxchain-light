@@ -1457,6 +1457,8 @@
   },
   "staking_program": {
     "title": "创建投票",
+    "set_commission_rate": "投票奖励分红比例（七天只能修改一次，请谨慎修改）",
+    "empty_staking_record": "暂无投票记录",
     "update_title": "更新投票",
     "claim_title": "取回投票",
     "day": "%(day)s天",

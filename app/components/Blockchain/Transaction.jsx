@@ -1373,7 +1373,7 @@ class Transaction extends React.Component {
                     rows.push(
                         <tr key={key++}>
                             <td><Translate component="span" content="transaction.commission_rate"/></td>
-                            <td>{op[1].commission_rate / 10}%</td>
+                            <td>{(op[1].commission_rate / 10).toFixed(1)}%</td>
                         </tr>
                     );
                     break;

@@ -1429,6 +1429,8 @@
   },
   "staking_program": {
     "title": "Create staking",
+    "set_commission_rate": "Commission rate(it can only be modified once within 7 days, please set carefully)",
+    "empty_staking_record": "No staking record",
     "update_title": "Update staking",
     "claim_title": "Claim staking",
     "day": "%(day)s Day",

@@ -1201,7 +1201,7 @@ class Operation extends React.Component {
                             string="operation.witness_set_commission"
                             keys={[
                                 { type: "account", value: op[1].witness_account, arg: "account" },
-                                { type: "", value: op[1].commission_rate * 0.1, arg: "rate" },
+                                { type: "", value: (op[1].commission_rate * 0.1).toFixed(1) + "%", arg: "rate" },
                             ]}
                         />
                     </span>

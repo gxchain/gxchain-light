@@ -168,36 +168,46 @@ class StakingsList extends React.Component {
         let cw = ["20%", "20%", "30%", "20%", "10%"];
 
         return (
-      <div>
-        {this.props.title && item_rows.length ? (
-          <h4>{this.props.title}</h4>
-        ) : null}
-        {item_rows.length ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th style={{ width: cw[0] }}>
-                  <Translate content="staking_program.account" />
-                </th>
-                <th style={{ width: cw[1] }}>
-                  <Translate content="staking_program.staking_amount" />
-                </th>
-                <th style={{ width: cw[2] }}>
-                  <Translate content="staking_program.term" />
-                </th>
-                <th style={{ width: cw[3] }}>
-                  <Translate content="staking_program.action" />
-                </th>
-              </tr>
-            </thead>
-            <tbody>{item_rows}</tbody>
-          </table>
-        ) : null}
-        <StakingUpdateModal ref="update-staking-modal" onFinish={this.onFinishAction.bind(this)} />
-        <StakingClaimModal ref="claim-staking-modal" onFinish={this.onFinishAction.bind(this)} />
-        {/* <ConfirmModal ref="confirm-modal" /> */}
-      </div>
-    );
+          <div>
+            {this.props.title && item_rows.length ? (
+              <h4>{this.props.title}</h4>
+            ) : null}
+            {item_rows.length ? (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th style={{ width: cw[0] }}>
+                      <Translate content="staking_program.account" />
+                    </th>
+                    <th style={{ width: cw[1] }}>
+                      <Translate content="staking_program.staking_amount" />
+                    </th>
+                    <th style={{ width: cw[2] }}>
+                      <Translate content="staking_program.term" />
+                    </th>
+                    <th style={{ width: cw[3] }}>
+                      <Translate content="staking_program.action" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{item_rows}</tbody>
+              </table>
+            ) : (
+              <div style={{ padding: "1rem 0" }}>
+                <Translate content="staking_program.empty_staking_record" />
+              </div>
+            )}
+            <StakingUpdateModal
+              ref="update-staking-modal"
+              onFinish={this.onFinishAction.bind(this)}
+            />
+            <StakingClaimModal
+              ref="claim-staking-modal"
+              onFinish={this.onFinishAction.bind(this)}
+            />
+            {/* <ConfirmModal ref="confirm-modal" /> */}
+          </div>
+        );
     }
 }
 

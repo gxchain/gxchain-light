@@ -394,11 +394,12 @@ class AccountVoting extends React.Component {
             if (!account || !this.state.witnesses) {
                 return null;
             }
-            if (!this.state.witnesses.includes(a)) {
-                return a;
-            } else {
-                return null;
-            }
+            // if (!this.state.witnesses.includes(a)) {
+            //     return a;
+            // } else {
+            //     return null;
+            // }
+            return a;
         }).filter(a => {
             return a !== null;
         });
@@ -420,7 +421,7 @@ class AccountVoting extends React.Component {
                       style={{ maxWidth: "800px" }}
                       path="components/AccountVotingWitnesses"
                     />
-                    <AccountsList
+                    {/* <AccountsList
                       type="witness"
                       label="account.votes.add_witness_label"
                       items={this.state.witnesses}
@@ -437,7 +438,7 @@ class AccountVoting extends React.Component {
                         "account.votes.w_approved_by",
                         { account: this.props.account.get("name") }
                       )}
-                    />
+                    /> */}
 
                     {unVotedActiveWitnesses.size ? (
                       <AccountsList
