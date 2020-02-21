@@ -74,6 +74,9 @@ class StakingClaimModal extends React.Component {
 
     submit() {
         let self = this;
+        self.setState({
+            loading: true
+        });
         AccountActions.claimStaking(
           this.state.ownerId,
           this.state.stakingId
@@ -87,8 +90,14 @@ class StakingClaimModal extends React.Component {
               autoDismiss: 10
           });
           ZfApi.publish("modal-claim-staking", "close");
+          self.setState({
+              loading: false
+          });
       })
       .catch((ex) => {
+          self.setState({
+              loading: false
+          });
           let error_msg = ex;
           if (typeof ex == "object") {
               error_msg =
@@ -184,7 +193,7 @@ class StakingClaimModal extends React.Component {
                 <button
                   style={{ margin: ".2rem" }}
                   onClick={this.submit.bind(this)}
-                  className="button"
+                  className={`button ${this.state.loading ? "disabled" : ""}`}
                   dangerouslySetInnerHTML={{ __html: button_text }}></button>
               </div>
             </div>

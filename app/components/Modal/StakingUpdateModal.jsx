@@ -73,6 +73,9 @@ class StakingUpdateModal extends React.Component {
 
     submit() {
         let self = this;
+        self.setState({
+            loading: true
+        });
         AccountActions.updateStaking(
           this.state.ownerId,
           ChainStore.getWitnessById(this.state.trustNodeId).get("id"),
@@ -87,8 +90,14 @@ class StakingUpdateModal extends React.Component {
               autoDismiss: 10
           });
           ZfApi.publish("modal-update-staking", "close");
+          self.setState({
+              loading: false
+          });
       })
       .catch((ex) => {
+          self.setState({
+              loading: false
+          });
           let error_msg = ex;
           if (typeof ex == "object") {
               error_msg =
@@ -150,7 +159,7 @@ class StakingUpdateModal extends React.Component {
                     <td>
                       <Translate content="staking_program.account" />
                     </td>
-                    <td style={{ float: 'right' }}>
+                    <td style={{ float: "right" }}>
                       <AccountSelect
                         account_names={trustNodesNames}
                         onChange={this.onChangeAccount.bind(this)}
@@ -171,8 +180,8 @@ class StakingUpdateModal extends React.Component {
                     </td>
                     <td>
                       <span>
-                        {counterpart.translate('staking_program.day', {
-                          day: this.state.stakingDays
+                        {counterpart.translate("staking_program.day", {
+                            day: this.state.stakingDays
                         })}
                       </span>
                     </td>
@@ -188,10 +197,10 @@ class StakingUpdateModal extends React.Component {
               <br />
               <div className="text-center">
                 <button
-                  style={{ margin: '.2rem' }}
+                  style={{ margin: ".2rem" }}
                   onClick={this.submit.bind(this)}
                   className={`button ${
-                    !this.state.trustNodeId ? 'disabled' : ''
+                    !this.state.trustNodeId || this.state.loading ? "disabled" : ""
                   }`}
                   dangerouslySetInnerHTML={{ __html: button_text }}></button>
               </div>
