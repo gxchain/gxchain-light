@@ -366,7 +366,7 @@ class AccountVoting extends React.Component {
     fetchStakingStatus() {
         Apis.instance()
             .db_api()
-            .exec("get_staking_object", [this.props.account.get("id")])
+            .exec("get_staking_objects", [this.props.account.get("id")])
             .then((resp) => {
                 let max_staking_count = this.props.globalObject.getIn([
                     "parameters",

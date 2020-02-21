@@ -103,7 +103,7 @@ class StakingsList extends React.Component {
         let currentAccountId = ChainStore.getAccount(currentAccount).get("id");
         Apis.instance()
       .db_api()
-      .exec("get_staking_object", [currentAccountId])
+      .exec("get_staking_objects", [currentAccountId])
       .then((resp) => {
           this.setState({ stakings: resp });
       })
