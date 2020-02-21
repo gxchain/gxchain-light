@@ -163,7 +163,7 @@ class Operation extends React.Component {
             case "transfer":
 
                 if (op[1].memo) {
-                    memoComponent = <MemoText memo={op[1].memo}/>
+                    memoComponent = <MemoText memo={op[1].memo}/>;
                 }
 
                 color = "success";
@@ -267,7 +267,7 @@ class Operation extends React.Component {
                             {type: "account", value: op[1].registrar, arg: "registrar"},
                             {type: "account", value: op[1].name, arg: "new_account"}
                         ]}
-                    />
+                    />;
                 break;
 
             case "account_update":
@@ -299,7 +299,7 @@ class Operation extends React.Component {
                             ]}
                         />
                     </span>
-                )
+                );
                 break;
 
             case "account_upgrade":
@@ -380,7 +380,7 @@ class Operation extends React.Component {
                 color = "warning";
 
                 if (op[1].memo) {
-                    memoComponent = <MemoText memo={op[1].memo}/>
+                    memoComponent = <MemoText memo={op[1].memo}/>;
                 }
 
                 op[1].asset_to_issue.amount = parseInt(op[1].asset_to_issue.amount, 10);
@@ -768,7 +768,7 @@ class Operation extends React.Component {
                             ]}
                         />
                     </span>
-                )
+                );
                 break;
 
             case "committee_member_update_global_parameters":
@@ -799,7 +799,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'account_upgrade_merchant':
+            case "account_upgrade_merchant":
                 column = (
                     <span>
                             <TranslateWithLinks
@@ -812,7 +812,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'account_upgrade_datasource':
+            case "account_upgrade_datasource":
                 column = (
                     <span>
                             <TranslateWithLinks
@@ -825,7 +825,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'account_upgrade_data_transaction_member':
+            case "account_upgrade_data_transaction_member":
                 column = (
                     <span>
                             <TranslateWithLinks
@@ -838,8 +838,8 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'stale_data_market_category_create':
-            case 'data_market_category_create':
+            case "stale_data_market_category_create":
+            case "data_market_category_create":
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -853,14 +853,14 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'stale_data_market_category_update':
-            case 'data_market_category_update':
+            case "stale_data_market_category_update":
+            case "data_market_category_update":
                 column = (
                     <span>
                         <TranslateWithLinks
                             string={"operation.data_market_category_update"}
                             keys={[
-                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "account", value: "1.2.0", arg: "issuer"},
                                 {type: "", value: op[1].new_category_name, arg: "category"}
                             ]}
                         />
@@ -868,12 +868,12 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'stale_free_data_product_create':
-            case 'free_data_product_create':
+            case "stale_free_data_product_create":
+            case "free_data_product_create":
                 let prod_to_create = {
                     id: op[1].free_data_product,
                     product_name: op[1].product_name
-                }
+                };
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -886,18 +886,18 @@ class Operation extends React.Component {
                     </span>
                 );
                 break;
-            case 'stale_free_data_product_update':
-            case 'free_data_product_update':
+            case "stale_free_data_product_update":
+            case "free_data_product_update":
                 let prod_to_update = {
                     id: op[1].free_data_product,
                     product_name: op[1].new_product_name
-                }
+                };
                 column = (
                     <span>
                         <TranslateWithLinks
                             string={"operation.free_data_product_update"}
                             keys={[
-                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "account", value: "1.2.0", arg: "issuer"},
                                 {type: "free_product", value: prod_to_update, arg: "product"}
                             ]}
                         />
@@ -905,8 +905,8 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'stale_league_data_product_create':
-            case 'league_data_product_create':
+            case "stale_league_data_product_create":
+            case "league_data_product_create":
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -919,27 +919,27 @@ class Operation extends React.Component {
                     </span>
                 );
                 break;
-            case 'stale_league_data_product_update':
-            case 'league_data_product_update':
+            case "stale_league_data_product_update":
+            case "league_data_product_update":
 
                 column = (
                     <span>
                         <TranslateWithLinks
                             string={"operation.league_data_product_update"}
                             keys={[
-                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "account", value: "1.2.0", arg: "issuer"},
                                 {type: "", value: op[1].new_product_name, arg: "product"}
                             ]}
                         />
                     </span>
                 );
                 break;
-            case 'stale_league_create':
-            case 'league_create':
+            case "stale_league_create":
+            case "league_create":
                 let league_to_create = {
                     id: op[1].league,
                     league_name: op[1].league_name
-                }
+                };
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -952,18 +952,18 @@ class Operation extends React.Component {
                     </span>
                 );
                 break;
-            case 'stale_league_update':
-            case 'league_update':
+            case "stale_league_update":
+            case "league_update":
                 let league_to_update = {
                     id: op[1].league,
                     league_name: op[1].new_league_name
-                }
+                };
                 column = (
                     <span>
                         <TranslateWithLinks
                             string={"operation.league_update"}
                             keys={[
-                                {type: "account", value: '1.2.0', arg: "issuer"},
+                                {type: "account", value: "1.2.0", arg: "issuer"},
                                 {type: "league", value: league_to_update, arg: "league"}
                             ]}
                         />
@@ -971,7 +971,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'data_transaction_create':
+            case "data_transaction_create":
 
                 column = (
                     <span>
@@ -985,7 +985,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'data_transaction_update':
+            case "data_transaction_update":
 
                 column = (
                     <span>
@@ -999,7 +999,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'data_transaction_pay':
+            case "data_transaction_pay":
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -1014,7 +1014,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'data_transaction_datasource_upload':
+            case "data_transaction_datasource_upload":
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -1028,7 +1028,7 @@ class Operation extends React.Component {
                 );
                 break;
 
-            case 'data_transaction_datasource_validate_error':
+            case "data_transaction_datasource_validate_error":
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -1040,7 +1040,7 @@ class Operation extends React.Component {
                     </span>
                 );
                 break;
-            case 'balance_lock':
+            case "balance_lock":
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -1053,7 +1053,7 @@ class Operation extends React.Component {
                     </span>
                 );
                 break;
-            case 'balance_unlock':
+            case "balance_unlock":
                 column = (
                     <span>
                         <TranslateWithLinks
@@ -1226,17 +1226,27 @@ class Operation extends React.Component {
             case "staking_create":
 
                 color = "success";
-
+                let staking_days = counterpart.translate(
+                  "operation.staking_days",
+                    {
+                        day: op[1].staking_days
+                    }
+                );
                 column = (
-                    <span className="right-td">
-                        <TranslateWithLinks
-                            string="operation.staking_create"
-                            keys={[
-                                { type: "account", value: op[1].owner, arg: "account" },
-                                { type: "amount", value: op[1].amount, arg: "amount" }
-                            ]}
-                        />
-                    </span>
+                  <span className="right-td">
+                    <LinkToAccountById account={op[1].owner} />
+                    &nbsp;
+                    <Translate content="operation.staking_create" />
+                    <FormattedAsset
+                      amount={op[1].amount.amount}
+                      asset={op[1].amount.asset_id}
+                    />
+                    <Translate content="operation.staking_to" />
+                    &nbsp;
+                    <LinkToWitnessById witness={op[1].trust_node} />
+                    {staking_days}
+                    {/* <Translate content="operation.staking_days" day={op[1].staking_days} /> */}
+                  </span>
                 );
 
                 break;
@@ -1244,14 +1254,15 @@ class Operation extends React.Component {
 
                 color = "success";
                 column = (
-                    <span className="right-td">
-                        <TranslateWithLinks
-                            string="operation.staking_update"
-                            keys={[
-                                { type: "account", value: op[1].owner, arg: "account" }
-                            ]}
-                        />
-                    </span>
+                  <span className="right-td">
+                    <LinkToAccountById account={op[1].owner} />
+                    &nbsp;
+                    <Translate content="operation.staking_update" />
+                    <Translate content="operation.staking_from" />
+                    <LinkToWitnessById witness={result[1]} />
+                    <Translate content="operation.update_to" />
+                    <LinkToWitnessById witness={op[1].trust_node} />
+                  </span>
                 );
 
                 break;
@@ -1285,7 +1296,7 @@ class Operation extends React.Component {
         if (this.props.csvExportMode) {
             const globalObject = ChainStore.getObject("2.0.0");
             const dynGlobalObject = ChainStore.getObject("2.1.0");
-            const block_time = utils.calc_block_time(block, globalObject, dynGlobalObject)
+            const block_time = utils.calc_block_time(block, globalObject, dynGlobalObject);
             return (
                 <div>
                     <div>{block_time ? block_time.toLocaleString() : ""}</div>

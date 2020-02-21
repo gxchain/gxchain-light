@@ -538,9 +538,13 @@
     "inter_contract_call": "合约账户 {sender_contract} 跨合约调用了合约账户 {contract_name} 的 {method_name} 方法",
     "witness_set_commission": "{account} 设置得票奖励分成比例 {rate}",
     "witness_unbanned": "{account} 离开了小黑屋",
-    "staking_create": "{account} 创建了抵押投票 {amount}",
-    "staking_update": "{account} 修改了抵押投票对象",
-    "staking_claim": "{account} 取回了一笔抵押 {amount}"
+    "staking_create": "创建了抵押投票 ",
+    "staking_update": "修改了抵押投票对象, ",
+    "staking_claim": "{account} 取回了一笔抵押 {amount}",
+    "staking_to": " 给",
+    "staking_from": "从 ",
+    "update_to": " 修改为 ",
+    "staking_days": "，抵押时间：%(day)s 天"
   },
   "transaction": {
     "sent": "发送",

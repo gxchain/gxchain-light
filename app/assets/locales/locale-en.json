@@ -545,9 +545,13 @@
     "inter_contract_call": "contract {account} call the contract {contract_name} {method_name} method",
     "witness_set_commission": "{account} set commission rates {rate}",
     "witness_unbanned": "{account} restarted and unbanded",
-    "staking_create": "{account} staking {amount}",
-    "staking_update": "{account} updated a staking record",
-    "staking_claim": "{account} claimed a staking {amount}"
+    "staking_create": "staking ",
+    "staking_update": "updated a staking record ",
+    "staking_claim": "{account} claimed a staking {amount}",
+    "staking_to": " to",
+    "staking_from": "from ",
+    "update_to": " to ",
+    "staking_days": " for %(day)s days"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
