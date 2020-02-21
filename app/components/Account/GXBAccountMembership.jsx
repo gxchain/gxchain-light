@@ -175,13 +175,13 @@ class GXBAccountMembership extends React.Component {
                             <hr/>
 
                             <div>
-                                <label>Commission Rate</label>
+                                <label><Translate content="staking_program.set_commission_rate"/></label>
                                 <div style={{display: "flex",alignItems: "center"}}>
                                     <input type="number" min="0" max="100" onChange={this.handelChangeCommissionRate.bind(this)} defaultValue={this.state.commission_rate} /><span>%</span>
                                 </div>
                                 <div>
                                     <button className={cname("button", {
-                                        disabled: isCooldown
+                                        disabled: isCooldown ||this.state.commission_rate < 0 ||this.state.commission_rate > 100
                                     })} onClick={this.updateCommissionRate.bind(this, this.state.witness_id, account, this.state.commission_rate)}>
                                         <Translate content="wallet.submit" />
                                     </button>
