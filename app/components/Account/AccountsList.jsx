@@ -10,7 +10,7 @@ import LinkToAccountById from "../Blockchain/LinkToAccountById";
 import counterpart from "counterpart";
 
 function getWitnessOrCommittee(type, acct) {
-    let url = "", votes = 0, account;
+    let url = "", votes = 0, account, commission_rate = 0;
     if (type === "witness") {
         account = ChainStore.getWitnessById(acct.get("id"));
     } else if (type === "committee") {
@@ -19,10 +19,11 @@ function getWitnessOrCommittee(type, acct) {
 
     url = account ? account.get("url") : url;
     votes = account ? account.get("total_votes") : votes;
-
+    commission_rate = account ? account.get("commission_rate") / 10 : commission_rate;
     return {
         url,
-        votes
+        votes,
+        commission_rate
     };
 }
 
@@ -45,8 +46,7 @@ class AccountItemRow extends React.Component {
         let name = account.get("name");
         let item_id = account.get("id");
 
-        let {url, votes} = getWitnessOrCommittee(type, account);
-
+        let {url, votes, commission_rate} = getWitnessOrCommittee(type, account);
         let link = url && url.length > 0 && url.indexOf("http") === -1 ? "http://" + url : url;
 
         return (
@@ -56,6 +56,7 @@ class AccountItemRow extends React.Component {
                 </td>
                 <td><LinkToAccountById account={account.get("id")}/></td>
                 <td><a href={link} target="_blank">{url.length < 45 ? url : url.substr(0, 45) + "..."}</a></td>
+                <td>{commission_rate}%</td>
                 <td><FormattedAsset amount={votes} asset="1.3.1" decimalOffset={5} hide_asset={true}/></td>
                 <td>
                     <button className="button outline" onClick={this.onAction.bind(this, item_id)}>
@@ -180,7 +181,7 @@ class AccountsList extends React.Component {
             error = counterpart.translate("account.votes.already");
         }
 
-        let cw = ["10%", "20%", "40%", "20%", "10%"];
+        let cw = ["10%", "20%", "10%", "30%", "20%", "10%"];
 
         return (
             <div>
@@ -206,8 +207,9 @@ class AccountsList extends React.Component {
                             <th style={{width: cw[0]}}></th>
                             <th style={{width: cw[1]}}><Translate content="account.votes.name"/></th>
                             <th style={{width: cw[2]}}><Translate content="account.votes.url"/></th>
-                            <th style={{width: cw[3]}}><Translate content="account.votes.votes"/></th>
-                            <th style={{width: cw[4]}}><Translate content="account.perm.action"/></th>
+                            <th style={{width: cw[3]}}><Translate content="account.votes.commission_rate"/></th>
+                            <th style={{width: cw[4]}}><Translate content="account.votes.votes"/></th>
+                            <th style={{width: cw[5]}}><Translate content="account.perm.action"/></th>
                         </tr>
                         </thead>
                         <tbody>
