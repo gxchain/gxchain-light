@@ -308,6 +308,8 @@
       "name": "Name",
       "info": "Info",
       "votes": "Votes",
+      "see_old_votes": "Old Votes",
+      "see_new_votes": "New Votes",
       "url": "Webpage",
       "commission_rate": "Commission rate",
       "support": "Support",

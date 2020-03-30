@@ -8,9 +8,10 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import BindToChainState from "../Utility/BindToChainState";
 import LinkToAccountById from "../Blockchain/LinkToAccountById";
 import counterpart from "counterpart";
+import { Link } from "react-router/es";
 
 function getWitnessOrCommittee(type, acct) {
-    let url = "", votes = 0, account, commission_rate = 0;
+    let url = "", votes = 0, account, commission_rate = 0, new_votes = 0;
     if (type === "witness") {
         account = ChainStore.getWitnessById(acct.get("id"));
     } else if (type === "committee") {
@@ -19,22 +20,25 @@ function getWitnessOrCommittee(type, acct) {
 
     url = account ? account.get("url") : url;
     votes = account ? account.get("total_votes") : votes;
+    new_votes = account ? account.get("total_vote_weights ") : new_votes;
     commission_rate = account ? account.get("commission_rate") / 10 : commission_rate;
     return {
         url,
         votes,
-        commission_rate
+        commission_rate,
+        new_votes
     };
 }
 
 class AccountItemRow extends React.Component {
     static propTypes = {
         account: React.PropTypes.object.isRequired,
-        onAction: React.PropTypes.func.isRequired
+        onAction: React.PropTypes.func.isRequired,
+        showNewVotes: React.PropTypes.bool.isRequired
     };
 
     shouldComponentUpdate(nextProps) {
-        return nextProps.account !== this.props.account;
+        return nextProps.account !== this.props.account || nextProps.showNewVotes !== this.props.showNewVotes;
     }
 
     onAction(item_id) {
@@ -46,7 +50,7 @@ class AccountItemRow extends React.Component {
         let name = account.get("name");
         let item_id = account.get("id");
 
-        let {url, votes, commission_rate} = getWitnessOrCommittee(type, account);
+        let { url, votes, commission_rate, new_votes} = getWitnessOrCommittee(type, account);
         let link = url && url.length > 0 && url.indexOf("http") === -1 ? "http://" + url : url;
 
         return (
@@ -57,7 +61,11 @@ class AccountItemRow extends React.Component {
                 <td><LinkToAccountById account={account.get("id")}/></td>
                 <td><a href={link} target="_blank">{url.length < 45 ? url : url.substr(0, 45) + "..."}</a></td>
                 <td>{commission_rate}%</td>
-                <td><FormattedAsset amount={votes} asset="1.3.1" decimalOffset={5} hide_asset={true}/></td>
+                <td>
+                    <div>
+                        <FormattedAsset amount={this.props.showNewVotes ? new_votes : votes} asset="1.3.1" decimalOffset={5} hide_asset={true} />
+                    </div>
+                </td>
                 <td>
                     <button className="button outline" onClick={this.onAction.bind(this, item_id)}>
                         <Translate content={`account.votes.${this.props.action}_witness`}/></button>
@@ -90,7 +98,8 @@ class AccountsList extends React.Component {
         this.state = {
             selected_item: null,
             item_name_input: "",
-            error: null
+            error: null,
+            showNewVotes: true
         };
         this.onItemChange = this.onItemChange.bind(this);
         this.onItemAccountChange = this.onItemAccountChange.bind(this);
@@ -148,20 +157,28 @@ class AccountsList extends React.Component {
             return !tmp;
         })
             .sort((a, b) => {
-                let {votes: a_votes} = getWitnessOrCommittee(this.props.type, a);
-                let {votes: b_votes} = getWitnessOrCommittee(this.props.type, b);
+                // let {votes: a_votes} = getWitnessOrCommittee(this.props.type, a);
+                // let {votes: b_votes} = getWitnessOrCommittee(this.props.type, b);
 
-                if (a_votes !== b_votes) {
-                    return b_votes - a_votes;
-                }
-                else if (a.get("name") > b.get("name")) {
-                    return 1;
-                }
-                else if (a.get("name") < b.get("name")) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+                // if (a_votes !== b_votes) {
+                //     return b_votes - a_votes;
+                // }
+                // else if (a.get("name") > b.get("name")) {
+                //     return 1;
+                // }
+                // else if (a.get("name") < b.get("name")) {
+                //     return -1;
+                // } else {
+                //     return 0;
+                // }
+                let { commission_rate: a_commission_rate } = getWitnessOrCommittee(this.props.type, a);
+                let { commission_rate: b_commission_rate} = getWitnessOrCommittee(this.props.type, b);
+                return b_commission_rate - a_commission_rate;
+            })
+            .sort((a, b) => {
+                let { new_votes: a_new_votes } = getWitnessOrCommittee(this.props.type, a);
+                let { new_votes: b_new_votes } = getWitnessOrCommittee(this.props.type, b);
+                return a_new_votes - b_new_votes;
             })
             .map(i => {
                 return (
@@ -172,6 +189,7 @@ class AccountsList extends React.Component {
                         onAction={this.props.onStakingCreate}
                         isSelected={this.props.items.indexOf(i) !== -1}
                         action={this.props.action}
+                        showNewVotes={this.state.showNewVotes}
                     />
                 );
             });
@@ -181,7 +199,7 @@ class AccountsList extends React.Component {
             error = counterpart.translate("account.votes.already");
         }
 
-        let cw = ["10%", "20%", "10%", "30%", "20%", "10%"];
+        let cw = ["10%", "20%", "20%", "15%", "25%", "10%"];
 
         return (
             <div>
@@ -208,7 +226,12 @@ class AccountsList extends React.Component {
                             <th style={{width: cw[1]}}><Translate content="account.votes.name"/></th>
                             <th style={{width: cw[2]}}><Translate content="account.votes.url"/></th>
                             <th style={{width: cw[3]}}><Translate content="account.votes.commission_rate"/></th>
-                            <th style={{width: cw[4]}}><Translate content="account.votes.votes"/></th>
+                            <th style={{ width: cw[4] }}>
+                                <Translate content="account.votes.votes" />
+                                <Link onClick={() => { this.setState({ showNewVotes: !this.state.showNewVotes }); }}>
+                                        ({this.state.showNewVotes ? <Translate content="account.votes.see_old_votes" /> : <Translate content="account.votes.see_new_votes" />})
+                                </Link>
+                            </th>
                             <th style={{width: cw[5]}}><Translate content="account.perm.action"/></th>
                         </tr>
                         </thead>
