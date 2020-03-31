@@ -17,10 +17,9 @@ function getWitnessOrCommittee(type, acct) {
     } else if (type === "committee") {
         account = ChainStore.getCommitteeMemberById(acct.get("id"));
     }
-
     url = account ? account.get("url") : url;
     votes = account ? account.get("total_votes") : votes;
-    new_votes = account ? account.get("total_vote_weights ") : new_votes;
+    new_votes = account ? account.get("total_vote_weights") : new_votes;
     commission_rate = account ? account.get("commission_rate") / 10 : commission_rate;
     return {
         url,
@@ -171,14 +170,20 @@ class AccountsList extends React.Component {
                 // } else {
                 //     return 0;
                 // }
-                let { commission_rate: a_commission_rate } = getWitnessOrCommittee(this.props.type, a);
-                let { commission_rate: b_commission_rate} = getWitnessOrCommittee(this.props.type, b);
-                return b_commission_rate - a_commission_rate;
-            })
-            .sort((a, b) => {
-                let { new_votes: a_new_votes } = getWitnessOrCommittee(this.props.type, a);
-                let { new_votes: b_new_votes } = getWitnessOrCommittee(this.props.type, b);
-                return a_new_votes - b_new_votes;
+                let {
+                  commission_rate: a_commission_rate,
+                  new_votes: a_new_votes
+                } = getWitnessOrCommittee(this.props.type, a);
+                let {
+                  commission_rate: b_commission_rate,
+                  new_votes: b_new_votes
+                } = getWitnessOrCommittee(this.props.type, b);
+                
+                if (a_commission_rate === b_commission_rate) {
+                    return a_new_votes - b_new_votes;
+                } else {
+                    return b_commission_rate - a_commission_rate;
+                }
             })
             .map(i => {
                 return (
