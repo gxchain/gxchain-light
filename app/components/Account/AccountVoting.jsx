@@ -237,6 +237,7 @@ class AccountVoting extends React.Component {
                 .get("balances")
                 .toJS();
             let balanceId = account_balances["1.3.1"];
+            balanceId = balanceId ? balanceId : "2.5.-1";
             let balanceObject = null;
             if (balanceId != "2.5.-1") {
                 balanceObject = ChainStore.getObject(balanceId);

@@ -116,6 +116,9 @@ class StakingCreateModal extends React.Component {
     }
 
     submit() {
+        if (!this.validate()) {
+            return;
+        }
         let self = this;
         let programs = this.props.globalObject
       .getIn(["parameters", "extensions"])
