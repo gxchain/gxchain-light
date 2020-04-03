@@ -922,7 +922,8 @@
       "table": "表格视图",
       "rank": "排名",
       "last_confirmed": "上次生成块",
-      "missed": "缺失块数"
+      "missed": "缺失块数",
+      "previous_missed": "上一周期丢块"
     },
     "committee_members": {
       "title": "理事会",

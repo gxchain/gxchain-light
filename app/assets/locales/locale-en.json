@@ -932,7 +932,8 @@
       "table": "Table view",
       "rank": "Rank",
       "last_confirmed": "Last confirmed",
-      "missed": "Blocks missed"
+      "missed": "Blocks missed",
+      "previous_missed": "Missed Last Term"
     },
     "committee_members": {
       "title": "Committee members",
