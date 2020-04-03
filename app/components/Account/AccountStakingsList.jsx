@@ -98,6 +98,15 @@ class StakingsList extends React.Component {
         this.fetchStakingFee();
     }
 
+    toDate(dateStr) {
+        if (!/Z$/.test(dateStr)) {
+            return new Date(dateStr + "Z");
+        }
+        else {
+            return new Date(dateStr);
+        }
+    }
+
     loadStakings() {
         let currentAccount = AccountStore.getState().currentAccount;
         let currentAccountId = ChainStore.getAccount(currentAccount).get("id");
@@ -105,7 +114,14 @@ class StakingsList extends React.Component {
       .db_api()
       .exec("get_staking_objects", [currentAccountId])
       .then((resp) => {
-          this.setState({ stakings: resp });
+          let stakings = resp || [];
+          stakings = stakings.map((item) => {
+              let start_date = this.toDate(item.create_date_time);
+              let end_date = new Date(start_date.getTime() + Number(item.staking_days) * 24 * 3600 * 1000);
+              item.is_valid = new Date() - end_date <= 0;
+              return item;
+          });
+          this.setState({ stakings: stakings });
       })
       .catch((ex) => {
           console.error("get_staking_objetcs failed", ex);
