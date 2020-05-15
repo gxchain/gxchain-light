@@ -122,7 +122,7 @@ class StakingUpdateModal extends React.Component {
         if (trustNodeName) {
             let trustNode = this.state.trustNodes.filter(item => item !== null && item.get("name") === trustNodeName);
             this.setState({
-                trustNodeId: trustNode[0].get("id")
+                trustNodeId: trustNode.get(0).get("id")
             });
         } else {
             this.setState({

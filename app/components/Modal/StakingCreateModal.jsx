@@ -153,7 +153,7 @@ class StakingCreateModal extends React.Component {
         AccountActions.createStaking(
           currentProgramID,
           this.state.ownerId,
-          ChainStore.getWitnessById(this.state.trustNodeId).get("id"),
+          ChainStore.getWitnessById(this.state.trustNode.get("id")).get("id"),
           amount * precision,
           currentProgram.weight,
           currentProgram.staking_days

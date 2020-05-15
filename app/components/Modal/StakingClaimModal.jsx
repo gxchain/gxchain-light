@@ -124,7 +124,7 @@ class StakingClaimModal extends React.Component {
         (item) => item !== null && item.get("name") === trustNodeName
       );
             this.setState({
-                trustNodeId: trustNode[0].get("id")
+                trustNodeId: trustNode.get(0).get("id")
             });
         } else {
             this.setState({
