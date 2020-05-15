@@ -1,6 +1,6 @@
 {
   "name": "gxb-light",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Advanced wallet interface for the GXChain.",
   "homepage": "https://github.com/gxchain/gxchain-light",
   "contributors": [
@@ -173,6 +173,7 @@
     },
     "mac": {
       "icon": "resources/icons/icon.icns",
+      "identity": "Apple Development: Minqiang Huang (X65PTKT3H4)",
       "category": "public.app-category.utilities"
     },
     "win": {
