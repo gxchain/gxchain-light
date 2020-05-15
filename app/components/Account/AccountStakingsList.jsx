@@ -128,8 +128,7 @@ class StakingsList extends React.Component {
     }
 
     onStakingUpdate(staking) {
-        let currentAccount = AccountStore.getState().currentAccount;
-        let currentAccountId = ChainStore.getAccount(currentAccount).get("id");
+        let currentAccountId = this.props.account.get("id");
         this.refs["update-staking-modal"].refs["bound_component"].show(
           staking.id,
           currentAccountId,
@@ -141,8 +140,7 @@ class StakingsList extends React.Component {
     }
 
     onStakingClaim(staking) {
-        let currentAccount = AccountStore.getState().currentAccount;
-        let currentAccountId = ChainStore.getAccount(currentAccount).get("id");
+        let currentAccountId = this.props.account.get("id");
         this.refs["claim-staking-modal"].refs["bound_component"].show(
           staking.id,
           currentAccountId,

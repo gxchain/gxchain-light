@@ -41,19 +41,19 @@ class AccountItemRow extends React.Component {
         showNewVotes: React.PropTypes.bool.isRequired,
     };
 
-    shouldComponentUpdate(nextProps) {
-        return (
-      nextProps.account !== this.props.account ||
-      nextProps.showNewVotes !== this.props.showNewVotes
-    );
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return (
+    //   nextProps.account !== this.props.account ||
 
-    onAction(item_id) {
-        this.props.onAction(item_id);
+    //   nextProps.showNewVotes !== this.props.showNewVotes
+    // );
+    // }
+
+    onAction() {
+        this.props.onAction(this.props.account);
     }
 
     render() {
-        console.log("rendering",account);
         let { account, type } = this.props;
         let name = account.get("name");
         let item_id = account.get("id");

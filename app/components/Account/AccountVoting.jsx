@@ -232,7 +232,7 @@ class AccountVoting extends React.Component {
               });
           });
     }
-    onStakingCreate(collection, item_id) {
+    onStakingCreate(collection, account) {
         if (this.state.canStaking) {
             let account_balances = this.props.account
                 .get("balances")
@@ -252,7 +252,7 @@ class AccountVoting extends React.Component {
             }
             this.refs["staking-modal"].refs["bound_component"].show(
                 balanceObject,
-                item_id,
+                account,
                 this.props.account.toJS().id,
                 this.state.fee
             );
@@ -452,6 +452,7 @@ class AccountVoting extends React.Component {
 
                     {items&&items.length>0 ? (
                       <AccountsList
+                        account={this.props.account}
                         type="witness"
                         label="account.votes.add_witness_label"
                         items={Immutable.List(items)}

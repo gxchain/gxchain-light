@@ -34,7 +34,7 @@ class StakingCreateModal extends React.Component {
             balance: null,
             termIndex: 0,
             balanceObject: null,
-            trustNodeId: "",
+            trustNode: null,
             ownerId: "",
             fee: 0
         };
@@ -49,7 +49,7 @@ class StakingCreateModal extends React.Component {
         });
     }
 
-    show(balanceObject, trustNodeId, ownerId, fee) {
+    show(balanceObject, trustNode, ownerId, fee) {
         let modalId = "modal-staking";
         this.setState({
             error: "",
@@ -57,7 +57,7 @@ class StakingCreateModal extends React.Component {
             balance: null,
             termIndex: 0,
             balanceObject: balanceObject,
-            trustNodeId: trustNodeId,
+            trustNode: trustNode,
             ownerId: ownerId,
             asset: ChainStore.getAsset("1.3.1"),
             fee: fee
@@ -247,9 +247,8 @@ class StakingCreateModal extends React.Component {
         let balanceObject = this.state.balanceObject;
         let amount = this.formatAmount(this.state.amount);
 
-        let trustNodeName = ChainStore.getAccount(this.state.trustNodeId).get(
-      "name"
-    );
+        let trustNode = this.state.trustNode;
+        let trustNodeName=trustNode?trustNode.get("name"):"";
 
         let button_text = counterpart.translate("staking_program.button_title");
 
