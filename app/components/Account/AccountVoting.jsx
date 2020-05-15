@@ -41,6 +41,7 @@ class AccountVoting extends React.Component {
 
         super(props);
         this.state = {
+            items:null,
             proxy_account_id: "",//"1.2.16",
             witnesses: null,
             committee: null,
@@ -385,25 +386,33 @@ class AccountVoting extends React.Component {
             });
     }
 
+    loadTrustedNodeAccounts(){
+        if(this.state.items){
+            return this.state.items;
+        }
+        if(!this.loading){
+            this.loading = true;
+            Apis.instance().db_api().exec("get_objects",[this.state.trust_nodes]).then(resp=>{
+                this.setState({
+                    items:resp.map(i=>{
+                        return Immutable.Map(i);
+                    })
+                });
+                this.loading = false;
+            }).catch(ex=>{
+                this.loading = false;
+                console.warn("error loading trusted nodes", ex);
+            });
+        }
+        return null;
+    }
+
     render() {
-        if (!this.state.trust_nodes) {
+        if (!this.state.trust_nodes || this.state.trust_nodes.length==0) {
             return null;
         }
 
-        let unVotedActiveWitnesses = this.state.trust_nodes.map(a => {
-            let account = ChainStore.getWitnessById(a);
-            if (!account || !this.state.witnesses) {
-                return null;
-            }
-            // if (!this.state.witnesses.includes(a)) {
-            //     return a;
-            // } else {
-            //     return null;
-            // }
-            return a;
-        }).filter(a => {
-            return a !== null;
-        });
+        let items = this.loadTrustedNodeAccounts();
 
         return (
           <div className="grid-container">
@@ -441,11 +450,11 @@ class AccountVoting extends React.Component {
                       )}
                     /> */}
 
-                    {unVotedActiveWitnesses.size ? (
+                    {items&&items.length>0 ? (
                       <AccountsList
                         type="witness"
                         label="account.votes.add_witness_label"
-                        items={Immutable.List(unVotedActiveWitnesses)}
+                        items={Immutable.List(items)}
                         validateAccount={this.validateAccount.bind(
                           this,
                           "witnesses"
@@ -468,7 +477,8 @@ class AccountVoting extends React.Component {
                   <div className="content-block">
                     <AccountStakingsList
                       label="account.votes.add_witness_label"
-                      trustNodes={Immutable.List(unVotedActiveWitnesses)}
+                      account={this.props.account}
+                      trustNodes={Immutable.List(items)}
                       validateAccount={this.validateAccount.bind(
                         this,
                         "witnesses"

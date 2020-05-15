@@ -53,14 +53,17 @@ class AccountItemRow extends React.Component {
     }
 
     render() {
+        console.log("rendering",account);
         let { account, type } = this.props;
         let name = account.get("name");
         let item_id = account.get("id");
-
+        
         let { url, votes, commission_rate, new_votes } = getWitnessOrCommittee(
       type,
       account
     );
+
+   
         let link =
       url && url.length > 0 && url.indexOf("http") === -1
         ? "http://" + url
@@ -154,42 +157,51 @@ class AccountsList extends React.Component {
     render() {
         if (!this.props.items) return null;
 
-        let item_rows = this.props.items
-      .filter((i) => {
-          if (!i) return false;
-          let nodes = [
-              "aaron",
-              "caitlin",
-              "kairos",
-              "sakura",
-              "taffy",
-              "miner1",
-              "miner2",
-              "miner3",
-              "miner4",
-              "miner5",
-              "miner6",
-              "miner7",
-              "miner8",
-              "miner9",
-              "miner10",
-              "miner11",
-              "hrrs",
-              "dennis1",
-              "david12",
-              "marks-lee",
-              "robin-green",
-          ];
-          let tmp = false;
-          for (let k = 0; k < nodes.length; k++) {
-              if (i.get("name") === nodes[k]) {
-                  tmp = true;
-                  break;
-              }
-          }
-          return !tmp;
-      })
-      .sort((a, b) => {
+        let item_rows = this.props.items.filter((i) => {
+            if (!i) return false;
+            let nodes = [
+                "aaron",
+                "caitlin",
+                "kairos",
+                "sakura",
+                "taffy",
+                "init0",
+                "init1",
+                "init2",
+                "init3",
+                "init4",
+                "init5",
+                "init6",
+                "init7",
+                "init8",
+                "init9",
+                "init10",
+                "miner1",
+                "miner2",
+                "miner3",
+                "miner4",
+                "miner5",
+                "miner6",
+                "miner7",
+                "miner8",
+                "miner9",
+                "miner10",
+                "miner11",
+                "hrrs",
+                "dennis1",
+                "david12",
+                "marks-lee",
+                "robin-green",
+            ];
+            let tmp = false;
+            for (let k = 0; k < nodes.length; k++) {
+                if (i.get("name") === nodes[k]) {
+                    tmp = true;
+                    break;
+                }
+            }
+            return !tmp;
+        }).sort((a, b) => {
         // let {votes: a_votes} = getWitnessOrCommittee(this.props.type, a);
         // let {votes: b_votes} = getWitnessOrCommittee(this.props.type, b);
 
@@ -204,48 +216,34 @@ class AccountsList extends React.Component {
         // } else {
         //     return 0;
         // }
-          let {
-          commission_rate: a_commission_rate,
-          new_votes: a_new_votes,
-        } = getWitnessOrCommittee(this.props.type, a);
-          let {
-          commission_rate: b_commission_rate,
-          new_votes: b_new_votes,
-        } = getWitnessOrCommittee(this.props.type, b);
-
-          if (a_commission_rate === b_commission_rate) {
-              return a_new_votes - b_new_votes;
-          } else {
-              return b_commission_rate - a_commission_rate;
-          }
-      })
-      .map((i) => {
-          return (
-          <AccountItemRow
-            key={i.get("name")}
-            account={i}
-            type={this.props.type}
-            onAction={this.props.onStakingCreate}
-            isSelected={this.props.items.indexOf(i) !== -1}
-            action={this.props.action}
-            showNewVotes={this.state.showNewVotes}
-          />
-        );
-      });
+            let {commission_rate: a_commission_rate,new_votes: a_new_votes} = getWitnessOrCommittee(this.props.type, a);
+            let {commission_rate: b_commission_rate,new_votes: b_new_votes} = getWitnessOrCommittee(this.props.type, b);
+            if (a_commission_rate === b_commission_rate) {
+                return a_new_votes - b_new_votes;
+            } else {
+                return b_commission_rate - a_commission_rate;
+            }
+        }).map((i) => {
+            return <AccountItemRow
+              key={i.get("name")}
+              account={i}
+              type={this.props.type}
+              onAction={this.props.onStakingCreate}
+              isSelected={this.props.items.indexOf(i) !== -1}
+              action={this.props.action}
+              showNewVotes={this.state.showNewVotes}
+            />;
+        });
 
         let error = this.state.error;
-        if (
-      !error &&
-      this.state.selected_item &&
-      this.props.items.indexOf(this.state.selected_item) !== -1
-    ) {
+      
+        if (!error && this.state.selected_item &&this.props.items.indexOf(this.state.selected_item) !== -1) {
             error = counterpart.translate("account.votes.already");
         }
 
         let cw = ["10%", "20%", "20%", "15%", "25%", "10%"];
 
-        return (
-      <div>
+        return (<div>
         {this.props.withSelector ? (
           <AccountSelector
             style={{ maxWidth: "600px" }}
@@ -264,7 +262,7 @@ class AccountsList extends React.Component {
         {this.props.title && item_rows.length ? (
           <h4>{this.props.title}</h4>
         ) : null}
-        {item_rows.length ? (
+        {item_rows.size ? (
           <table className="table">
             <thead>
               <tr>
@@ -302,9 +300,9 @@ class AccountsList extends React.Component {
             <tbody>{item_rows}</tbody>
           </table>
         ) : null}
-      </div>
-    );
+      </div>);
     }
 }
 
-export default BindToChainState(AccountsList, { keep_updating: true });
+// export default BindToChainState(AccountsList, { keep_updating: true });
+export default AccountsList;

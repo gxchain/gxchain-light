@@ -108,8 +108,7 @@ class StakingsList extends React.Component {
     }
 
     loadStakings() {
-        let currentAccount = AccountStore.getState().currentAccount;
-        let currentAccountId = ChainStore.getAccount(currentAccount).get("id");
+        let currentAccountId = this.props.account.get("id");
         Apis.instance()
       .db_api()
       .exec("get_staking_objects", [currentAccountId])
@@ -227,4 +226,5 @@ class StakingsList extends React.Component {
     }
 }
 
-export default BindToChainState(StakingsList, { keep_updating: true });
+// export default BindToChainState(StakingsList, { keep_updating: true });
+export default StakingsList;
