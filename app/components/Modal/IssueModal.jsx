@@ -93,7 +93,7 @@ class IssueModal extends React.Component {
             this.state.to_id,
             asset_to_issue.get ("issuer"),
             asset_to_issue.get ("id"),
-            amount,
+            amount+'',
             this.state.memo ? new Buffer (this.state.memo, "utf-8") : this.state.memo,
             this.state.feeAsset ? this.state.feeAsset.get ('id') : '1.3.1'
         );
