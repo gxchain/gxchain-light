@@ -49,7 +49,7 @@
     "foundation-apps": "git+https://github.com/zurb/foundation-apps.git",
     "fractional": "^1.0.0",
     "gxbjs": "^1.5.1",
-    "highcharts": "^7.0.3",
+    "highcharts": "^9.0.0",
     "immutable": "^3.8.1",
     "indexeddbshim": "^2.2.1",
     "intl": "^1.1.0",
