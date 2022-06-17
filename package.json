@@ -106,7 +106,7 @@
     "copyfiles": "^2.1.0",
     "css-loader": "^0.22.0",
     "del-cli": "^1.1.0",
-    "electron": "^7.2.4",
+    "electron": "^15.5.5",
     "electron-builder": "^22.2.0",
     "electron-updater": "^4.0.6",
     "es6-promise": "^3.0.2",
