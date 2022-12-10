@@ -113,7 +113,7 @@
     "eslint": "^2.11.1",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-react": "^5.2.2",
-    "express": "^4.14.0",
+    "express": "^4.17.3",
     "express-history-api-fallback": "^2.1.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.8.4",
